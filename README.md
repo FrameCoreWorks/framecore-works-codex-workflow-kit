@@ -19,9 +19,9 @@ FrameCore Works Skill Kit is an English-only, provider-neutral workflow system f
 - Hipson Adapter for research maps, internet mapping packets, bounded instruction packets, review packets, and execution packets.
 - Validation, privacy audit, and AppleDouble cleanup scripts.
 
-## What It Does Not Install
+## Privacy And Scope
 
-This v1 ships without paid media-provider integrations, provider CLIs, private project context, private cloud delivery settings, local machine paths, secrets, generated outputs, backups, or cache folders.
+This kit contains reusable workflow assets: role-based agents, skills, templates, onboarding, validation, and project-local configuration.
 
 ## Install Flow
 
