@@ -1,6 +1,6 @@
 # Contributing
 
-FrameCore Works Skill Kit is English-only and provider-neutral.
+FrameCore Works Skill Kit is provider-neutral and configurable for user language preferences during onboarding.
 
 Contributions must:
 

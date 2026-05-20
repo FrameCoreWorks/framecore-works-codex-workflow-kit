@@ -14,7 +14,7 @@ Follow this order:
 Do not use global install and do not enable external execution tools unless I explicitly ask for them.
 ```
 
-FrameCore Works Skill Kit is an English-only, provider-neutral workflow system for Codex. It installs role-based agents, skills, templates, handoff rules, QA gates, Humanizer, HyperFrames workflow knowledge, a lightweight Hipson Adapter, and an explicit workflow self-improvement loop.
+FrameCore Works Skill Kit is a provider-neutral workflow system for Codex. It installs role-based agents, skills, templates, handoff rules, QA gates, Humanizer, HyperFrames workflow knowledge, a lightweight Hipson Adapter, and an explicit workflow self-improvement loop.
 
 ## What It Installs
 
