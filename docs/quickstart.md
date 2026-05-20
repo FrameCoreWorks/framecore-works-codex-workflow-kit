@@ -11,6 +11,13 @@ This guide installs FrameCore Works Skill Kit into one Codex workspace. The reco
 
 The commands below are run from the root of this repository unless noted otherwise.
 
+For command help:
+
+```bash
+node scripts/install.mjs --help
+node scripts/onboard.mjs --help
+```
+
 ## Beginner-Friendly Manual Quickstart
 
 1. Open a terminal in this repository.

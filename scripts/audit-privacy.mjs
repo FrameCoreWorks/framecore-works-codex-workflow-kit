@@ -1,6 +1,22 @@
 #!/usr/bin/env node
 import { basename, join, relative, resolve } from "node:path";
-import { decodeBase64List, isAppleDouble, readJson, readText, repoRoot, reportFindings, walkFiles } from "./common.mjs";
+import { decodeBase64List, hasHelpFlag, isAppleDouble, printHelpAndExit, readJson, readText, repoRoot, reportFindings, walkFiles } from "./common.mjs";
+
+if (hasHelpFlag()) {
+  printHelpAndExit(`
+Usage:
+  node scripts/audit-privacy.mjs [repo-root]
+
+Purpose:
+  Scan source files for content that should not be committed to the public kit.
+
+Options:
+  repo-root  Optional repository root to audit. Defaults to this repo.
+
+Checks:
+  Private names, excluded provider remnants, local paths, emails, secret-like values, secret-bearing filenames, private cloud references, and AppleDouble files.
+`);
+}
 
 const targetRoot = process.argv[2] ? resolve(process.argv[2]) : repoRoot;
 const policy = readJson(join(repoRoot, "config/privacy-audit-policy.json"));

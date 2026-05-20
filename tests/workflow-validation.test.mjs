@@ -161,6 +161,33 @@ test("privacy audit catches secret filenames and credential-shaped values", () =
   assert.match(`${result.stderr}${result.stdout}`, /SECRET_LIKE_VALUE/);
 });
 
+test("cli scripts expose non-mutating help output", () => {
+  const dir = mkdtempSync(join(tmpdir(), "framecore-help-"));
+  const sidecar = join(root, "._framecore-help-test");
+  writeFileSync(sidecar, "");
+  try {
+    for (const script of [
+      "scripts/install.mjs",
+      "scripts/onboard.mjs",
+      "scripts/render-agents.mjs",
+      "scripts/validate.mjs",
+      "scripts/audit-privacy.mjs",
+      "scripts/cleanup-appledouble.mjs",
+    ]) {
+      const output = run([script, "--help", "--target", dir]);
+      assert.match(output, /Usage:/);
+      assert.match(output, /Purpose:/);
+      assert.match(output, /Options:/);
+    }
+    assert.equal(existsSync(join(dir, "framecore.config.json")), false);
+    assert.equal(existsSync(join(dir, ".framecore/manifest.json")), false);
+    assert.equal(existsSync(join(dir, ".codex/agents")), false);
+    assert.equal(existsSync(sidecar), true);
+  } finally {
+    rmSync(sidecar, { force: true });
+  }
+});
+
 test("validation rejects unknown handoff roles", () => {
   const dir = copyRepoFixture("framecore-validate-handoff-");
   const file = join(dir, ".agents/skills/pipeline-core/references/handoff-matrix.md");

@@ -182,6 +182,7 @@ npm test
 npm run check
 npm run release:check
 npm pack --dry-run
+node scripts/install.mjs --help
 ```
 
 `npm run check` is the expected CI path.

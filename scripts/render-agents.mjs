@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
-import { repoRoot, readJson } from "./common.mjs";
+import { hasHelpFlag, printHelpAndExit, repoRoot, readJson } from "./common.mjs";
 import { assertValidFrameCoreConfig } from "./config-validation.mjs";
 
 function toManifestPath(target, destination) {
@@ -71,6 +71,20 @@ export function renderAgents({ target, configPath, dryRun = false, previousManag
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
+  if (hasHelpFlag()) {
+    printHelpAndExit(`
+Usage:
+  node scripts/render-agents.mjs [--target <path>] [--config <path>] [--dry-run]
+
+Purpose:
+  Render neutral role-based agent templates into local .codex/agents files.
+
+Options:
+  --target <path>  Workspace where rendered .codex/agents files should be written.
+  --config <path>  Optional framecore.config.json path. Defaults to <target>/framecore.config.json.
+  --dry-run        Report rendered files without writing them.
+`);
+  }
   const targetIndex = process.argv.indexOf("--target");
   const configIndex = process.argv.indexOf("--config");
   const target = targetIndex >= 0 ? process.argv[targetIndex + 1] : process.cwd();

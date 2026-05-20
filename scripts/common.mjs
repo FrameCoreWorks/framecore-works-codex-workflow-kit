@@ -12,6 +12,15 @@ export function readText(path) {
   return readFileSync(path, "utf8");
 }
 
+export function hasHelpFlag() {
+  return process.argv.includes("--help") || process.argv.includes("-h");
+}
+
+export function printHelpAndExit(text) {
+  console.log(text.trim());
+  process.exit(0);
+}
+
 export function decodeBase64List(values) {
   return values.map((value) => Buffer.from(value, "base64").toString("utf8"));
 }

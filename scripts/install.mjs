@@ -2,7 +2,7 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
 import { homedir } from "node:os";
-import { readJson, repoRoot, walkFiles } from "./common.mjs";
+import { hasHelpFlag, printHelpAndExit, readJson, repoRoot, walkFiles } from "./common.mjs";
 import { renderAgents } from "./render-agents.mjs";
 import { assertValidFrameCoreConfig } from "./config-validation.mjs";
 
@@ -195,6 +195,32 @@ function install({ mode }) {
 }
 
 const mode = argValue("--mode", "dry-run");
+if (hasHelpFlag()) {
+  printHelpAndExit(`
+Usage:
+  node scripts/install.mjs --mode <dry-run|project-local|global|update|repair|uninstall> [--target <path>] [--force] [--yes]
+
+Purpose:
+  Install, update, repair, preview, or uninstall FrameCore-managed workflow files.
+
+Options:
+  --mode <mode>    Operation mode. Defaults to dry-run.
+  --target <path>  Target workspace for project-local, dry-run, update, repair, or uninstall.
+  --force          Allow overwriting user-owned conflicting files after creating backups.
+  --yes            Apply uninstall removals after preview.
+
+Modes:
+  dry-run        Report planned writes without changing files.
+  project-local  Install into the target workspace.
+  global         Install into the current user's home workspace.
+  update         Update an existing install. Requires .framecore/manifest.json.
+  repair         Recreate only manifest-recorded files. Requires .framecore/manifest.json.
+  uninstall      Preview manifest-recorded removals. Use --yes to apply.
+
+Safety:
+  --force only bypasses user-owned file overwrite protection. It does not bypass config validation.
+`);
+}
 const allowed = new Set(["dry-run", "project-local", "global", "update", "repair", "uninstall"]);
 if (!allowed.has(mode)) {
   console.error(`unknown mode: ${mode}`);

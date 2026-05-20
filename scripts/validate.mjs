@@ -1,7 +1,23 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
-import { repoRoot, reportFindings, walkFiles } from "./common.mjs";
+import { hasHelpFlag, printHelpAndExit, repoRoot, reportFindings, walkFiles } from "./common.mjs";
+
+if (hasHelpFlag()) {
+  printHelpAndExit(`
+Usage:
+  node scripts/validate.mjs [repo-root]
+
+Purpose:
+  Validate the workflow kit structure and public repository readiness.
+
+Options:
+  repo-root  Optional repository root to validate. Defaults to this repo.
+
+Checks:
+  Agent templates, skill contracts, gates, handoffs, artifact templates, docs, examples, Markdown links, text-image policy, and release governance.
+`);
+}
 
 const validationRoot = resolve(process.argv[2] ?? repoRoot);
 const findings = [];

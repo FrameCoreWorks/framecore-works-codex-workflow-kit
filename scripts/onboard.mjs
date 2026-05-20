@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
-import { repoRoot, readJson } from "./common.mjs";
+import { hasHelpFlag, printHelpAndExit, repoRoot, readJson } from "./common.mjs";
 import { assertValidFrameCoreConfig } from "./config-validation.mjs";
 
 function argValue(name, fallback) {
@@ -115,6 +115,22 @@ export async function runOnboarding({ target = process.cwd(), defaults = false }
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
+  if (hasHelpFlag()) {
+    printHelpAndExit(`
+Usage:
+  node scripts/onboard.mjs [--target <path>] [--defaults]
+
+Purpose:
+  Create a local framecore.config.json with workspace preferences.
+
+Options:
+  --target <path>  Workspace where framecore.config.json should be written.
+  --defaults       Write default preferences without interactive questions.
+
+Output:
+  Writes framecore.config.json and, when explicitly enabled, an optional report-only automation recipe.
+`);
+  }
   await runOnboarding({
     target: argValue("--target", process.cwd()),
     defaults: process.argv.includes("--defaults"),
