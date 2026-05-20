@@ -60,7 +60,7 @@ function install({ mode }) {
   const agentsTarget = mode === "global" ? join(homedir(), ".codex/agents") : join(target, ".codex/agents");
 
   copyDir(join(repoRoot, ".agents/skills"), skillsTarget, dryRun, planned);
-  renderAgents({ target: mode === "global" ? homedir() : target, configPath, dryRun });
+  planned.push(...renderAgents({ target: mode === "global" ? homedir() : target, configPath, dryRun }));
   writeManagedFile(join(target, "AGENTS.md"), readFileSync(join(repoRoot, "AGENTS.template.md"), "utf8"), dryRun, planned);
 
   if (!dryRun) {

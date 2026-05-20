@@ -11,7 +11,7 @@ For new multi-step workflow tasks:
 
 ## Core Rules
 
-- Keep workflow artifacts in English unless the user explicitly asks for a localized final deliverable.
+- Use the configured working language from `framecore.config.json`, unless the user asks for a different language for a specific task or final deliverable.
 - Use role IDs and local display names chosen during onboarding.
 - Do not skip upstream gates before prompt, execution, QA, or delivery work.
 - Static raster graphics with visible text must use `openai/gpt-image-2` in one pass with text included.
