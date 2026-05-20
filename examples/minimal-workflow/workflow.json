@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "example_id": "minimal-workflow",
+  "route": [
+    "intent-confirmation",
+    "workflow-orchestrator",
+    "brief-architect",
+    "delivery-documentation"
+  ],
+  "gates": [
+    "intent_lock",
+    "workflow_route",
+    "brief_completeness",
+    "delivery_fit"
+  ],
+  "artifacts": [
+    "Task Confirmation",
+    "Project State",
+    "Brief Contract",
+    "Delivery Manifest"
+  ],
+  "handoffs": [
+    "intent-confirmation->workflow-orchestrator",
+    "workflow-orchestrator->brief-architect"
+  ],
+  "execution_boundary": "Planning only. No asset generation or external execution."
+}

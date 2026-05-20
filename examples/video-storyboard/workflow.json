@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "example_id": "video-storyboard",
+  "route": [
+    "intent-confirmation",
+    "workflow-orchestrator",
+    "brief-architect",
+    "reference-curator",
+    "motion-direction",
+    "storyboard-architect",
+    "copy-voice",
+    "video-prompting",
+    "qa-iteration",
+    "delivery-documentation"
+  ],
+  "gates": [
+    "intent_lock",
+    "workflow_route",
+    "brief_completeness",
+    "reference_authority_fit",
+    "direction_fit",
+    "structure_fit",
+    "copy_fit",
+    "promptability_fit",
+    "post_execution_fit",
+    "delivery_fit"
+  ],
+  "artifacts": [
+    "Task Confirmation",
+    "Project State",
+    "Brief Contract",
+    "Reference Pack",
+    "Direction Contract",
+    "Storyboard Contract",
+    "Copy Pack",
+    "Prompt Pack",
+    "QA / Iteration Report",
+    "Delivery Manifest"
+  ],
+  "handoffs": [
+    "intent-confirmation->workflow-orchestrator",
+    "workflow-orchestrator->brief-architect",
+    "brief-architect->reference-curator",
+    "reference-curator->motion-direction",
+    "motion-direction->storyboard-architect",
+    "storyboard-architect->video-prompting",
+    "copy-voice->video-prompting",
+    "qa-iteration->delivery-documentation"
+  ],
+  "execution_boundary": "Storyboard and prompt planning only. No video generation by default."
+}

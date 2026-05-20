@@ -34,6 +34,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: l
 - Want the mental model first: read [Architecture](docs/architecture.md).
 - Want to compare workflow paths: open [Examples Index](examples/README.md).
 - Want to see a complete workflow specimen: open [End-To-End Creative Workflow Example](examples/end-to-end-creative-workflow/README.md).
+- Maintaining example routes: use each example's checked `workflow.json`.
 - Maintaining artifact contracts: read [Artifact Schemas](docs/artifact-schemas.md).
 - Preparing a release or repo maintenance change: read [Release Guide](docs/release.md).
 - Already installing: use the short install flow below.

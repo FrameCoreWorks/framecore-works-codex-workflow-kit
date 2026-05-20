@@ -432,6 +432,34 @@ test("validation rejects example artifact fixtures missing required fields", () 
   assert.match(`${result.stderr}${result.stdout}`, /EXAMPLE_ARTIFACT_MISSING_FIELD/);
 });
 
+test("validation rejects missing example workflow manifests", () => {
+  const dir = copyRepoFixture("framecore-validate-example-workflow-missing-");
+  rmSync(join(dir, "examples/static-campaign/workflow.json"), { force: true });
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /MISSING_EXAMPLE_WORKFLOW/);
+});
+
+test("validation rejects example workflow route, gate, artifact, and handoff drift", () => {
+  const dir = copyRepoFixture("framecore-validate-example-workflow-drift-");
+  const file = join(dir, "examples/static-campaign/workflow.json");
+  const workflow = JSON.parse(readFileSync(file, "utf8"));
+  workflow.route.push("unknown-role");
+  workflow.gates.push("unknown_gate");
+  workflow.artifacts.push("Unknown Artifact");
+  workflow.handoffs.push("static-direction->delivery-documentation");
+  writeFileSync(file, JSON.stringify(workflow, null, 2));
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  const output = `${result.stderr}${result.stdout}`;
+  assert.notEqual(result.status, 0);
+  assert.match(output, /UNKNOWN_EXAMPLE_ROLE/);
+  assert.match(output, /UNKNOWN_EXAMPLE_GATE/);
+  assert.match(output, /UNKNOWN_EXAMPLE_ARTIFACT/);
+  assert.match(output, /UNKNOWN_EXAMPLE_HANDOFF/);
+});
+
 test("validation rejects agent templates with unknown review gates", () => {
   const dir = copyRepoFixture("framecore-validate-agent-gate-");
   const file = join(dir, ".codex/agents/brief-architect.toml.template");

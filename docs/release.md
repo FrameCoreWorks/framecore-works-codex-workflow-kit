@@ -33,7 +33,8 @@ This project uses GitHub releases as the public release record. npm publication 
 7. Confirm the privacy audit passes without allowlisting sensitive content.
 8. Confirm the text-bearing image policy still references native Codex/ChatGPT image generation powered by GPT Image 2.
 9. Confirm Hipson remains a lightweight adapter unless a user explicitly connects the separate full Hipson repo.
-10. Confirm workflow self-improvement remains explicit-only and proposal-only.
+10. Confirm public examples include validated `workflow.json` manifests.
+11. Confirm workflow self-improvement remains explicit-only and proposal-only.
 
 ## Required Checks
 
@@ -53,6 +54,8 @@ The release-check workflow must remain non-publishing, read-only, and secret-fre
 ## Package Contents Review
 
 Review the `npm pack --dry-run` file list before each release. The package should contain source skills, agent templates, config examples, docs, examples, scripts, and tests. It should not contain local configs, generated outputs, caches, backups, machine metadata, or user-specific files.
+
+Example folders should include their `workflow.json` manifests. These are source fixtures used by validation, not generated outputs.
 
 ## Privacy And Provider-Neutral Gate
 

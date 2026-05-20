@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "example_id": "hyperframes-video",
+  "route": [
+    "intent-confirmation",
+    "workflow-orchestrator",
+    "motion-direction",
+    "storyboard-architect",
+    "copy-voice",
+    "hyperframes-producer",
+    "asset-manifest",
+    "qa-iteration",
+    "delivery-documentation"
+  ],
+  "gates": [
+    "intent_lock",
+    "workflow_route",
+    "direction_fit",
+    "structure_fit",
+    "copy_fit",
+    "execution_manifest_fit",
+    "asset_manifest_fit",
+    "post_execution_fit",
+    "delivery_fit"
+  ],
+  "artifacts": [
+    "Task Confirmation",
+    "Project State",
+    "Direction Contract",
+    "Storyboard Contract",
+    "Copy Pack",
+    "HyperFrames Production Brief",
+    "Asset Manifest",
+    "QA / Iteration Report",
+    "Delivery Manifest"
+  ],
+  "handoffs": [
+    "intent-confirmation->workflow-orchestrator",
+    "motion-direction->storyboard-architect",
+    "storyboard-architect->hyperframes-producer",
+    "asset-manifest->qa-iteration",
+    "qa-iteration->delivery-documentation"
+  ],
+  "execution_boundary": "Coded-video production brief only. Runtime setup and rendering are outside the default install."
+}

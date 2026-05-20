@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added machine-checked `workflow.json` manifests for all public examples.
 - Added artifact schema registry validation for gate-required artifacts, templates, and example fixtures.
 - Added managed file hashes to new manifests and taught `doctor` to warn about missing or changed FrameCore-managed files.
 - Added a non-mutating `doctor` preflight command for checking install targets before dry-run, install, update, repair, or uninstall.

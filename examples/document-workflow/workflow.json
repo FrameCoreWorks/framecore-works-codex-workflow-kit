@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "example_id": "document-workflow",
+  "route": [
+    "intent-confirmation",
+    "workflow-orchestrator",
+    "brief-architect",
+    "research-evidence",
+    "copy-voice",
+    "delivery-documentation"
+  ],
+  "gates": [
+    "intent_lock",
+    "workflow_route",
+    "brief_completeness",
+    "evidence_fit",
+    "copy_fit",
+    "delivery_fit"
+  ],
+  "artifacts": [
+    "Task Confirmation",
+    "Project State",
+    "Brief Contract",
+    "Evidence Note",
+    "Copy Pack",
+    "Delivery Manifest"
+  ],
+  "handoffs": [
+    "intent-confirmation->workflow-orchestrator",
+    "workflow-orchestrator->brief-architect"
+  ],
+  "execution_boundary": "Local document-ready text only unless the user explicitly asks for delivery or upload."
+}

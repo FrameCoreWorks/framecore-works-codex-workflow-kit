@@ -206,6 +206,8 @@ for (const file of [gateRegistry, handoffMatrix, artifactTemplates]) {
 
 let artifactSchemas = null;
 let artifactSchemaNames = new Set();
+let knownGates = new Map();
+let knownHandoffPairs = new Set();
 if (existsSync(artifactSchemasPath)) {
   try {
     artifactSchemas = JSON.parse(read(artifactSchemasPath));
@@ -234,6 +236,7 @@ if (existsSync(gateRegistry)) {
   const gateRows = parseMarkdownTable(text, ["gate", "ownerRoles", "requiredArtifact"]);
   const seenGates = new Set();
   const gates = new Map(gateRows.map((row) => [row.gate, row]));
+  knownGates = gates;
   for (const gate of ["intent_lock", "workflow_route", "brief_completeness", "reference_authority_fit", "evidence_fit", "instruction_packet_fit", "direction_fit", "structure_fit", "storyboard_board_fit", "copy_fit", "promptability_fit", "schema_pricing_fit", "execution_manifest_fit", "asset_manifest_fit", "post_execution_fit", "delivery_fit"]) {
     if (!gates.has(gate)) addFinding("MISSING_GATE", `Gate is missing: ${gate}`, [gateRegistry]);
   }
@@ -303,6 +306,7 @@ if (existsSync(handoffMatrix)) {
     }
   }
   const handoffPairs = new Set(handoffRows.map((row) => `${row.from}->${row.to}`));
+  knownHandoffPairs = handoffPairs;
   for (const pair of ["intent-confirmation->workflow-orchestrator", "workflow-orchestrator->instruction-packet-factory", "image-prompting->tool-routing-cost", "video-prompting->tool-routing-cost", "qa-iteration->delivery-documentation"]) {
     if (!handoffPairs.has(pair)) {
       addFinding("MISSING_HANDOFF", `Required handoff is missing: ${pair}`, [handoffMatrix]);
@@ -458,6 +462,69 @@ for (const file of exampleReadmes) {
   const text = read(file);
   for (const section of requiredExampleSections) {
     if (!text.includes(section)) addFinding("WEAK_EXAMPLE_STRUCTURE", `Example is missing required section: ${section}`, [file]);
+  }
+}
+
+for (const readmePath of exampleReadmes) {
+  const exampleDir = dirname(readmePath);
+  const workflowPath = join(exampleDir, "workflow.json");
+  const expectedId = basename(exampleDir);
+  if (!existsSync(workflowPath)) {
+    addFinding("MISSING_EXAMPLE_WORKFLOW", `Example is missing workflow.json: ${expectedId}`, [readmePath]);
+    continue;
+  }
+  let workflow = null;
+  try {
+    workflow = JSON.parse(read(workflowPath));
+  } catch (error) {
+    addFinding("INVALID_EXAMPLE_WORKFLOW", `Example workflow.json must be valid JSON: ${error.message}`, [workflowPath]);
+    continue;
+  }
+  if (!isPlainObject(workflow)) {
+    addFinding("INVALID_EXAMPLE_WORKFLOW", "Example workflow.json must be a JSON object.", [workflowPath]);
+    continue;
+  }
+  if (workflow.schema_version !== 1) {
+    addFinding("INVALID_EXAMPLE_WORKFLOW", "Example workflow schema_version must be 1.", [workflowPath]);
+  }
+  if (workflow.example_id !== expectedId) {
+    addFinding("INVALID_EXAMPLE_WORKFLOW", `Example workflow example_id must match folder name: ${expectedId}`, [workflowPath]);
+  }
+  if (typeof workflow.execution_boundary !== "string" || workflow.execution_boundary.trim().length === 0) {
+    addFinding("INVALID_EXAMPLE_WORKFLOW", "Example workflow must define execution_boundary.", [workflowPath]);
+  }
+  for (const [field, allowedSet, code] of [
+    ["route", requiredRoleSet, "UNKNOWN_EXAMPLE_ROLE"],
+    ["gates", new Set(knownGates.keys()), "UNKNOWN_EXAMPLE_GATE"],
+    ["artifacts", artifactSchemaNames, "UNKNOWN_EXAMPLE_ARTIFACT"]
+  ]) {
+    if (!Array.isArray(workflow[field]) || workflow[field].length === 0) {
+      addFinding("INVALID_EXAMPLE_WORKFLOW", `Example workflow must define non-empty ${field}.`, [workflowPath]);
+      continue;
+    }
+    for (const value of workflow[field]) {
+      if (typeof value !== "string" || value.trim().length === 0) {
+        addFinding("INVALID_EXAMPLE_WORKFLOW", `Example workflow ${field} must contain non-empty strings.`, [workflowPath]);
+      } else if (!allowedSet.has(value)) {
+        addFinding(code, `Example workflow ${field} contains unknown value: ${value}`, [workflowPath]);
+      }
+    }
+  }
+  if (!Array.isArray(workflow.handoffs)) {
+    addFinding("INVALID_EXAMPLE_WORKFLOW", "Example workflow must define handoffs as an array.", [workflowPath]);
+  } else {
+    for (const pair of workflow.handoffs) {
+      if (typeof pair !== "string" || !/^[a-z0-9-]+->[a-z0-9-]+$/.test(pair)) {
+        addFinding("INVALID_EXAMPLE_WORKFLOW", `Example workflow handoff must use from->to format: ${pair}`, [workflowPath]);
+        continue;
+      }
+      const [from, to] = pair.split("->");
+      if (!requiredRoleSet.has(from) || !requiredRoleSet.has(to)) {
+        addFinding("UNKNOWN_EXAMPLE_ROLE", `Example workflow handoff references unknown role: ${pair}`, [workflowPath]);
+      } else if (!knownHandoffPairs.has(pair)) {
+        addFinding("UNKNOWN_EXAMPLE_HANDOFF", `Example workflow handoff is not listed in handoff matrix: ${pair}`, [workflowPath, handoffMatrix]);
+      }
+    }
   }
 }
 

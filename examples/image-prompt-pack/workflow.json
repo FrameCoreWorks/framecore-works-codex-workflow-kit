@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "example_id": "image-prompt-pack",
+  "route": [
+    "intent-confirmation",
+    "workflow-orchestrator",
+    "image-prompting",
+    "qa-iteration",
+    "delivery-documentation"
+  ],
+  "gates": [
+    "intent_lock",
+    "workflow_route",
+    "promptability_fit",
+    "post_execution_fit",
+    "delivery_fit"
+  ],
+  "artifacts": [
+    "Task Confirmation",
+    "Project State",
+    "Prompt Pack",
+    "Image Prompt Contract",
+    "QA / Iteration Report",
+    "Delivery Manifest"
+  ],
+  "handoffs": [
+    "intent-confirmation->workflow-orchestrator",
+    "qa-iteration->delivery-documentation"
+  ],
+  "execution_boundary": "Prompt text only. Image generation requires an explicit user request."
+}

@@ -41,6 +41,8 @@ The contract keeps runtime behavior predictable without turning each skill into 
 
 Artifact contracts are tracked separately in `config/artifact-schemas.json`. Validation checks that gate-required artifacts, template sections, and registered example fixtures keep the same required fields.
 
+Example routes are tracked in `examples/*/workflow.json`. Validation checks that each example uses known role IDs, known gates, known artifacts, and handoffs that exist in the handoff matrix.
+
 ## Installation Model
 
 Project-local install copies only FrameCore-managed files into the target workspace:
