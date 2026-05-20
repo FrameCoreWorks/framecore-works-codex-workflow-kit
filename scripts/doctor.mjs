@@ -2,8 +2,9 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { homedir } from "node:os";
-import { isAbsolute, join, relative, resolve, sep } from "node:path";
+import { join, relative, sep } from "node:path";
 import { hasHelpFlag, printHelpAndExit, readJson, repoRoot, walkFiles } from "./common.mjs";
+import { resolveManagedPath, sha256File, validateManifest } from "./manifest.mjs";
 import { assertValidFrameCoreConfig } from "./config-validation.mjs";
 
 function argValue(name, fallback) {
@@ -15,57 +16,42 @@ function toManifestPath(target, destination) {
   return relative(target, destination).replaceAll(sep, "/");
 }
 
-function resolveManagedPath(target, entry) {
-  if (typeof entry !== "string" || entry.length === 0 || isAbsolute(entry) || entry.split(/[\\/]+/).includes("..")) {
-    throw new Error(`unsafe managed path: ${entry}`);
-  }
-  const root = resolve(target);
-  const resolved = resolve(root, entry);
-  if (resolved === root || !resolved.startsWith(`${root}${sep}`)) {
-    throw new Error(`managed path outside target: ${entry}`);
-  }
-  return resolved;
-}
-
 function readManifest(target) {
   const manifestPath = join(target, ".framecore/manifest.json");
   if (!existsSync(manifestPath)) return null;
   return JSON.parse(readFileSync(manifestPath, "utf8"));
 }
 
-function isPlainObject(value) {
-  return value !== null && typeof value === "object" && !Array.isArray(value);
-}
-
-function validateManifest(target, manifest) {
-  const errors = [];
-  if (!isPlainObject(manifest)) return ["manifest must be a JSON object"];
-  if (manifest.schema_version !== 1) errors.push("manifest schema_version must be 1");
-  if (!Array.isArray(manifest.managed_paths)) {
-    errors.push("manifest managed_paths must be an array");
-    return errors;
+function reportManifestIntegrity(target, manifest, ok, warn) {
+  if (!manifest?.managed_hashes) {
+    warn("Manifest has no managed file hashes. Run update or repair to refresh integrity metadata.");
+    return;
   }
 
-  const seen = new Set();
-  for (const entry of manifest.managed_paths) {
-    if (typeof entry !== "string" || entry.trim().length === 0) {
-      errors.push("manifest managed_paths must contain non-empty strings");
+  let missing = 0;
+  let changed = 0;
+  let untracked = 0;
+  const hashedEntries = new Set(Object.keys(manifest.managed_hashes));
+  for (const [entry, expectedHash] of Object.entries(manifest.managed_hashes)) {
+    const path = resolveManagedPath(target, entry);
+    if (!existsSync(path)) {
+      missing += 1;
       continue;
     }
-    if (seen.has(entry)) {
-      errors.push(`manifest contains duplicate managed path: ${entry}`);
-    }
-    seen.add(entry);
-    try {
-      const resolved = resolveManagedPath(target, entry);
-      if (existsSync(resolved) && statSync(resolved).isDirectory()) {
-        errors.push(`manifest managed path points to a directory: ${entry}`);
-      }
-    } catch {
-      errors.push("manifest contains an unsafe managed path entry");
+    if (!statSync(path).isFile()) continue;
+    if (sha256File(path) !== expectedHash) changed += 1;
+  }
+  for (const entry of manifest.managed_paths ?? []) {
+    if (entry === ".framecore/manifest.json") continue;
+    const path = resolveManagedPath(target, entry);
+    if (existsSync(path) && statSync(path).isFile() && !hashedEntries.has(entry)) {
+      untracked += 1;
     }
   }
-  return errors;
+  if (missing > 0) warn(`${missing} managed file(s) recorded in the manifest are missing.`);
+  if (changed > 0) warn(`${changed} managed file(s) differ from the manifest hash.`);
+  if (untracked > 0) warn(`${untracked} managed file(s) have no manifest hash metadata.`);
+  if (missing === 0 && changed === 0 && untracked === 0) ok("Managed file hashes match the current manifest.");
 }
 
 function targetForMode(mode) {
@@ -198,6 +184,7 @@ function runDoctor({ mode }) {
   }
   if (manifest) ok("Manifest found.");
   else if (mode === "project-local" || mode === "dry-run") ok("No existing manifest required for first install or dry-run.");
+  if (manifest && manifestErrors.length === 0) reportManifestIntegrity(target, manifest, ok, warn);
 
   if (mode === "uninstall") {
     for (const entry of manifest?.managed_paths ?? []) {

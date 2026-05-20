@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
-import { dirname, isAbsolute, join, relative, resolve, sep } from "node:path";
+import { dirname, join, relative, sep } from "node:path";
 import { homedir } from "node:os";
 import { hasHelpFlag, printHelpAndExit, readJson, repoRoot, walkFiles } from "./common.mjs";
+import { assertValidManifest, resolveManagedPath, sha256File } from "./manifest.mjs";
 import { renderAgents } from "./render-agents.mjs";
 import { assertValidFrameCoreConfig } from "./config-validation.mjs";
 
@@ -20,22 +21,31 @@ function toManifestPath(target, destination) {
   return relative(target, destination).replaceAll(sep, "/");
 }
 
-function resolveManagedPath(target, entry) {
-  if (typeof entry !== "string" || entry.length === 0 || isAbsolute(entry) || entry.split(/[\\/]+/).includes("..")) {
-    throw new Error(`refusing unsafe managed path: ${entry}`);
-  }
-  const root = resolve(target);
-  const resolved = resolve(root, entry);
-  if (resolved === root || !resolved.startsWith(`${root}${sep}`)) {
-    throw new Error(`refusing managed path outside target: ${entry}`);
-  }
-  return resolved;
-}
-
 function readManifest(target) {
   const manifestPath = join(target, ".framecore/manifest.json");
   if (!existsSync(manifestPath)) return null;
   return JSON.parse(readFileSync(manifestPath, "utf8"));
+}
+
+function buildManifest({ target, managedPaths, manifestRel }) {
+  const packageInfo = readJson(join(repoRoot, "package.json"));
+  const managedHashes = {};
+  for (const entry of managedPaths) {
+    if (entry === manifestRel) continue;
+    const path = resolveManagedPath(target, entry);
+    if (existsSync(path) && statSync(path).isFile()) {
+      managedHashes[entry] = sha256File(path);
+    }
+  }
+  return {
+    schema_version: 1,
+    kit: {
+      name: packageInfo.name,
+      version: packageInfo.version
+    },
+    managed_paths: managedPaths,
+    managed_hashes: managedHashes
+  };
 }
 
 function nextBackupPath(destination) {
@@ -105,9 +115,11 @@ function install({ mode }) {
   const force = process.argv.includes("--force");
   const planned = [];
   const managed = [];
+  const previousManifest = readManifest(target);
+  if (previousManifest) assertValidManifest(target, previousManifest);
 
   if (mode === "uninstall") {
-    const manifest = readManifest(target);
+    const manifest = previousManifest;
     if (!manifest) {
       console.log("no manifest found");
       return;
@@ -137,7 +149,6 @@ function install({ mode }) {
   }
   const skillsTarget = mode === "global" ? join(homedir(), ".agents/skills") : join(target, ".agents/skills");
   const installTarget = mode === "global" ? homedir() : target;
-  const previousManifest = readManifest(target);
   const previousManaged = new Set(previousManifest?.managed_paths ?? []);
   if ((repair || update) && !previousManifest) {
     throw new Error(`${mode} requires .framecore/manifest.json. Run project-local install first.`);
@@ -183,10 +194,7 @@ function install({ mode }) {
 
   if (!dryRun) {
     mkdirSync(join(target, ".framecore"), { recursive: true });
-    writeFileSync(manifestPath, `${JSON.stringify({
-      schema_version: 1,
-      managed_paths: manifestManaged
-    }, null, 2)}\n`);
+    writeFileSync(manifestPath, `${JSON.stringify(buildManifest({ target, managedPaths: manifestManaged, manifestRel }), null, 2)}\n`);
   }
 
   for (const item of planned) {

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added managed file hashes to new manifests and taught `doctor` to warn about missing or changed FrameCore-managed files.
 - Added a non-mutating `doctor` preflight command for checking install targets before dry-run, install, update, repair, or uninstall.
 - Added non-mutating `--help` output for the main installer, onboarding, agent rendering, validation, privacy audit, and AppleDouble cleanup scripts.
 - Added release readiness documentation, a non-publishing release-check workflow, install support issue intake, and validation coverage for release governance files.
