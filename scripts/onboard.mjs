@@ -15,6 +15,43 @@ async function ask(rl, prompt, fallback) {
   return answer.trim() || fallback;
 }
 
+function printIntro() {
+  console.log(`
+FrameCore Works Skill Kit setup
+
+This installer adds a structured creative workflow to your current Codex workspace.
+It is meant for work such as graphics, video, storyboards, campaign assets,
+e-commerce assets, prompt workflows, QA, and delivery preparation.
+
+What will be installed project-locally:
+- role-based Codex agents for planning, references, direction, prompts, QA, and delivery
+- skills and templates for briefs, reference packs, prompt packs, review gates, and manifests
+- Humanizer for natural rewriting and voice polish
+- HyperFrames workflow knowledge for coded video planning
+- validation and privacy audit scripts
+- a local framecore.config.json with your preferences
+
+How this improves your work:
+- Codex starts by confirming the task instead of rushing into output
+- larger jobs are split into clear stages and review gates
+- prompts, assets, QA notes, and delivery summaries follow repeatable templates
+- generated or produced assets can be reviewed before delivery
+- your workspace can keep a consistent operating style across projects
+
+Hipson in this setup:
+The included Hipson Adapter is a lightweight packet layer. It helps Codex prepare
+research maps, internet mapping packets, bounded agent instructions, review packets,
+and execution packets inside this workflow.
+
+Full Hipson is separate and optional:
+https://github.com/Hipson47/Hipson.git
+
+If you connect the full Hipson system later, it can add broader repo scanning,
+delta reviews, sidecar review agents, cross-repo orchestration, CLI commands,
+and a larger Hipson knowledge base. The adapter is enough to use this workflow now.
+`);
+}
+
 export async function runOnboarding({ target = process.cwd(), defaults = false } = {}) {
   const defaultsConfig = readJson(join(repoRoot, "config/defaults.example.json"));
   const configPath = join(target, "framecore.config.json");
@@ -23,6 +60,8 @@ export async function runOnboarding({ target = process.cwd(), defaults = false }
 
   if (!defaults) {
     const rl = readline.createInterface({ input, output });
+    printIntro();
+    await rl.question("Press Enter to continue setup. ");
     config.working_language = await ask(rl, "Working language", defaultsConfig.working_language);
     config.response_tone = await ask(rl, "Response tone", defaultsConfig.response_tone);
     config.output_dir = await ask(rl, "Output directory", defaultsConfig.output_dir);
@@ -32,10 +71,14 @@ export async function runOnboarding({ target = process.cwd(), defaults = false }
     const fullHipson = await ask(rl, "Connect full Hipson now? yes/no", "no");
     config.hipson.connect_full_repo = /^y/i.test(fullHipson);
 
-    console.log("\nAgent display names are local only. Press enter to keep role IDs.");
-    for (const role of roles) {
-      const value = await ask(rl, role, role);
-      if (value !== role) config.agent_display_names[role] = value;
+    console.log("\nAgents use neutral role IDs by default. You can keep them or rename them locally for your own workspace.");
+    const defaultRoleNames = await ask(rl, "Use default role names? yes/no", "yes");
+    if (!/^y/i.test(defaultRoleNames)) {
+      console.log("Enter local display names. Press Enter to keep a role ID.");
+      for (const role of roles) {
+        const value = await ask(rl, role, role);
+        if (value !== role) config.agent_display_names[role] = value;
+      }
     }
     rl.close();
   }

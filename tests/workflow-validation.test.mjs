@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { execFileSync, spawnSync } from "node:child_process";
+import { execFileSync, spawn, spawnSync } from "node:child_process";
 import { existsSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
@@ -18,6 +18,35 @@ function failRun(args, options = {}) {
 
 function hidden(value) {
   return Buffer.from(value, "base64").toString("utf8");
+}
+
+function runInteractiveOnboarding(dir) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(node, ["scripts/onboard.mjs", "--target", dir], {
+      cwd: root,
+      stdio: ["pipe", "pipe", "pipe"],
+    });
+    let stdout = "";
+    let stderr = "";
+    const answers = ["", "", "", "", "", "", "", "yes"];
+    let answerIndex = 0;
+
+    child.stdout.on("data", (chunk) => {
+      const text = chunk.toString();
+      stdout += text;
+      if ((text.includes(": ") || text.includes("setup. ")) && answerIndex < answers.length) {
+        child.stdin.write(`${answers[answerIndex]}\n`);
+        answerIndex += 1;
+      }
+    });
+    child.stderr.on("data", (chunk) => {
+      stderr += chunk.toString();
+    });
+    child.on("error", reject);
+    child.on("close", (status) => {
+      resolve({ status, stdout, stderr });
+    });
+  });
 }
 
 test("validation passes on the repo scaffold", () => {
@@ -63,6 +92,18 @@ test("onboarding renders project-local config and agent templates", () => {
   assert.equal(rendered.length, 20);
   const sample = readFileSync(join(dir, ".codex/agents/intent-confirmation.toml"), "utf8");
   assert.match(sample, /intent-confirmation/);
+});
+
+test("interactive onboarding explains the workflow and can keep default role names", async () => {
+  const dir = mkdtempSync(join(tmpdir(), "framecore-interactive-"));
+  const result = await runInteractiveOnboarding(dir);
+  assert.equal(result.status, 0);
+  assert.match(result.stdout, /This installer adds a structured creative workflow/);
+  assert.match(result.stdout, /How this improves your work/);
+  assert.match(result.stdout, /Hipson in this setup/);
+  assert.match(result.stdout, /Use default role names/);
+  const config = JSON.parse(readFileSync(join(dir, "framecore.config.json"), "utf8"));
+  assert.deepEqual(config.agent_display_names, {});
 });
 
 test("installer dry run reports writes without mutating target", () => {
