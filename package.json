@@ -5,6 +5,48 @@
   "type": "module",
   "description": "FrameCore Works: Creative Workflow Skill Kit for Codex.",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/issues"
+  },
+  "homepage": "https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit#readme",
+  "keywords": [
+    "codex",
+    "workflow",
+    "skills",
+    "agents",
+    "creative-workflow",
+    "storyboard",
+    "video",
+    "ecommerce",
+    "prompting"
+  ],
+  "packageManager": "npm@10.9.2",
+  "files": [
+    ".agents/",
+    ".codex/",
+    "AGENTS.template.md",
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "LICENSE",
+    "README.md",
+    "SECURITY.md",
+    "SUPPORT.md",
+    "config/",
+    "docs/",
+    "examples/",
+    "scripts/",
+    "tests/"
+  ],
+  "bin": {
+    "framecore-install": "./scripts/install.mjs",
+    "framecore-onboard": "./scripts/onboard.mjs",
+    "framecore-validate": "./scripts/validate.mjs"
+  },
   "scripts": {
     "audit:privacy": "node scripts/audit-privacy.mjs",
     "cleanup:appledouble": "node scripts/cleanup-appledouble.mjs",

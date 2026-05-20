@@ -1,5 +1,8 @@
 # FrameCore Works: Creative Workflow Skill Kit for Codex
 
+[![validate](https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/actions/workflows/validate.yml/badge.svg)](https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/actions/workflows/validate.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
+
 From the Codex workspace where you want to install the kit, give Codex this instruction:
 
 ```text
@@ -138,11 +141,21 @@ Onboarding can optionally create a report-only 24-hour review recipe. The defaul
 
 ## Development
 
+This is a GitHub-first repo. `package.json` provides local scripts, package metadata, and packaging checks; npm publication is optional and not required for project-local installation.
+
 ```bash
 npm run audit:privacy
 npm run validate
 npm test
 npm run check
+npm pack --dry-run
 ```
 
 `npm run check` is the expected CI path.
+
+See also:
+
+- [Contributing](CONTRIBUTING.md)
+- [Security](SECURITY.md)
+- [Support](SUPPORT.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security-sensitive report
+    url: https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/security
+    about: Use the Security tab for private vulnerability reporting when available. Do not disclose sensitive details in public issues.
