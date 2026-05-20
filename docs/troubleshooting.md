@@ -46,6 +46,22 @@ Upgrade Node, then rerun:
 npm run check
 ```
 
+## Doctor Reports A Preflight Failure
+
+Run doctor before dry-run when you are unsure whether a target workspace is ready:
+
+```bash
+npm run doctor -- --target /path/to/your/project
+```
+
+Doctor is read-only. It reports missing targets, old Node versions, missing npm, invalid config, missing manifests for update/repair/uninstall, unsafe manifest entries, and likely user-owned file conflicts. It does not install, repair, back up, remove, or render files.
+
+If doctor passes, still run install dry-run before any real install:
+
+```bash
+npm run install:dry-run -- --target /path/to/your/project
+```
+
 ## Dry Run Reports User-Owned File Conflicts
 
 The installer refuses to overwrite files that were not previously recorded in `.framecore/manifest.json`.

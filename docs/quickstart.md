@@ -16,6 +16,7 @@ For command help:
 ```bash
 node scripts/install.mjs --help
 node scripts/onboard.mjs --help
+node scripts/doctor.mjs --help
 ```
 
 ## Beginner-Friendly Manual Quickstart
@@ -38,13 +39,14 @@ node scripts/onboard.mjs --help
 
    You can also replace `$FRAMECORE_TARGET` in the commands below with the actual target path.
 
-4. Preview the install:
+4. Run preflight and preview the install:
 
    ```bash
+   npm run doctor -- --target "$FRAMECORE_TARGET"
    npm run install:dry-run -- --target "$FRAMECORE_TARGET"
    ```
 
-   Review the planned writes. The installer should report `would write` lines and should not create files during dry run.
+   The doctor command checks target readiness without writing files. Review the planned writes from dry run. The installer should report `would write` lines and should not create files during dry run.
 
 5. Run onboarding:
 
@@ -211,13 +213,16 @@ your-project/
 - Run update or repair only after reviewing the current manifest. `update` can add new FrameCore-managed paths from the current kit; `repair` rewrites only paths already listed in the manifest:
 
   ```bash
+  node scripts/doctor.mjs --mode update --target "$FRAMECORE_TARGET"
   node scripts/install.mjs --mode update --target "$FRAMECORE_TARGET"
+  node scripts/doctor.mjs --mode repair --target "$FRAMECORE_TARGET"
   node scripts/install.mjs --mode repair --target "$FRAMECORE_TARGET"
   ```
 
 - Preview uninstall before applying it:
 
   ```bash
+  node scripts/doctor.mjs --mode uninstall --target "$FRAMECORE_TARGET"
   node scripts/install.mjs --mode uninstall --target "$FRAMECORE_TARGET"
   node scripts/install.mjs --mode uninstall --target "$FRAMECORE_TARGET" --yes
   ```

@@ -43,6 +43,7 @@
     "tests/"
   ],
   "bin": {
+    "framecore-doctor": "./scripts/doctor.mjs",
     "framecore-install": "./scripts/install.mjs",
     "framecore-onboard": "./scripts/onboard.mjs",
     "framecore-validate": "./scripts/validate.mjs"
@@ -50,6 +51,7 @@
   "scripts": {
     "audit:privacy": "node scripts/audit-privacy.mjs",
     "cleanup:appledouble": "node scripts/cleanup-appledouble.mjs",
+    "doctor": "node scripts/doctor.mjs",
     "install:dry-run": "node scripts/install.mjs --mode dry-run",
     "onboard:defaults": "node scripts/onboard.mjs --defaults",
     "render:agents": "node scripts/render-agents.mjs",

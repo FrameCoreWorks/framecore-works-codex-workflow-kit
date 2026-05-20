@@ -70,13 +70,14 @@ Public docs and source assets are English. Installed workspaces can still use lo
    npm run check
    ```
 
-3. Run a dry run:
+3. Run preflight and dry run:
 
    ```bash
+   npm run doctor -- --target /path/to/your/project
    npm run install:dry-run -- --target /path/to/your/project
    ```
 
-4. Review the planned writes. The installer refuses to overwrite user-owned files by default.
+4. Review the preflight result and planned writes. The installer refuses to overwrite user-owned files by default.
 
 5. Run onboarding:
 
@@ -182,6 +183,7 @@ npm test
 npm run check
 npm run release:check
 npm pack --dry-run
+node scripts/doctor.mjs --help
 node scripts/install.mjs --help
 ```
 

@@ -296,7 +296,8 @@ const requiredRepoFiles = [
   "CONTRIBUTING.md",
   "SECURITY.md",
   "SUPPORT.md",
-  "CODE_OF_CONDUCT.md"
+  "CODE_OF_CONDUCT.md",
+  "scripts/doctor.mjs"
 ];
 for (const file of requiredRepoFiles) {
   if (!existsSync(join(validationRoot, file))) addFinding("MISSING_REPO_FILE", `Required public repo file is missing: ${file}`, [join(validationRoot, file)]);
