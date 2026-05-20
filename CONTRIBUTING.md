@@ -39,4 +39,14 @@ Pull requests should explain:
 - how it was verified
 - whether install, update, repair, uninstall, onboarding, or generated agent files are affected
 
+## Docs Update Rule
+
+If a pull request changes a skill contract, role, gate, handoff, artifact template, install behavior, or validation rule, update the matching docs or examples in the same pull request. At minimum, check whether these files need edits:
+
+- `docs/workflow-stages.md`
+- `docs/architecture.md`
+- `docs/onboarding.md`
+- `examples/README.md`
+- the closest workflow example under `examples/`
+
 Do not include generated outputs, local configs, private project context, credentials, user-specific agent names, or local machine paths.

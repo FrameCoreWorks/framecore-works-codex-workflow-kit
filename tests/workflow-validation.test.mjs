@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync, spawn, spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import test from "node:test";
@@ -14,6 +14,18 @@ function run(args, options = {}) {
 
 function failRun(args, options = {}) {
   return spawnSync(node, args, { cwd: root, encoding: "utf8", ...options });
+}
+
+function copyRepoFixture(prefix) {
+  const dir = join(mkdtempSync(join(tmpdir(), prefix)), "repo");
+  cpSync(root, dir, {
+    recursive: true,
+    filter(source) {
+      const normalized = source.replaceAll("\\", "/");
+      return !normalized.includes("/.git/") && !normalized.endsWith("/.git") && !normalized.includes("/node_modules/");
+    }
+  });
+  return dir;
 }
 
 function hidden(value) {
@@ -51,6 +63,47 @@ function runInteractiveOnboarding(dir) {
 
 test("validation passes on the repo scaffold", () => {
   assert.match(run(["scripts/validate.mjs"]), /workflow validation passed/);
+});
+
+test("validation rejects stub skills", () => {
+  const dir = copyRepoFixture("framecore-validate-stub-");
+  writeFileSync(join(dir, ".agents/skills/brief-architect/SKILL.md"), [
+    "---",
+    "name: brief-architect",
+    "description: Use this skill to create a brief.",
+    "---",
+    "",
+    "# Brief Architect",
+    "",
+    "Create a brief."
+  ].join("\n"));
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /SKILL_STUB/);
+  assert.match(`${result.stderr}${result.stdout}`, /MISSING_SKILL_SECTION/);
+});
+
+test("validation rejects missing skill contract sections", () => {
+  const dir = copyRepoFixture("framecore-validate-section-");
+  const file = join(dir, ".agents/skills/humanizer/SKILL.md");
+  const text = readFileSync(file, "utf8");
+  writeFileSync(file, text.replace("\n## Guardrails\n", "\n## Safety Notes\n"));
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /MISSING_SKILL_SECTION/);
+});
+
+test("validation rejects skill frontmatter names that drift from folder names", () => {
+  const dir = copyRepoFixture("framecore-validate-name-");
+  const file = join(dir, ".agents/skills/humanizer/SKILL.md");
+  const text = readFileSync(file, "utf8");
+  writeFileSync(file, text.replace("name: humanizer", "name: copy-polisher"));
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /SKILL_NAME_MISMATCH/);
 });
 
 test("privacy audit passes on the repo scaffold", () => {

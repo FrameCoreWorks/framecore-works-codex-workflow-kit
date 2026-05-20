@@ -7,6 +7,8 @@
 - Improved onboarding explanation and default role-name flow.
 - Added public repository health files, issue templates, pull request template, package metadata, and stronger CI checks.
 - Added deeper quickstart, troubleshooting, architecture, workflow stages, structured examples, and an end-to-end creative workflow specimen.
+- Expanded all core `SKILL.md` files into operational contracts with inputs, outputs, process, decision rules, guardrails, handoffs, and QA checklists.
+- Added validation and tests that reject stub skills, missing skill contract sections, and frontmatter name drift.
 
 ## 0.1.0 - 2026-05-20
 

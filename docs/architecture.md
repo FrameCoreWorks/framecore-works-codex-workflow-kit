@@ -25,6 +25,20 @@ flowchart TD
 - Expansion layer: lightweight Hipson Adapter for research maps, internet mapping packets, bounded instruction packets, review packets, and execution packets.
 - Governance layer: explicit workflow self-improvement logs and change proposals. It is report-only unless the user asks for a specific change.
 
+## Skill Contract Model
+
+Each `SKILL.md` is an operational contract. It tells Codex:
+
+- when the skill should trigger;
+- what inputs are required or optional;
+- what artifact or decision it must produce;
+- what process and decision rules apply;
+- what guardrails must not be crossed;
+- which review gate applies;
+- what handoff fields the next role needs.
+
+The contract keeps runtime behavior predictable without turning each skill into a long manual. Detailed examples and domain references belong in `references/`, `templates/`, or `examples/` when they are too large for the skill body.
+
 ## Installation Model
 
 Project-local install copies only FrameCore-managed files into the target workspace:

@@ -1,12 +1,13 @@
 #!/usr/bin/env node
-import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { dirname, join, relative, resolve } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { basename, dirname, join, relative, resolve } from "node:path";
 import { repoRoot, reportFindings, walkFiles } from "./common.mjs";
 
+const validationRoot = resolve(process.argv[2] ?? repoRoot);
 const findings = [];
 
 function addFinding(code, message, files) {
-  findings.push({ code, message, files: files.map((file) => relative(repoRoot, file)) });
+  findings.push({ code, message, files: files.map((file) => relative(validationRoot, file)) });
 }
 
 function read(file) {
@@ -53,8 +54,8 @@ function validateMarkdownLinks(files) {
   }
 }
 
-const requiredRoles = JSON.parse(readFileSync(join(repoRoot, "config/agent-naming.schema.json"), "utf8")).roles;
-const agentDir = join(repoRoot, ".codex/agents");
+const requiredRoles = JSON.parse(readFileSync(join(validationRoot, "config/agent-naming.schema.json"), "utf8")).roles;
+const agentDir = join(validationRoot, ".codex/agents");
 const missingAgents = requiredRoles
   .map((role) => join(agentDir, `${role}.toml.template`))
   .filter((path) => !existsSync(path));
@@ -73,20 +74,46 @@ for (const role of requiredRoles) {
   }
 }
 
-const skillFiles = walkFiles(join(repoRoot, ".agents/skills")).filter((file) => file.endsWith("SKILL.md"));
+const skillFiles = walkFiles(join(validationRoot, ".agents/skills")).filter((file) => file.endsWith("SKILL.md"));
 if (skillFiles.length < 25) {
-  addFinding("MISSING_SKILLS", "Expected full skill pack is incomplete.", [join(repoRoot, ".agents/skills")]);
+  addFinding("MISSING_SKILLS", "Expected full skill pack is incomplete.", [join(validationRoot, ".agents/skills")]);
 }
+const requiredSkillSections = [
+  "## When To Use",
+  "## Inputs",
+  "## Outputs",
+  "## Process",
+  "## Decision Rules",
+  "## Guardrails",
+  "## Handoff",
+  "## QA Checklist"
+];
 for (const file of skillFiles) {
   const text = read(file);
-  if (!/^---\nname:\s*[-a-z0-9]+/m.test(text) || !/\ndescription:\s*/m.test(text)) {
+  const nameMatch = text.match(/^---\nname:\s*([-a-z0-9]+)/m);
+  if (!nameMatch || !/\ndescription:\s*/m.test(text)) {
     addFinding("INVALID_SKILL_FRONTMATTER", "Skill frontmatter must include name and description.", [file]);
+    continue;
+  }
+  const expectedName = basename(dirname(file));
+  if (nameMatch[1] !== expectedName) {
+    addFinding("SKILL_NAME_MISMATCH", `Skill frontmatter name must match folder name: ${expectedName}`, [file]);
+  }
+  const body = text.replace(/^---[\s\S]*?---\n/, "");
+  const bodyWordCount = (body.match(/\b[\w'-]+\b/g) ?? []).length;
+  if (bodyWordCount < 120 || (body.match(/^##\s+/gm) ?? []).length < 6) {
+    addFinding("SKILL_STUB", "Skill body is too thin to function as an operational contract.", [file]);
+  }
+  for (const section of requiredSkillSections) {
+    if (!text.includes(section)) {
+      addFinding("MISSING_SKILL_SECTION", `Skill is missing required section: ${section}`, [file]);
+    }
   }
 }
 
-const gateRegistry = join(repoRoot, ".agents/skills/pipeline-core/references/gate-registry.md");
-const handoffMatrix = join(repoRoot, ".agents/skills/pipeline-core/references/handoff-matrix.md");
-const artifactTemplates = join(repoRoot, ".agents/skills/pipeline-core/templates/artifact-templates.md");
+const gateRegistry = join(validationRoot, ".agents/skills/pipeline-core/references/gate-registry.md");
+const handoffMatrix = join(validationRoot, ".agents/skills/pipeline-core/references/handoff-matrix.md");
+const artifactTemplates = join(validationRoot, ".agents/skills/pipeline-core/templates/artifact-templates.md");
 for (const file of [gateRegistry, handoffMatrix, artifactTemplates]) {
   if (!existsSync(file)) addFinding("MISSING_PIPELINE_FILE", "Required pipeline core file is missing.", [file]);
 }
@@ -125,13 +152,15 @@ const requiredDocs = [
   "docs/recurring-workflow-review.md",
   "docs/workflow-self-improvement.md",
   "docs/migration-guide.md",
-  "docs/agent-roster.md"
+  "docs/agent-roster.md",
+  "examples/README.md"
 ];
 for (const doc of requiredDocs) {
-  if (!existsSync(join(repoRoot, doc))) addFinding("MISSING_DOC", `Required documentation file is missing: ${doc}`, [join(repoRoot, doc)]);
+  if (!existsSync(join(validationRoot, doc))) addFinding("MISSING_DOC", `Required documentation file is missing: ${doc}`, [join(validationRoot, doc)]);
 }
 
-const exampleReadmes = walkFiles(join(repoRoot, "examples")).filter((file) => file.endsWith("README.md"));
+const exampleReadmes = walkFiles(join(validationRoot, "examples"))
+  .filter((file) => file.endsWith("README.md") && relative(validationRoot, file).replaceAll("\\", "/") !== "examples/README.md");
 const requiredExampleSections = [
   "## Purpose",
   "## Starting User Request",
@@ -163,21 +192,21 @@ const endToEndFiles = [
   "examples/end-to-end-creative-workflow/artifacts/delivery-manifest.md"
 ];
 for (const file of endToEndFiles) {
-  if (!existsSync(join(repoRoot, file))) addFinding("MISSING_END_TO_END_EXAMPLE", `End-to-end example file is missing: ${file}`, [join(repoRoot, file)]);
+  if (!existsSync(join(validationRoot, file))) addFinding("MISSING_END_TO_END_EXAMPLE", `End-to-end example file is missing: ${file}`, [join(validationRoot, file)]);
 }
 
-const readme = read(join(repoRoot, "README.md"));
-for (const target of [...requiredDocs, ...exampleReadmes.map((file) => relative(repoRoot, file).replaceAll("\\", "/"))]) {
+const readme = read(join(validationRoot, "README.md"));
+for (const target of [...requiredDocs, ...exampleReadmes.map((file) => relative(validationRoot, file).replaceAll("\\", "/"))]) {
   if (!readme.includes(`](${target})`)) {
-    addFinding("README_MISSING_DOC_LINK", `README must link to ${target}`, [join(repoRoot, "README.md")]);
+    addFinding("README_MISSING_DOC_LINK", `README must link to ${target}`, [join(validationRoot, "README.md")]);
   }
 }
 
-validateMarkdownLinks(walkFiles(repoRoot).filter((file) => file.endsWith(".md")));
+validateMarkdownLinks(walkFiles(validationRoot).filter((file) => file.endsWith(".md")));
 
-const textPolicy = read(join(repoRoot, "config/text-image-policy.json"));
+const textPolicy = read(join(validationRoot, "config/text-image-policy.json"));
 if (!textPolicy.includes("gpt-image-2") || !textPolicy.includes("native Codex/ChatGPT image generator") || !textPolicy.includes("one-pass generation")) {
-  addFinding("WEAK_TEXT_IMAGE_POLICY", "Text-image policy is missing required native generator, model reference, or one-pass rule.", [join(repoRoot, "config/text-image-policy.json")]);
+  addFinding("WEAK_TEXT_IMAGE_POLICY", "Text-image policy is missing required native generator, model reference, or one-pass rule.", [join(validationRoot, "config/text-image-policy.json")]);
 }
 
 process.exit(reportFindings(findings, "workflow validation passed"));

@@ -21,11 +21,18 @@ FrameCore Works Skill Kit is a provider-neutral workflow system for Codex. It in
 
 Provider-neutral means this kit does not ship external paid media-provider clients, endpoint catalogs, provider CLIs, API-key workflows, or paid execution routes. The text-bearing image rule may still route to the native Codex/ChatGPT image generator when that built-in capability is available.
 
+## Mental Model
+
+Skills are workflow contracts, not personality presets. A skill defines when a workflow role should act, what input it needs, what artifact it must produce, which QA gate applies, and where the handoff goes next.
+
+Onboarding does not rewrite that workflow logic. It tunes the local workspace: language, tone, output paths, QA strictness, and local display names for neutral role IDs.
+
 ## Start Here
 
 - New to the kit: read [Quickstart](docs/quickstart.md).
 - Installation failed or produced an unexpected result: read [Troubleshooting](docs/troubleshooting.md).
 - Want the mental model first: read [Architecture](docs/architecture.md).
+- Want to compare workflow paths: open [Examples Index](examples/README.md).
 - Want to see a complete workflow specimen: open [End-To-End Creative Workflow Example](examples/end-to-end-creative-workflow/README.md).
 - Already installing: use the short install flow below.
 
@@ -184,6 +191,7 @@ See also:
 - [Workflow Self-Improvement](docs/workflow-self-improvement.md)
 - [Migration Guide](docs/migration-guide.md)
 - [Agent Roster](docs/agent-roster.md)
+- [Examples Index](examples/README.md)
 - [End-To-End Creative Workflow Example](examples/end-to-end-creative-workflow/README.md)
 - [Minimal Workflow Example](examples/minimal-workflow/README.md)
 - [Static Campaign Example](examples/static-campaign/README.md)
