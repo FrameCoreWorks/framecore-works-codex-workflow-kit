@@ -1,0 +1,29 @@
+# Delivery Manifest
+
+- final_files:
+  - examples/end-to-end-creative-workflow/artifacts/task-confirmation.md
+  - examples/end-to-end-creative-workflow/artifacts/brief-contract.md
+  - examples/end-to-end-creative-workflow/artifacts/reference-pack.md
+  - examples/end-to-end-creative-workflow/artifacts/direction-contract.md
+  - examples/end-to-end-creative-workflow/artifacts/prompt-pack.md
+  - examples/end-to-end-creative-workflow/artifacts/qa-iteration-report.md
+- QA_status: Planning artifacts reviewed. No generated assets were created or approved.
+- excluded_files:
+  - generated images
+  - generated videos
+  - local configs
+  - external provider outputs
+  - private references
+- source_list:
+  - fictional user request
+  - FrameCore Works artifact templates
+  - provider-neutral workflow policy
+  - text-bearing image policy
+- usage_notes:
+  - Use these artifacts as a neutral example of workflow structure.
+  - Replace product details, dimensions, channel formats, and locked copy before production work.
+  - Do not treat this example as a generated media delivery.
+- known_caveats:
+  - The example does not include real product measurements.
+  - The example does not include final marketplace specs.
+  - The example intentionally avoids visible text.

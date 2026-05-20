@@ -1,0 +1,23 @@
+# Direction Contract
+
+- thesis: Present the lamp as a compact, calm, useful object for focused work in small spaces.
+- system:
+  - visual mood: clean, precise, warm, practical
+  - composition: product-forward, readable silhouette, clear scale cues
+  - lighting: soft desk glow plus gentle ambient fill
+  - palette: neutral surfaces with one muted accent object
+  - camera: eye-level or slight three-quarter angle for product legibility
+- constraints:
+  - keep the lamp fully visible
+  - avoid dramatic cinematic darkness
+  - avoid fake UI labels or unsupported feature badges
+  - leave safe negative space for future layout use
+- asset_matrix:
+  - hero image: isolated desk surface, product dominant, no visible text
+  - lifestyle one: compact apartment desk, lamp in active use
+  - lifestyle two: study setup, notebook and laptop context
+  - reveal storyboard: three beats showing footprint, adjustability, light cone
+- handoff_needs:
+  - exact aspect ratios
+  - final channel requirements
+  - locked visible copy if any text-bearing raster output is requested

@@ -1,0 +1,28 @@
+# Reference Pack
+
+- canonical_references:
+  - compact adjustable task lamp, role: product form reference
+  - clean small desk workspace, role: environment reference
+  - matte neutral plastic and brushed metal finishes, role: material reference
+  - soft directional desk lighting, role: lighting reference
+- aliases:
+  - product: compact modular desk lamp
+  - audience workspace: small desk setup
+  - hero setup: clean ecommerce hero surface
+- continuity_anchors:
+  - small footprint
+  - adjustable lamp head
+  - visible modular joint
+  - soft warm-white light cone
+  - neutral desk environment
+- suppression_rules:
+  - no visible brand marks
+  - no unrealistic floating parts
+  - no cluttered cable mess
+  - no exaggerated glow that hides the product
+  - no unsupported feature labels
+- conflicts:
+  - product should feel compact but not toy-like
+  - lifestyle scenes should feel lived-in but not messy
+- source_notes:
+  - Example uses typed reference descriptions only. No private images or external URLs are required.

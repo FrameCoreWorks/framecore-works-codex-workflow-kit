@@ -1,0 +1,23 @@
+# QA / Iteration Report
+
+- accepted_assets:
+  - hero prompt draft
+  - lifestyle prompt draft
+  - product reveal storyboard prompt draft
+- excluded_assets:
+  - no generated media included
+  - no external provider output included
+- defects:
+  - exact aspect ratios are still unknown
+  - exact product dimensions are still unknown
+  - visible copy is intentionally absent
+- corrected_instruction_packets:
+  - If visible text becomes required, lock exact copy before any raster graphic generation.
+  - If channel formats are supplied, update prompts with aspect ratio and safe-margin requirements.
+- rerun_guidance:
+  - Return to `brief-architect` for missing product specs.
+  - Return to `copy-voice` if marketing copy becomes visible in the asset.
+  - Return to `image-prompting` after dimensions and channel formats are known.
+- allowlist:
+  - planning artifacts are approved for review
+  - no generated asset is approved because no generation occurred

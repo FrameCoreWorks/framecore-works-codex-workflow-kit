@@ -1,0 +1,30 @@
+# Brief Contract
+
+- objective: Prepare a reusable ecommerce visual direction and prompt pack for a compact modular desk lamp.
+- audience: Remote workers, students, small-space apartment users, and shoppers comparing compact desk lighting.
+- deliverables:
+  - hero image prompt
+  - lifestyle variant prompt for a small apartment desk
+  - lifestyle variant prompt for a student study setup
+  - short product reveal storyboard idea
+  - QA checklist and delivery notes
+- constraints:
+  - provider-neutral planning only
+  - no brand names
+  - no false technical claims
+  - no generation until explicitly requested
+  - visible text only when exact copy is locked
+- exclusions:
+  - no external provider setup
+  - no price claims
+  - no medical or productivity guarantees
+  - no private references
+- unknowns:
+  - exact lamp dimensions
+  - final aspect ratios
+  - final visible copy
+  - required marketplace or channel format
+- acceptance_criteria:
+  - prompts are usable without private context
+  - each prompt includes composition, lighting, material, environment, constraints, and QA notes
+  - visible text handling follows the native GPT Image 2 one-pass policy

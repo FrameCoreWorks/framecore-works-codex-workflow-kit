@@ -21,6 +21,14 @@ FrameCore Works Skill Kit is a provider-neutral workflow system for Codex. It in
 
 Provider-neutral means this kit does not ship external paid media-provider clients, endpoint catalogs, provider CLIs, API-key workflows, or paid execution routes. The text-bearing image rule may still route to the native Codex/ChatGPT image generator when that built-in capability is available.
 
+## Start Here
+
+- New to the kit: read [Quickstart](docs/quickstart.md).
+- Installation failed or produced an unexpected result: read [Troubleshooting](docs/troubleshooting.md).
+- Want the mental model first: read [Architecture](docs/architecture.md).
+- Want to see a complete workflow specimen: open [End-To-End Creative Workflow Example](examples/end-to-end-creative-workflow/README.md).
+- Already installing: use the short install flow below.
+
 ## What It Installs
 
 - Role-based Codex agent templates with local display-name customization.
@@ -43,24 +51,32 @@ The repo also includes validation and privacy audit scripts for checking this ki
 
 This kit contains reusable workflow assets: role-based agents, skills, templates, onboarding, validation, and project-local configuration.
 
+Public docs and source assets are English. Installed workspaces can still use local language and tone preferences through onboarding.
+
 ## Install Flow
 
 1. Clone or download this repo.
-2. Run a dry run:
+2. Check the repository:
+
+   ```bash
+   npm run check
+   ```
+
+3. Run a dry run:
 
    ```bash
    npm run install:dry-run -- --target /path/to/your/project
    ```
 
-3. Review the planned writes. The installer refuses to overwrite user-owned files by default.
+4. Review the planned writes. The installer refuses to overwrite user-owned files by default.
 
-4. Run onboarding:
+5. Run onboarding:
 
    ```bash
    node scripts/onboard.mjs --target /path/to/your/project
    ```
 
-5. Install project-local:
+6. Install project-local:
 
    ```bash
    node scripts/install.mjs --mode project-local --target /path/to/your/project
@@ -155,6 +171,27 @@ npm pack --dry-run
 
 See also:
 
+- [Quickstart](docs/quickstart.md)
+- [Troubleshooting](docs/troubleshooting.md)
+- [Architecture](docs/architecture.md)
+- [Workflow Stages](docs/workflow-stages.md)
+- [Onboarding](docs/onboarding.md)
+- [Customization](docs/customization.md)
+- [Text-Bearing Image Policy](docs/text-image-policy.md)
+- [Hipson Integration](docs/hipson-integration.md)
+- [HyperFrames](docs/hyperframes.md)
+- [Recurring Workflow Review](docs/recurring-workflow-review.md)
+- [Workflow Self-Improvement](docs/workflow-self-improvement.md)
+- [Migration Guide](docs/migration-guide.md)
+- [Agent Roster](docs/agent-roster.md)
+- [End-To-End Creative Workflow Example](examples/end-to-end-creative-workflow/README.md)
+- [Minimal Workflow Example](examples/minimal-workflow/README.md)
+- [Static Campaign Example](examples/static-campaign/README.md)
+- [Video Storyboard Example](examples/video-storyboard/README.md)
+- [HyperFrames Video Example](examples/hyperframes-video/README.md)
+- [Image Prompt Pack Example](examples/image-prompt-pack/README.md)
+- [Document Workflow Example](examples/document-workflow/README.md)
+- [No External Execution Mode Example](examples/no-provider-mode/README.md)
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)
 - [Support](SUPPORT.md)
