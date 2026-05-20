@@ -2,6 +2,7 @@
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { repoRoot, readJson } from "./common.mjs";
+import { assertValidFrameCoreConfig } from "./config-validation.mjs";
 
 function toManifestPath(target, destination) {
   return relative(target, destination).replaceAll(sep, "/");
@@ -38,10 +39,11 @@ function writeRenderedFile({ target, destination, content, dryRun, previousManag
   }
 }
 
-export function renderAgents({ target, configPath, dryRun = false, previousManaged = new Set(), force = false }) {
+export function renderAgents({ target, configPath, dryRun = false, previousManaged = new Set(), force = false, includeManagedPath = () => true }) {
   const sourceDir = join(repoRoot, ".codex/agents");
   const targetDir = join(target, ".codex/agents");
   const config = existsSync(configPath) ? readJson(configPath) : {};
+  if (existsSync(configPath)) assertValidFrameCoreConfig(config);
   const names = config.agent_display_names ?? {};
   const language = safeTemplateValue(config.working_language ?? "en");
   const tone = safeTemplateValue(config.response_tone ?? "calm, direct, practical");
@@ -59,6 +61,8 @@ export function renderAgents({ target, configPath, dryRun = false, previousManag
       .replaceAll("{{response_tone}}", tone)
       .replaceAll("{{output_dir}}", outputDir);
     const destination = join(targetDir, `${roleId}.toml`);
+    const managedPath = toManifestPath(target, destination);
+    if (!includeManagedPath(managedPath)) continue;
     planned.push(destination);
     writeRenderedFile({ target, destination, content: rendered, dryRun, previousManaged, force });
   }

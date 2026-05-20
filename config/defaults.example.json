@@ -1,7 +1,6 @@
 {
   "schema_version": 1,
   "product": "FrameCore Works: Creative Workflow Skill Kit for Codex",
-  "install_scope": "project-local",
   "working_language": "en",
   "response_tone": "calm, direct, practical",
   "output_dir": "output/framecore",

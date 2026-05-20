@@ -4,6 +4,7 @@ import { dirname, join } from "node:path";
 import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { repoRoot, readJson } from "./common.mjs";
+import { assertValidFrameCoreConfig } from "./config-validation.mjs";
 
 function argValue(name, fallback) {
   const index = process.argv.indexOf(name);
@@ -13,6 +14,14 @@ function argValue(name, fallback) {
 async function ask(rl, prompt, fallback) {
   const answer = await rl.question(`${prompt} (${fallback}): `);
   return answer.trim() || fallback;
+}
+
+async function askChoice(rl, prompt, fallback, choices) {
+  while (true) {
+    const value = await ask(rl, prompt, fallback);
+    if (choices.includes(value)) return value;
+    console.log(`Choose one of: ${choices.join(", ")}`);
+  }
 }
 
 function printIntro() {
@@ -65,7 +74,7 @@ export async function runOnboarding({ target = process.cwd(), defaults = false }
     config.working_language = await ask(rl, "Working language", defaultsConfig.working_language);
     config.response_tone = await ask(rl, "Response tone", defaultsConfig.response_tone);
     config.output_dir = await ask(rl, "Output directory", defaultsConfig.output_dir);
-    config.qa_strictness = await ask(rl, "QA strictness: light, standard, or strict", defaultsConfig.qa_strictness);
+    config.qa_strictness = await askChoice(rl, "QA strictness", defaultsConfig.qa_strictness, ["light", "standard", "strict"]);
     const recurring = await ask(rl, "Enable 24-hour workflow self-improvement review? yes/no", "no");
     config.workflow_self_improvement.recurring_review_enabled = /^y/i.test(recurring);
     const fullHipson = await ask(rl, "Connect full Hipson now? yes/no", "no");
@@ -82,6 +91,8 @@ export async function runOnboarding({ target = process.cwd(), defaults = false }
     }
     rl.close();
   }
+
+  assertValidFrameCoreConfig(config);
 
   if (existsSync(configPath)) {
     const backup = `${configPath}.bak`;

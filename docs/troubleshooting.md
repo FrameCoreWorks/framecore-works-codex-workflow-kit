@@ -105,6 +105,23 @@ To change local names:
 2. Enter custom display names when prompted.
 3. Rerun project-local install or repair.
 
+## Config Validation Fails
+
+`framecore.config.json` is validated before rendering or installation. The installer stops before writing managed files when the config is invalid.
+
+Common causes:
+
+- `qa_strictness` is not `light`, `standard`, or `strict`.
+- `output_dir` is absolute, points outside the workspace, uses `~`, or is a URL.
+- `agent_display_names` contains a role ID that is not in the public role schema.
+- nested `delivery`, `hipson`, or `workflow_self_improvement` settings have the wrong shape.
+
+Rerun onboarding to regenerate a valid config:
+
+```bash
+node scripts/onboard.mjs --target /path/to/your/project
+```
+
 ## Codex Does Not Seem To Use The Installed Workflow
 
 Check these items:
@@ -126,6 +143,8 @@ Read AGENTS.md and AGENTS.framecore.md before continuing.
 When repair rewrites an existing managed file, it creates a `.bak` file first. This preserves the previous content for review.
 
 If the backup is no longer needed, remove it intentionally after comparing it with the current managed file.
+
+`repair` requires `.framecore/manifest.json` and does not add new paths. Use `update` when you intentionally want the target workspace to receive new FrameCore-managed files from the current kit.
 
 ## Uninstall Did Not Remove Everything
 

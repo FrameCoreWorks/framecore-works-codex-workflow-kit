@@ -10,6 +10,5 @@
     "hipson",
     "workflow_self_improvement"
   ],
-  "qa_strictness_values": ["light", "standard", "strict"],
-  "install_scope_values": ["project-local", "global"]
+  "qa_strictness_values": ["light", "standard", "strict"]
 }

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { execFileSync, spawn, spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import test from "node:test";
@@ -212,10 +212,42 @@ test("onboarding renders project-local config and agent templates", () => {
   run(["scripts/onboard.mjs", "--defaults", "--target", dir]);
   run(["scripts/render-agents.mjs", "--target", dir]);
   assert.ok(existsSync(join(dir, "framecore.config.json")));
+  const config = JSON.parse(readFileSync(join(dir, "framecore.config.json"), "utf8"));
+  assert.equal("install_scope" in config, false);
   const rendered = readdirSync(join(dir, ".codex/agents")).filter((file) => file.endsWith(".toml"));
   assert.equal(rendered.length, 20);
   const sample = readFileSync(join(dir, ".codex/agents/intent-confirmation.toml"), "utf8");
   assert.match(sample, /intent-confirmation/);
+});
+
+test("config validation rejects invalid local config before rendering", () => {
+  const dir = mkdtempSync(join(tmpdir(), "framecore-bad-config-"));
+  const config = JSON.parse(readFileSync(join(root, "config/defaults.example.json"), "utf8"));
+  config.qa_strictness = "maximum";
+  config.agent_display_names = { "unknown-role": "Unknown" };
+  config.output_dir = "../outside";
+  writeFileSync(join(dir, "framecore.config.json"), JSON.stringify(config, null, 2));
+
+  const result = failRun(["scripts/render-agents.mjs", "--target", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /invalid framecore\.config\.json/);
+  assert.match(`${result.stderr}${result.stdout}`, /qa_strictness/);
+  assert.match(`${result.stderr}${result.stdout}`, /unknown-role/);
+  assert.match(`${result.stderr}${result.stdout}`, /output_dir/);
+});
+
+test("install rejects invalid local config before writing managed files", () => {
+  const dir = mkdtempSync(join(tmpdir(), "framecore-bad-install-config-"));
+  const config = JSON.parse(readFileSync(join(root, "config/defaults.example.json"), "utf8"));
+  config.output_dir = "/tmp/not-portable";
+  writeFileSync(join(dir, "framecore.config.json"), JSON.stringify(config, null, 2));
+
+  const result = failRun(["scripts/install.mjs", "--mode", "project-local", "--target", dir, "--force"]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /invalid framecore\.config\.json/);
+  assert.equal(existsSync(join(dir, ".agents/skills/pipeline-core/SKILL.md")), false);
+  assert.equal(existsSync(join(dir, ".codex/agents/intent-confirmation.toml")), false);
+  assert.equal(existsSync(join(dir, ".framecore/manifest.json")), false);
 });
 
 test("interactive onboarding explains the workflow and can keep default role names", async () => {
@@ -300,16 +332,46 @@ test("repair install backs up user-owned files", () => {
   assert.match(readFileSync(join(dir, "AGENTS.md.bak"), "utf8"), /local user content/);
 });
 
+test("update and repair require a manifest", () => {
+  const dir = mkdtempSync(join(tmpdir(), "framecore-mode-no-manifest-"));
+  run(["scripts/onboard.mjs", "--defaults", "--target", dir]);
+
+  for (const mode of ["update", "repair"]) {
+    const result = failRun(["scripts/install.mjs", "--mode", mode, "--target", dir]);
+    assert.notEqual(result.status, 0);
+    assert.match(`${result.stderr}${result.stdout}`, /requires \.framecore\/manifest\.json/);
+  }
+});
+
+test("repair only rewrites manifest-recorded paths while update expands managed set", () => {
+  const dir = mkdtempSync(join(tmpdir(), "framecore-repair-update-"));
+  run(["scripts/onboard.mjs", "--defaults", "--target", dir]);
+  run(["scripts/install.mjs", "--mode", "project-local", "--target", dir]);
+
+  const manifestPath = join(dir, ".framecore/manifest.json");
+  const manifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+  manifest.managed_paths = manifest.managed_paths.filter((item) => !item.startsWith(".agents/skills/humanizer/"));
+  writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
+  rmSync(join(dir, ".agents/skills/humanizer"), { recursive: true, force: true });
+
+  run(["scripts/install.mjs", "--mode", "repair", "--target", dir]);
+  assert.equal(existsSync(join(dir, ".agents/skills/humanizer/SKILL.md")), false);
+
+  run(["scripts/install.mjs", "--mode", "update", "--target", dir]);
+  assert.equal(existsSync(join(dir, ".agents/skills/humanizer/SKILL.md")), true);
+  const updatedManifest = JSON.parse(readFileSync(manifestPath, "utf8"));
+  assert.equal(updatedManifest.managed_paths.includes(".agents/skills/humanizer/SKILL.md"), true);
+});
+
 test("agent rendering escapes local display names and config values", () => {
   const dir = mkdtempSync(join(tmpdir(), "framecore-render-"));
-  writeFileSync(join(dir, "framecore.config.json"), JSON.stringify({
-    agent_display_names: {
-      "intent-confirmation": "Agent \"Quoted\"\nname = \"evil\""
-    },
-    working_language: "en",
-    response_tone: "calm \"quoted\" tone",
-    output_dir: "output/\"quoted\""
-  }));
+  const config = JSON.parse(readFileSync(join(root, "config/defaults.example.json"), "utf8"));
+  config.agent_display_names = {
+    "intent-confirmation": "Agent \"Quoted\"\nname = \"evil\""
+  };
+  config.response_tone = "calm \"quoted\" tone";
+  config.output_dir = "output/\"quoted\"";
+  writeFileSync(join(dir, "framecore.config.json"), JSON.stringify(config));
 
   run(["scripts/render-agents.mjs", "--target", dir]);
   const rendered = readFileSync(join(dir, ".codex/agents/intent-confirmation.toml"), "utf8");

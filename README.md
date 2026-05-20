@@ -99,9 +99,15 @@ node scripts/install.mjs --mode global
 
 Use `--mode dry-run` first for every install target.
 
-## Repair And Uninstall
+## Update, Repair, And Uninstall
 
-Repair/update mode rewrites only FrameCore-managed files recorded in `.framecore/manifest.json`:
+Update requires an existing `.framecore/manifest.json`, upgrades the current FrameCore-managed set, and refuses user-owned conflicts:
+
+```bash
+node scripts/install.mjs --mode update --target /path/to/your/project
+```
+
+Repair also requires a manifest, but rewrites only paths already recorded in that manifest. It does not add new managed paths:
 
 ```bash
 node scripts/install.mjs --mode repair --target /path/to/your/project
@@ -133,6 +139,8 @@ Onboarding collects:
 - optional full Hipson expansion
 
 Agent source files in this repo use neutral role IDs only. User-specific display names are generated locally and should not be committed.
+
+`framecore.config.json` is validated before rendering or installation. Invalid config values stop installation before managed files are written.
 
 ## Text-Bearing Image Policy
 
