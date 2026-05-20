@@ -1,11 +1,12 @@
 import assert from "node:assert/strict";
 import { execFileSync, spawn, spawnSync } from "node:child_process";
 import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { dirname, join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import test from "node:test";
 
-const root = new URL("..", import.meta.url).pathname.replace(/\/$/, "");
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const node = process.execPath;
 
 function run(args, options = {}) {

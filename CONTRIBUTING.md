@@ -31,6 +31,8 @@ npm run check
 npm pack --dry-run
 ```
 
+CI runs the same checks on Linux, macOS, and Windows with Node 20 and 22. Keep path handling portable and avoid shell-specific assumptions in scripts and tests.
+
 Pull requests should explain:
 
 - what changed

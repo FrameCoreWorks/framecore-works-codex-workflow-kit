@@ -1,7 +1,8 @@
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
-import { basename, join, relative } from "node:path";
+import { fileURLToPath } from "node:url";
+import { basename, dirname, join, relative, resolve } from "node:path";
 
-export const repoRoot = new URL("..", import.meta.url).pathname.replace(/\/$/, "");
+export const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 export function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
