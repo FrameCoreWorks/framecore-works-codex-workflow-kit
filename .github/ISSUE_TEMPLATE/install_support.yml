@@ -1,0 +1,87 @@
+name: Install support
+description: Get help with dry-run, onboarding, project-local install, update, repair, or uninstall.
+title: "[Install]: "
+labels: ["support", "install"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include secrets, private URLs, private project context, generated confidential outputs, emails, or local machine paths. Replace them with placeholders before submitting.
+  - type: dropdown
+    id: install_step
+    attributes:
+      label: Install Step
+      options:
+        - clone or download
+        - repository checks
+        - dry-run
+        - onboarding
+        - project-local install
+        - global install
+        - update
+        - repair
+        - uninstall
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What are you trying to do, and what happened?
+    validations:
+      required: true
+  - type: input
+    id: version_or_commit
+    attributes:
+      label: Version Or Commit
+      description: Which release, tag, or commit are you using?
+      placeholder: "v0.1.0 or commit SHA"
+  - type: textarea
+    id: sanitized_commands
+    attributes:
+      label: Sanitized Commands
+      description: Paste the commands you ran after replacing private paths with placeholders such as `<workspace>`.
+      render: text
+  - type: textarea
+    id: sanitized_output
+    attributes:
+      label: Sanitized Output
+      description: Paste only sanitized output. Remove paths, emails, URLs, keys, tokens, and private project names.
+      render: text
+  - type: input
+    id: operating_system
+    attributes:
+      label: Operating System
+      placeholder: "macOS, Windows, or Linux"
+  - type: input
+    id: node_version
+    attributes:
+      label: Node Version
+      placeholder: "20.x or 22.x"
+  - type: dropdown
+    id: manifest_present
+    attributes:
+      label: Manifest Present
+      options:
+        - yes
+        - no
+        - unsure
+  - type: dropdown
+    id: agents_file_state
+    attributes:
+      label: AGENTS File State
+      options:
+        - no AGENTS.md
+        - existing AGENTS.md
+        - generated AGENTS.framecore.md
+        - unsure
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety Confirmation
+      options:
+        - label: I removed secrets, private URLs, emails, private project context, and local machine paths from this report.
+          required: true
+        - label: I understand security-sensitive reports should use SECURITY.md, not this public issue.
+          required: true

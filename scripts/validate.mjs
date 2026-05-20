@@ -254,6 +254,7 @@ if (existsSync(artifactTemplates)) {
 const requiredDocs = [
   "docs/quickstart.md",
   "docs/troubleshooting.md",
+  "docs/release.md",
   "docs/architecture.md",
   "docs/workflow-stages.md",
   "docs/onboarding.md",
@@ -269,6 +270,58 @@ const requiredDocs = [
 ];
 for (const doc of requiredDocs) {
   if (!existsSync(join(validationRoot, doc))) addFinding("MISSING_DOC", `Required documentation file is missing: ${doc}`, [join(validationRoot, doc)]);
+}
+
+const requiredRepoFiles = [
+  ".github/workflows/validate.yml",
+  ".github/workflows/release-check.yml",
+  ".github/ISSUE_TEMPLATE/install_support.yml",
+  ".github/pull_request_template.md",
+  "CONTRIBUTING.md",
+  "SECURITY.md",
+  "SUPPORT.md",
+  "CODE_OF_CONDUCT.md"
+];
+for (const file of requiredRepoFiles) {
+  if (!existsSync(join(validationRoot, file))) addFinding("MISSING_REPO_FILE", `Required public repo file is missing: ${file}`, [join(validationRoot, file)]);
+}
+
+const releaseDoc = join(validationRoot, "docs/release.md");
+if (existsSync(releaseDoc)) {
+  const sections = markdownSections(read(releaseDoc));
+  for (const section of ["Purpose", "Release Principles", "Pre-Release Checklist", "Required Checks", "Package Contents Review", "Privacy And Provider-Neutral Gate", "Halt Conditions", "Maintainer Sign-Off", "Tag And Release Flow", "Release Check Workflow", "Rollback"]) {
+    if (!sections.has(section)) addFinding("MISSING_RELEASE_DOC_SECTION", `Release guide is missing required section: ${section}`, [releaseDoc]);
+  }
+}
+
+const packageJsonPath = join(validationRoot, "package.json");
+if (existsSync(packageJsonPath)) {
+  const releaseCheck = JSON.parse(read(packageJsonPath)).scripts?.["release:check"] ?? "";
+  if (!releaseCheck.includes("npm run check") || !releaseCheck.includes("npm pack --dry-run")) {
+    addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json release:check must run npm run check and npm pack --dry-run.", [packageJsonPath]);
+  }
+}
+
+const releaseWorkflow = join(validationRoot, ".github/workflows/release-check.yml");
+if (existsSync(releaseWorkflow)) {
+  const text = read(releaseWorkflow);
+  if (!text.includes("workflow_dispatch") || !text.includes("tags:") || !text.includes("npm run release:check") || !/permissions:\s*\n\s*contents:\s*read/.test(text)) {
+    addFinding("WEAK_RELEASE_WORKFLOW", "release-check workflow must be manual/tag-triggered, read-only, and run npm run release:check.", [releaseWorkflow]);
+  }
+  const unsafePatterns = [
+    /pull_request_target/,
+    /contents:\s*write/,
+    /id-token:\s*write/,
+    /packages:\s*write/,
+    /\bsecrets\./,
+    /\bnpm\s+publish\b/,
+    /\bgh\s+release\s+create\b/,
+    /softprops\/action-gh-release/,
+    /actions\/upload-artifact/,
+  ];
+  if (unsafePatterns.some((pattern) => pattern.test(text))) {
+    addFinding("UNSAFE_RELEASE_WORKFLOW", "release-check workflow must not publish, upload artifacts, use secrets, or request write permissions.", [releaseWorkflow]);
+  }
 }
 
 const exampleReadmes = walkFiles(join(validationRoot, "examples"))

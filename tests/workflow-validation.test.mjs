@@ -208,6 +208,49 @@ test("validation rejects agent templates with unknown review gates", () => {
   assert.match(`${result.stderr}${result.stdout}`, /UNKNOWN_AGENT_REVIEW_GATE/);
 });
 
+test("validation rejects missing release readiness files", () => {
+  const dir = copyRepoFixture("framecore-validate-release-");
+  rmSync(join(dir, "docs/release.md"), { force: true });
+  rmSync(join(dir, ".github/workflows/release-check.yml"), { force: true });
+  rmSync(join(dir, ".github/ISSUE_TEMPLATE/install_support.yml"), { force: true });
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /MISSING_DOC/);
+  assert.match(`${result.stderr}${result.stdout}`, /MISSING_REPO_FILE/);
+});
+
+test("validation rejects weak release readiness docs and workflow safety", () => {
+  const dir = copyRepoFixture("framecore-validate-release-weak-");
+  const releaseDoc = join(dir, "docs/release.md");
+  const workflow = join(dir, ".github/workflows/release-check.yml");
+  const packageJson = join(dir, "package.json");
+
+  writeFileSync(releaseDoc, readFileSync(releaseDoc, "utf8").replace("## Maintainer Sign-Off", "## Maintainer Approval"));
+  writeFileSync(workflow, [
+    readFileSync(workflow, "utf8").replace("npm run release:check", "npm test"),
+    "pull_request_target:",
+    "permissions:",
+    "  contents: write",
+    "  id-token: write",
+    "  packages: write",
+    "steps:",
+    "  - run: npm publish",
+    "  - run: gh release create v0.0.0",
+    "  - uses: actions/upload-artifact@v4",
+  ].join("\n"));
+  const pkg = JSON.parse(readFileSync(packageJson, "utf8"));
+  pkg.scripts["release:check"] = "npm test";
+  writeFileSync(packageJson, JSON.stringify(pkg, null, 2));
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /MISSING_RELEASE_DOC_SECTION/);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_RELEASE_CHECK_SCRIPT/);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_RELEASE_WORKFLOW/);
+  assert.match(`${result.stderr}${result.stdout}`, /UNSAFE_RELEASE_WORKFLOW/);
+});
+
 test("onboarding renders project-local config and agent templates", () => {
   const dir = mkdtempSync(join(tmpdir(), "framecore-onboard-"));
   run(["scripts/onboard.mjs", "--defaults", "--target", dir]);

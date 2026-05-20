@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added release readiness documentation, a non-publishing release-check workflow, install support issue intake, and validation coverage for release governance files.
 - Hardened repo path resolution for cross-platform Node execution and expanded CI to Linux, macOS, and Windows on Node 20 and 22.
 - Hardened project-local install ownership, uninstall path validation, and user-owned file protection.
 - Clarified native Codex/ChatGPT GPT Image 2 policy for text-bearing raster graphics.

@@ -34,6 +34,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: l
 - Want the mental model first: read [Architecture](docs/architecture.md).
 - Want to compare workflow paths: open [Examples Index](examples/README.md).
 - Want to see a complete workflow specimen: open [End-To-End Creative Workflow Example](examples/end-to-end-creative-workflow/README.md).
+- Preparing a release or repo maintenance change: read [Release Guide](docs/release.md).
 - Already installing: use the short install flow below.
 
 ## What It Installs
@@ -179,6 +180,7 @@ npm run audit:privacy
 npm run validate
 npm test
 npm run check
+npm run release:check
 npm pack --dry-run
 ```
 
@@ -188,6 +190,7 @@ See also:
 
 - [Quickstart](docs/quickstart.md)
 - [Troubleshooting](docs/troubleshooting.md)
+- [Release Guide](docs/release.md)
 - [Architecture](docs/architecture.md)
 - [Workflow Stages](docs/workflow-stages.md)
 - [Onboarding](docs/onboarding.md)

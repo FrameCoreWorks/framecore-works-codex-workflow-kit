@@ -24,10 +24,13 @@ Run before publishing:
 npm run audit:privacy
 npm run validate
 npm test
+npm run release:check
 npm pack --dry-run
 ```
 
 The privacy audit is intentionally strict. If it blocks a release, remove the sensitive content or move the test case into a temporary fixture generated at test time.
+
+Follow the release checklist in [Release Guide](docs/release.md) before creating a public tag or GitHub release.
 
 ## Scope
 

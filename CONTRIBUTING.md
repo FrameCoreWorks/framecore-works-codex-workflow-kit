@@ -28,6 +28,7 @@ Before opening a pull request, run:
 
 ```bash
 npm run check
+npm run release:check
 npm pack --dry-run
 ```
 
@@ -39,6 +40,7 @@ Pull requests should explain:
 - why the change is needed
 - what files are affected
 - how it was verified
+- whether release notes, package contents, or tag planning are affected
 - whether install, update, repair, uninstall, onboarding, or generated agent files are affected
 
 ## Docs Update Rule
@@ -48,7 +50,10 @@ If a pull request changes a skill contract, role, gate, handoff, artifact templa
 - `docs/workflow-stages.md`
 - `docs/architecture.md`
 - `docs/onboarding.md`
+- `docs/release.md`
 - `examples/README.md`
 - the closest workflow example under `examples/`
 
 Do not include generated outputs, local configs, private project context, credentials, user-specific agent names, or local machine paths.
+
+For versioned releases, follow [Release Guide](docs/release.md).
