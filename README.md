@@ -1,11 +1,17 @@
 # FrameCore Works: Creative Workflow Skill Kit for Codex
 
-Paste this into Codex from the workspace where you want to install the kit:
+From the Codex workspace where you want to install the kit, give Codex this instruction:
 
 ```text
-Install FrameCore Works: Creative Workflow Skill Kit for Codex from this repo.
-Start with a dry run, then run onboarding, then install project-local unless I explicitly choose global install.
-Do not enable paid external execution tools during setup.
+Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git into a temporary or tools folder, read its README, then install it into my current workspace.
+
+Follow this order:
+1. Run the repository checks.
+2. Run install dry-run against my current workspace.
+3. Run onboarding for my current workspace.
+4. Install project-local only.
+
+Do not use global install and do not enable external execution tools unless I explicitly ask for them.
 ```
 
 FrameCore Works Skill Kit is an English-only, provider-neutral workflow system for Codex. It installs role-based agents, skills, templates, handoff rules, QA gates, Humanizer, HyperFrames workflow knowledge, a lightweight Hipson Adapter, and an explicit workflow self-improvement loop.
@@ -17,7 +23,7 @@ FrameCore Works Skill Kit is an English-only, provider-neutral workflow system f
 - Humanizer for natural copy polish and voice consistency.
 - HyperFrames workflow knowledge for coded video planning, scene structure, animation guidance, caption planning, render QA, and delivery manifests.
 - Hipson Adapter for research maps, internet mapping packets, bounded instruction packets, review packets, and execution packets.
-- Validation, privacy audit, and AppleDouble cleanup scripts.
+- Validation and privacy audit scripts.
 
 ## Privacy And Scope
 
