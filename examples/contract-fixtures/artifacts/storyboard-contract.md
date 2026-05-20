@@ -1,0 +1,21 @@
+# Storyboard Contract
+
+- beats:
+  - establish product and setting
+  - reveal key physical feature
+  - close on final composition for review
+- scenes:
+  - neutral tabletop setup
+  - simple hand interaction
+  - clean final frame
+- shot_cards:
+  - shot 1: wide product context, stable camera, two seconds
+  - shot 2: medium interaction detail, two seconds
+  - shot 3: close final hero angle, two seconds
+- timing:
+  - total duration target: six seconds
+  - each shot has approximate timing, not final render timing
+- continuity:
+  - product form remains consistent
+  - lighting direction remains stable
+  - no visible brand marks are introduced

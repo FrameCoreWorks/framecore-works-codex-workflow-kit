@@ -22,6 +22,9 @@
         "review_gates",
         "next_role",
         "next_action"
+      ],
+      "example_paths": [
+        "examples/contract-fixtures/artifacts/project-state.md"
       ]
     },
     "Brief Contract": {
@@ -59,6 +62,9 @@
         "confidence",
         "limits",
         "unresolved_unknowns"
+      ],
+      "example_paths": [
+        "examples/contract-fixtures/artifacts/evidence-note.md"
       ]
     },
     "Instruction Packet": {
@@ -74,6 +80,9 @@
         "acceptance_criteria",
         "output_schema",
         "handoff_to"
+      ],
+      "example_paths": [
+        "examples/contract-fixtures/artifacts/instruction-packet.md"
       ]
     },
     "Direction Contract": {
@@ -95,6 +104,9 @@
         "shot_cards",
         "timing",
         "continuity"
+      ],
+      "example_paths": [
+        "examples/contract-fixtures/artifacts/storyboard-contract.md"
       ]
     },
     "Board Artifact Prompt": {
@@ -106,6 +118,9 @@
         "safe_margins",
         "visual_style",
         "acceptance_criteria"
+      ],
+      "example_paths": [
+        "examples/contract-fixtures/artifacts/board-artifact-prompt.md"
       ]
     },
     "Copy Pack": {
@@ -117,6 +132,9 @@
         "supers",
         "CTA",
         "exact_text_locks"
+      ],
+      "example_paths": [
+        "examples/contract-fixtures/artifacts/copy-pack.md"
       ]
     },
     "Prompt Pack": {
@@ -137,6 +155,9 @@
         "final_prompt",
         "negative_constraints",
         "QA_checks"
+      ],
+      "example_paths": [
+        "examples/contract-fixtures/artifacts/image-prompt-contract.md"
       ]
     },
     "Tool Routing Plan": {
@@ -148,6 +169,9 @@
         "risk_note",
         "output_plan",
         "handoff_to"
+      ],
+      "example_paths": [
+        "examples/contract-fixtures/artifacts/tool-routing-plan.md"
       ]
     },
     "Execution Manifest": {
@@ -159,6 +183,9 @@
         "redaction_status",
         "errors",
         "next_handoff"
+      ],
+      "example_paths": [
+        "examples/contract-fixtures/artifacts/execution-manifest.md"
       ]
     },
     "HyperFrames Production Brief": {
@@ -171,6 +198,9 @@
         "render_constraints",
         "QA_checks",
         "handoff_to"
+      ],
+      "example_paths": [
+        "examples/contract-fixtures/artifacts/hyperframes-production-brief.md"
       ]
     },
     "Asset Manifest": {
@@ -181,6 +211,9 @@
         "checksums",
         "excluded_files",
         "traceability_notes"
+      ],
+      "example_paths": [
+        "examples/contract-fixtures/artifacts/asset-manifest.md"
       ]
     },
     "QA / Iteration Report": {

@@ -421,6 +421,53 @@ test("validation rejects artifact schema fields missing from templates", () => {
   assert.match(`${result.stderr}${result.stdout}`, /EXAMPLE_ARTIFACT_MISSING_FIELD/);
 });
 
+test("validation rejects artifact schemas without fixture coverage", () => {
+  const dir = copyRepoFixture("framecore-validate-artifact-fixture-coverage-");
+  const schemaFile = join(dir, "config/artifact-schemas.json");
+  const schema = JSON.parse(readFileSync(schemaFile, "utf8"));
+  delete schema.artifacts["Project State"].example_paths;
+  writeFileSync(schemaFile, JSON.stringify(schema, null, 2));
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /MISSING_ARTIFACT_FIXTURE_COVERAGE/);
+});
+
+test("validation rejects registered artifact fixture paths that are missing", () => {
+  const dir = copyRepoFixture("framecore-validate-artifact-fixture-missing-");
+  rmSync(join(dir, "examples/contract-fixtures/artifacts/project-state.md"), { force: true });
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /MISSING_ARTIFACT_EXAMPLE/);
+});
+
+test("validation rejects artifact fixture paths outside public Markdown examples", () => {
+  const dir = copyRepoFixture("framecore-validate-artifact-fixture-path-");
+  const schemaFile = join(dir, "config/artifact-schemas.json");
+  const schema = JSON.parse(readFileSync(schemaFile, "utf8"));
+  schema.artifacts["Project State"].example_paths = [
+    "docs/artifact-schemas.md",
+    "examples/contract-fixtures/artifacts/._project-state.md"
+  ];
+  writeFileSync(schemaFile, JSON.stringify(schema, null, 2));
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /INVALID_ARTIFACT_FIXTURE_PATH/);
+});
+
+test("validation ignores AppleDouble markdown sidecars during link and example scans", () => {
+  const dir = copyRepoFixture("framecore-validate-appledouble-ignore-");
+  writeFileSync(join(dir, "._CHANGELOG.md"), "[broken](missing.md)\n");
+  writeFileSync(join(dir, "examples/._README.md"), [
+    "# Sidecar",
+    "[broken](missing.md)"
+  ].join("\n"));
+
+  assert.match(run(["scripts/validate.mjs", dir]), /workflow validation passed/);
+});
+
 test("validation rejects example artifact fixtures missing required fields", () => {
   const dir = copyRepoFixture("framecore-validate-artifact-example-");
   const file = join(dir, "examples/end-to-end-creative-workflow/artifacts/brief-contract.md");

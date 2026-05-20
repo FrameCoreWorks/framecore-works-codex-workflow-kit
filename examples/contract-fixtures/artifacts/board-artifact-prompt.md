@@ -1,0 +1,22 @@
+# Board Artifact Prompt
+
+- panel_count: 6
+- panel_hierarchy:
+  - row 1: setup, product reveal, benefit cue
+  - row 2: interaction, final frame, QA notes
+- exact_board_text:
+  - no visible marketing headline in this fixture
+  - panel labels only: Shot 1, Shot 2, Shot 3, Shot 4, Shot 5, Shot 6
+- shot_labels:
+  - Shot 1: setup
+  - Shot 2: reveal
+  - Shot 3: detail
+  - Shot 4: interaction
+  - Shot 5: final frame
+  - Shot 6: review notes
+- safe_margins: Keep labels inside a clean margin and away from key visual details.
+- visual_style: Neutral storyboard board with clear frame hierarchy and no private brand styling.
+- acceptance_criteria:
+  - all panels are legible
+  - no extra text appears
+  - visual continuity matches the Storyboard Contract

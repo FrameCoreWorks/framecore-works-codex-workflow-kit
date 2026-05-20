@@ -1,0 +1,24 @@
+# HyperFrames Production Brief
+
+- composition_goal: Plan a short coded-video title card with a simple product-neutral reveal.
+- scene_structure:
+  - scene 1: title card setup
+  - scene 2: reveal transition
+  - scene 3: final hold with caption-safe layout
+- timing:
+  - total duration target: six seconds
+  - final timing remains adjustable in the runtime project
+- animation_system:
+  - simple opacity and position transitions
+  - GSAP-style sequencing described conceptually only
+- caption_or_overlay_plan:
+  - captions remain inside safe margins
+  - no private brand text
+- render_constraints:
+  - no runtime install in this kit
+  - no generated render output in this fixture
+- QA_checks:
+  - composition has a clear start and end
+  - captions do not overlap key visuals
+  - render assumptions are explicit
+- handoff_to: `asset-manifest`

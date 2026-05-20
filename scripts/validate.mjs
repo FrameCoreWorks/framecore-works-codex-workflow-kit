@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync } from "node:fs";
 import { basename, dirname, join, relative, resolve } from "node:path";
-import { hasHelpFlag, printHelpAndExit, repoRoot, reportFindings, walkFiles } from "./common.mjs";
+import { hasHelpFlag, isAppleDouble, printHelpAndExit, repoRoot, reportFindings, walkFiles } from "./common.mjs";
 
 if (hasHelpFlag()) {
   printHelpAndExit(`
@@ -54,6 +54,7 @@ function anchorsFor(text) {
 
 function validateMarkdownLinks(files) {
   for (const file of files) {
+    if (isAppleDouble(file)) continue;
     const text = read(file);
     for (const match of text.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)) {
       const href = match[1].trim();
@@ -129,6 +130,12 @@ function markdownSectionBody(text, section) {
 
 function artifactFieldSet(text) {
   return new Set([...text.matchAll(/^-\s+([A-Za-z][A-Za-z0-9_ /-]*):/gm)].map((match) => match[1].trim()));
+}
+
+function isPublicFixturePath(value) {
+  if (typeof value !== "string") return false;
+  if (!value.startsWith("examples/") || !value.endsWith(".md")) return false;
+  return !value.split(/[\\/]+/).some((segment) => segment.startsWith(".") || segment.startsWith("._") || segment.length === 0);
 }
 
 const requiredRoles = JSON.parse(readFileSync(join(validationRoot, "config/agent-naming.schema.json"), "utf8")).roles;
@@ -340,9 +347,16 @@ if (existsSync(artifactTemplates)) {
           addFinding("ARTIFACT_SCHEMA_FIELD_MISSING_TEMPLATE", `Artifact ${artifactName} requires field missing from its template: ${field}`, [artifactSchemasPath, artifactTemplates]);
         }
       }
+      if (!Array.isArray(schema.example_paths) || schema.example_paths.length === 0) {
+        addFinding("MISSING_ARTIFACT_FIXTURE_COVERAGE", `Artifact schema must register at least one public fixture: ${artifactName}`, [artifactSchemasPath]);
+      }
       for (const examplePath of schema.example_paths ?? []) {
         if (typeof examplePath !== "string" || examplePath.startsWith("/") || examplePath.split(/[\\/]+/).includes("..")) {
           addFinding("INVALID_ARTIFACT_SCHEMA", `Artifact schema example path must be repo-relative and safe: ${artifactName}`, [artifactSchemasPath]);
+          continue;
+        }
+        if (!isPublicFixturePath(examplePath)) {
+          addFinding("INVALID_ARTIFACT_FIXTURE_PATH", `Artifact schema example path must point to a public Markdown fixture under examples/: ${artifactName}`, [artifactSchemasPath]);
           continue;
         }
         const exampleFile = join(validationRoot, examplePath);
@@ -444,7 +458,7 @@ if (existsSync(releaseWorkflow)) {
 }
 
 const exampleReadmes = walkFiles(join(validationRoot, "examples"))
-  .filter((file) => file.endsWith("README.md") && relative(validationRoot, file).replaceAll("\\", "/") !== "examples/README.md");
+  .filter((file) => !isAppleDouble(file) && file.endsWith("README.md") && relative(validationRoot, file).replaceAll("\\", "/") !== "examples/README.md");
 const requiredExampleSections = [
   "## Purpose",
   "## Starting User Request",
@@ -549,7 +563,7 @@ for (const target of [...requiredDocs, ...exampleReadmes.map((file) => relative(
   }
 }
 
-validateMarkdownLinks(walkFiles(validationRoot).filter((file) => file.endsWith(".md")));
+validateMarkdownLinks(walkFiles(validationRoot).filter((file) => !isAppleDouble(file) && file.endsWith(".md")));
 
 const textPolicy = read(join(validationRoot, "config/text-image-policy.json"));
 if (!textPolicy.includes("gpt-image-2") || !textPolicy.includes("native Codex/ChatGPT image generator") || !textPolicy.includes("one-pass generation")) {

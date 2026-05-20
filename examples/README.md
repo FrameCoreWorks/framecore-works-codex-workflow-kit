@@ -4,6 +4,8 @@ Use these examples to choose the smallest workflow path that fits the task. Each
 
 Each example directory includes a `workflow.json` manifest. The manifest is the machine-checked contract for the route, gates, artifacts, declared handoffs, and execution boundary. README files explain the workflow for humans; `npm run validate` checks the manifests against the role roster, gate registry, handoff matrix, and artifact schemas.
 
+Additional minimal contract fixtures live under `contract-fixtures/artifacts/`. They are validation fixtures for artifact schemas, not full workflow examples.
+
 | Example | Use Case | Main Stages | Typical Artifacts | Execution Boundary |
 | --- | --- | --- | --- | --- |
 | [Minimal Workflow](minimal-workflow/README.md) | Small planning task or first install check | intent, route, brief | Task Confirmation, Brief Contract | stops at planning |

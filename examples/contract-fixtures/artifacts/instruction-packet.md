@@ -1,0 +1,31 @@
+# Instruction Packet
+
+- packet_id: public-fixture-instruction-packet
+- target_role: `image-prompting`
+- goal: Convert an approved Direction Contract into a provider-neutral Prompt Pack.
+- context:
+  - generic product category
+  - no private references
+  - no execution requested
+- exclusions:
+  - no provider-specific endpoints
+  - no API keys
+  - no generated media claims
+- required_inputs:
+  - Brief Contract
+  - Reference Pack
+  - Direction Contract
+  - Copy Pack when visible text is needed
+- method:
+  - preserve locked constraints
+  - state expected observables
+  - include negative constraints
+- evidence_rules:
+  - do not add factual claims not present in upstream artifacts
+  - mark unknowns instead of inventing details
+- acceptance_criteria:
+  - prompt is usable without private context
+  - visible text policy is explicit when text is present
+- output_schema:
+  - Prompt Pack
+- handoff_to: `qa-iteration`

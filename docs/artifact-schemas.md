@@ -18,6 +18,7 @@ It is intentionally lightweight. It is not a full JSON Schema system and it does
 - `config/artifact-schemas.json`: canonical registry of artifact names, required fields, and optional example fixture paths.
 - `.agents/skills/pipeline-core/templates/artifact-templates.md`: human-readable artifact templates.
 - `examples/end-to-end-creative-workflow/artifacts/*.md`: validated example fixtures for the public end-to-end workflow.
+- `examples/contract-fixtures/artifacts/*.md`: minimal validation fixtures for artifact contracts that do not naturally appear in the end-to-end example.
 
 ## Validation
 
@@ -26,6 +27,7 @@ It is intentionally lightweight. It is not a full JSON Schema system and it does
 - every gate-required artifact has a matching schema or a valid alternative schema;
 - every schema has a matching template section;
 - every required schema field appears in its template section;
+- every schema registers at least one public fixture path;
 - every registered example fixture exists;
 - every registered example fixture contains all required fields.
 
@@ -35,6 +37,8 @@ When adding a new workflow artifact:
 
 1. Add the artifact section to `artifact-templates.md`.
 2. Add the artifact and its `required_fields` to `config/artifact-schemas.json`.
-3. If the artifact appears in a public example, add the example path to `example_paths`.
+3. Register at least one safe repo-relative fixture path in `example_paths`.
 4. Update the gate registry or handoff matrix only if the artifact changes workflow routing.
 5. Run `npm run validate`.
+
+Contract fixtures are validation assets. They show the minimum required field shape and should stay generic, provider-neutral, and free of private project context.

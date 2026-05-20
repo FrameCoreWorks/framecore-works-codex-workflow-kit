@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added public contract fixtures so every artifact schema has validated fixture coverage.
 - Added machine-checked `workflow.json` manifests for all public examples.
 - Added artifact schema registry validation for gate-required artifacts, templates, and example fixtures.
 - Added managed file hashes to new manifests and taught `doctor` to warn about missing or changed FrameCore-managed files.
