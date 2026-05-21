@@ -79,6 +79,7 @@ v1.0 docs should give a new user a complete path:
 - Architecture explains roles, skills, gates, handoffs, artifacts, examples, and provider boundaries
 - Compatibility explains Node.js, OS expectations, Codex assumptions, install modes, manifests, external tool boundary, and support baseline
 - Release, Roadmap, Repository Settings, Security, Support, and Contributing stay aligned with current behavior
+- Team Configuration explains what stays local, what may be shared intentionally, and how to review shared config
 
 ## Validation Gates
 

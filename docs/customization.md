@@ -13,4 +13,6 @@ Safe customizations:
 
 Do not commit user-specific config, secrets, local paths, private project context, or generated outputs.
 
+For team use, read [Team Configuration](team-configuration.md) before committing any installed workflow files or local config.
+
 Installer ownership is tracked in `.framecore/manifest.json`. Do not add user-owned files to this manifest. Uninstall removes only exact manifest paths and refuses directory removals. When managed hashes are present, `doctor` can warn if a FrameCore-managed file was locally edited or deleted.

@@ -685,6 +685,21 @@ test("validation rejects weak onboarding guide and assisted install prompt", () 
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_INSTALL_PROMPT/);
 });
 
+test("validation rejects weak team configuration guide", () => {
+  const dir = copyRepoFixture("framecore-validate-team-configuration-");
+  const doc = join(dir, "docs/team-configuration.md");
+  writeFileSync(
+    doc,
+    readFileSync(doc, "utf8")
+      .replace("## Shared Team Install", "## Shared Setup")
+      .replace("Do not commit these by default", "Avoid these files")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_TEAM_CONFIGURATION_DOC/);
+});
+
 test("validation rejects weak Codex-assisted install guide", () => {
   const dir = copyRepoFixture("framecore-validate-codex-assisted-install-");
   const doc = join(dir, "docs/codex-assisted-install.md");

@@ -45,6 +45,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: l
 - Preparing for a stable public release: read [v1.0 Readiness](docs/v1-readiness.md).
 - Checking what provider-neutral allows and forbids: read [Provider-Neutral Boundary](docs/provider-neutral-boundary.md).
 - Want to compare workflow paths: open [Examples Index](examples/README.md).
+- Using the kit with a team: read [Team Configuration](docs/team-configuration.md).
 - Want to see a complete workflow specimen: open [End-To-End Creative Workflow Example](examples/end-to-end-creative-workflow/README.md).
 - Maintaining example routes: use each example's checked `workflow.json`.
 - Maintaining artifact contracts: read [Artifact Schemas](docs/artifact-schemas.md).
@@ -252,6 +253,7 @@ See also:
 - [Workflow Stages](docs/workflow-stages.md)
 - [Onboarding](docs/onboarding.md)
 - [Customization](docs/customization.md)
+- [Team Configuration](docs/team-configuration.md)
 - [Text-Bearing Image Policy](docs/text-image-policy.md)
 - [Hipson Integration](docs/hipson-integration.md)
 - [HyperFrames](docs/hyperframes.md)

@@ -454,6 +454,7 @@ const requiredDocs = [
   "docs/workflow-stages.md",
   "docs/onboarding.md",
   "docs/customization.md",
+  "docs/team-configuration.md",
   "docs/text-image-policy.md",
   "docs/hipson-integration.md",
   "docs/hyperframes.md",
@@ -477,6 +478,18 @@ if (existsSync(onboardingDoc)) {
   }
   for (const phrase of ["Allow automatic delivery uploads", "Require an explicit user request before delivery/export", "Require QA approval before generated asset delivery", "Delivery preferences only shape local behavior"]) {
     if (!text.includes(phrase)) addFinding("WEAK_ONBOARDING_DOC", `Onboarding guide is missing required delivery-preference phrase: ${phrase}`, [onboardingDoc]);
+  }
+}
+
+const teamConfigurationDoc = join(validationRoot, "docs/team-configuration.md");
+if (existsSync(teamConfigurationDoc)) {
+  const text = read(teamConfigurationDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Purpose", "Personal Install", "Shared Team Install", "Recommended Team Pattern", "Files That Should Stay Local By Default", "When To Share Config", "Privacy Review", "Update And Repair In Teams"]) {
+    if (!sections.has(section)) addFinding("WEAK_TEAM_CONFIGURATION_DOC", `Team configuration guide is missing required section: ${section}`, [teamConfigurationDoc]);
+  }
+  for (const phrase of ["safe default is personal install", "framecore.config.json", ".framecore/manifest.json", "run `npm run audit:privacy`", "provider-neutral boundary", "Do not commit these by default", "repo-relative and portable", "update and repair"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_TEAM_CONFIGURATION_DOC", `Team configuration guide is missing required local-config phrase: ${phrase}`, [teamConfigurationDoc]);
   }
 }
 
