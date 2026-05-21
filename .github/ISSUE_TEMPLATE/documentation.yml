@@ -3,6 +3,10 @@ description: Report unclear, missing, or outdated documentation.
 title: "[Docs]: "
 labels: ["documentation"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not include secrets, private URLs, private project context, generated confidential outputs, emails, or local machine paths.
   - type: textarea
     id: page
     attributes:

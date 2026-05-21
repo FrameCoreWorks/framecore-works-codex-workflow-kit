@@ -503,6 +503,10 @@ const requiredRepoFiles = [
   ".github/workflows/validate.yml",
   ".github/workflows/release-check.yml",
   ".github/workflows/cross-platform.yml",
+  ".github/ISSUE_TEMPLATE/config.yml",
+  ".github/ISSUE_TEMPLATE/bug_report.yml",
+  ".github/ISSUE_TEMPLATE/documentation.yml",
+  ".github/ISSUE_TEMPLATE/feature_request.yml",
   ".github/ISSUE_TEMPLATE/install_support.yml",
   ".github/pull_request_template.md",
   "CONTRIBUTING.md",
@@ -535,6 +539,29 @@ if (existsSync(dependabotConfig)) {
   const text = read(dependabotConfig);
   for (const phrase of ["version: 2", "package-ecosystem: github-actions", "package-ecosystem: npm", "directory: /", "interval: weekly"]) {
     if (!text.includes(phrase)) addFinding("WEAK_DEPENDABOT_CONFIG", `Dependabot config is missing required phrase: ${phrase}`, [dependabotConfig]);
+  }
+}
+
+const issueTemplateConfig = join(validationRoot, ".github/ISSUE_TEMPLATE/config.yml");
+if (existsSync(issueTemplateConfig)) {
+  const text = read(issueTemplateConfig);
+  for (const phrase of ["blank_issues_enabled: false", "Security-sensitive report", "/security"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_ISSUE_TEMPLATE_HYGIENE", `Issue template config is missing required safety phrase: ${phrase}`, [issueTemplateConfig]);
+  }
+}
+
+for (const issueTemplate of [
+  ".github/ISSUE_TEMPLATE/bug_report.yml",
+  ".github/ISSUE_TEMPLATE/documentation.yml",
+  ".github/ISSUE_TEMPLATE/feature_request.yml",
+  ".github/ISSUE_TEMPLATE/install_support.yml"
+]) {
+  const file = join(validationRoot, issueTemplate);
+  if (existsSync(file)) {
+    const text = read(file);
+    for (const phrase of ["Do not include secrets", "private URLs", "private project context", "generated confidential outputs", "emails", "local machine paths"]) {
+      if (!text.includes(phrase)) addFinding("WEAK_ISSUE_TEMPLATE_HYGIENE", `Issue template is missing required privacy warning phrase: ${phrase}`, [file]);
+    }
   }
 }
 

@@ -7,6 +7,7 @@
 - Added numbered backups for manifest rewrites during update/repair and documented how update, repair, uninstall, and backup preservation behave.
 - Added maintainer-focused repository settings guidance for branch rulesets, optional PR/status-check mode, Actions safety, public issue hygiene, and release readiness.
 - Added validation and tests for repository settings documentation so public maintenance guidance remains present and aligned with the repo safety model.
+- Strengthened public issue template hygiene and validation so support, bug, docs, and feature reports warn against posting sensitive data.
 - Added public contract fixtures so every artifact schema has validated fixture coverage.
 - Added machine-checked `workflow.json` manifests for all public examples.
 - Added artifact schema registry validation for gate-required artifacts, templates, and example fixtures.

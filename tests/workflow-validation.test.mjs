@@ -613,6 +613,19 @@ test("validation rejects weak Dependabot config", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_DEPENDABOT_CONFIG/);
 });
 
+test("validation rejects weak issue template hygiene", () => {
+  const dir = copyRepoFixture("framecore-validate-issue-template-");
+  const config = join(dir, ".github/ISSUE_TEMPLATE/config.yml");
+  const documentationTemplate = join(dir, ".github/ISSUE_TEMPLATE/documentation.yml");
+
+  writeFileSync(config, readFileSync(config, "utf8").replace("blank_issues_enabled: false", "blank_issues_enabled: true"));
+  writeFileSync(documentationTemplate, readFileSync(documentationTemplate, "utf8").replace("Do not include secrets", "Include details"));
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_ISSUE_TEMPLATE_HYGIENE/);
+});
+
 test("validation rejects weak onboarding guide and assisted install prompt", () => {
   const dir = copyRepoFixture("framecore-validate-onboarding-docs-");
   const readme = join(dir, "README.md");
