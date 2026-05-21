@@ -34,6 +34,8 @@ npm pack --dry-run
 
 The default validate workflow runs on pull requests and pushes to `main` on Ubuntu with Node 20 and 22. The manual cross-platform workflow covers Ubuntu, macOS, and Windows with Node 20 before releases or path-handling changes. Keep path handling portable and avoid shell-specific assumptions in scripts and tests.
 
+The repo uses `.editorconfig` and `.gitattributes` to keep text files UTF-8, LF-normalized, final-newline terminated, and space-indented across macOS, Linux, and Windows.
+
 Pull requests should explain:
 
 - what changed

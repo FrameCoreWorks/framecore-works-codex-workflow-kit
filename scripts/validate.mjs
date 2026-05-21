@@ -512,6 +512,8 @@ if (existsSync(readmePath)) {
 }
 
 const requiredRepoFiles = [
+  ".editorconfig",
+  ".gitattributes",
   ".github/dependabot.yml",
   ".github/workflows/validate.yml",
   ".github/workflows/release-check.yml",
@@ -539,11 +541,27 @@ for (const file of requiredRepoFiles) {
 const contributingDoc = join(validationRoot, "CONTRIBUTING.md");
 if (existsSync(contributingDoc)) {
   const text = read(contributingDoc);
-  for (const phrase of ["default validate workflow", "Ubuntu with Node 20 and 22", "manual cross-platform workflow", "Ubuntu, macOS, and Windows with Node 20"]) {
+  for (const phrase of ["default validate workflow", "Ubuntu with Node 20 and 22", "manual cross-platform workflow", "Ubuntu, macOS, and Windows with Node 20", ".editorconfig", ".gitattributes"]) {
     if (!text.includes(phrase)) addFinding("WEAK_CONTRIBUTING_CI_DOC", `Contributing guide must accurately describe CI coverage: ${phrase}`, [contributingDoc]);
   }
   if (/CI runs the same checks on Linux, macOS, and Windows with Node 20 and 22/.test(text)) {
     addFinding("WEAK_CONTRIBUTING_CI_DOC", "Contributing guide must not imply every PR runs cross-platform Node 20/22 checks.", [contributingDoc]);
+  }
+}
+
+const editorconfigFile = join(validationRoot, ".editorconfig");
+if (existsSync(editorconfigFile)) {
+  const text = read(editorconfigFile);
+  for (const phrase of ["root = true", "charset = utf-8", "end_of_line = lf", "insert_final_newline = true", "trim_trailing_whitespace = true"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_REPO_FORMAT_CONFIG", `.editorconfig is missing required format rule: ${phrase}`, [editorconfigFile]);
+  }
+}
+
+const gitattributesFile = join(validationRoot, ".gitattributes");
+if (existsSync(gitattributesFile)) {
+  const text = read(gitattributesFile);
+  for (const phrase of ["* text=auto eol=lf", "*.png binary", "*.pdf binary"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_REPO_FORMAT_CONFIG", `.gitattributes is missing required normalization rule: ${phrase}`, [gitattributesFile]);
   }
 }
 

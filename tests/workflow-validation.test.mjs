@@ -613,6 +613,19 @@ test("validation rejects weak Dependabot config", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_DEPENDABOT_CONFIG/);
 });
 
+test("validation rejects weak repository format config", () => {
+  const dir = copyRepoFixture("framecore-validate-format-config-");
+  const editorconfig = join(dir, ".editorconfig");
+  const gitattributes = join(dir, ".gitattributes");
+
+  writeFileSync(editorconfig, readFileSync(editorconfig, "utf8").replace("end_of_line = lf", "end_of_line = crlf"));
+  writeFileSync(gitattributes, readFileSync(gitattributes, "utf8").replace("* text=auto eol=lf", "* text=auto"));
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_REPO_FORMAT_CONFIG/);
+});
+
 test("validation rejects weak issue template hygiene", () => {
   const dir = copyRepoFixture("framecore-validate-issue-template-");
   const config = join(dir, ".github/ISSUE_TEMPLATE/config.yml");

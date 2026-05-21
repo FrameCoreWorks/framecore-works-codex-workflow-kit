@@ -15,6 +15,8 @@ const allowedRoots = new Set([
 ]);
 
 const allowedRootFiles = new Set([
+  ".editorconfig",
+  ".gitattributes",
   "AGENTS.template.md",
   "CHANGELOG.md",
   "CODE_OF_CONDUCT.md",

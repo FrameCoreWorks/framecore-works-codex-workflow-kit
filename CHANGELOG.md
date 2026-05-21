@@ -9,6 +9,7 @@
 - Added validation and tests for repository settings documentation so public maintenance guidance remains present and aligned with the repo safety model.
 - Strengthened public issue template hygiene and validation so support, bug, docs, and feature reports warn against posting sensitive data.
 - Added compatibility guidance for runtime requirements, operating systems, Codex assumptions, install modes, manifests, and support baseline.
+- Added repo formatting defaults through `.editorconfig`, `.gitattributes`, and validation coverage for cross-platform line-ending consistency.
 - Added public contract fixtures so every artifact schema has validated fixture coverage.
 - Added machine-checked `workflow.json` manifests for all public examples.
 - Added artifact schema registry validation for gate-required artifacts, templates, and example fixtures.

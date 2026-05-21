@@ -26,6 +26,8 @@
   ],
   "packageManager": "npm@10.9.2",
   "files": [
+    ".editorconfig",
+    ".gitattributes",
     ".agents/",
     ".codex/",
     "AGENTS.template.md",
