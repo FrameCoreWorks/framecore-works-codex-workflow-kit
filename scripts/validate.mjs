@@ -441,6 +441,7 @@ if (existsSync(artifactTemplates)) {
 
 const requiredDocs = [
   "docs/quickstart.md",
+  "docs/codex-assisted-install.md",
   "docs/troubleshooting.md",
   "docs/compatibility.md",
   "docs/provider-neutral-boundary.md",
@@ -490,6 +491,18 @@ if (existsSync(quickstartDoc)) {
   }
   if (!appearsInOrder(text, ["Run npm run check", "Run doctor/preflight", "Run onboarding", "Run install dry-run", "after onboarding", "Install project-local only"])) {
     addFinding("WEAK_INSTALL_PROMPT", "Codex-assisted quickstart must keep canonical order: check, doctor, onboarding, post-onboarding dry-run, project-local install.", [quickstartDoc]);
+  }
+}
+
+const codexAssistedInstallDoc = join(validationRoot, "docs/codex-assisted-install.md");
+if (existsSync(codexAssistedInstallDoc)) {
+  const text = read(codexAssistedInstallDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Purpose", "Paste-In Instruction", "What Codex Should Do", "Onboarding Questions", "Stop Conditions", "Expected Result"]) {
+    if (!sections.has(section)) addFinding("WEAK_CODEX_ASSISTED_INSTALL_DOC", `Codex-assisted install guide is missing required section: ${section}`, [codexAssistedInstallDoc]);
+  }
+  for (const phrase of ["temporary or tools folder", "guided project-local installer", "manual fallback", "Run onboarding", "Run install dry-run", "Install project-local only", "Do not use global install", "delivery upload behavior", "optional full Hipson expansion", "stop and ask the user", "user-owned file conflicts", "external execution tools", "AGENTS.framecore.md"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_CODEX_ASSISTED_INSTALL_DOC", `Codex-assisted install guide is missing required safety phrase: ${phrase}`, [codexAssistedInstallDoc]);
   }
 }
 

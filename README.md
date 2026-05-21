@@ -8,7 +8,7 @@ Licensed under Apache-2.0. See [NOTICE](NOTICE) for redistribution notice detail
 From the Codex workspace where you want to install the kit, give Codex this instruction:
 
 ```text
-Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git into a temporary or tools folder, read its README, then install it into my current workspace.
+Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git into a temporary or tools folder, read its README and docs/codex-assisted-install.md, then install it into my current workspace.
 
 Follow this order:
 1. Run the guided project-local installer if available.
@@ -37,6 +37,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: l
 ## Start Here
 
 - New to the kit: read [Quickstart](docs/quickstart.md).
+- Installing by pasting a GitHub link into Codex: read [Codex-Assisted Install](docs/codex-assisted-install.md).
 - Installation failed or produced an unexpected result: read [Troubleshooting](docs/troubleshooting.md).
 - Checking supported environments and install modes: read [Compatibility](docs/compatibility.md).
 - Want the mental model first: read [Architecture](docs/architecture.md).
@@ -238,6 +239,7 @@ node scripts/install.mjs --help
 See also:
 
 - [Quickstart](docs/quickstart.md)
+- [Codex-Assisted Install](docs/codex-assisted-install.md)
 - [Troubleshooting](docs/troubleshooting.md)
 - [Compatibility](docs/compatibility.md)
 - [Provider-Neutral Boundary](docs/provider-neutral-boundary.md)

@@ -685,6 +685,21 @@ test("validation rejects weak onboarding guide and assisted install prompt", () 
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_INSTALL_PROMPT/);
 });
 
+test("validation rejects weak Codex-assisted install guide", () => {
+  const dir = copyRepoFixture("framecore-validate-codex-assisted-install-");
+  const doc = join(dir, "docs/codex-assisted-install.md");
+  writeFileSync(
+    doc,
+    readFileSync(doc, "utf8")
+      .replace("## Stop Conditions", "## Notes")
+      .replace("Install project-local only", "Install")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_CODEX_ASSISTED_INSTALL_DOC/);
+});
+
 test("validation rejects weak compatibility documentation", () => {
   const dir = copyRepoFixture("framecore-validate-compatibility-");
   const compatibilityDoc = join(dir, "docs/compatibility.md");

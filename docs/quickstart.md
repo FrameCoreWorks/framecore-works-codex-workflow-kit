@@ -139,10 +139,12 @@ node scripts/install.mjs --mode global --confirm-global
 
 ## Codex-Assisted Quickstart
 
+For the full assistant-facing guide, read [Codex-Assisted Install](codex-assisted-install.md).
+
 From the Codex workspace where you want to install the kit, paste this instruction:
 
 ```text
-Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git into a temporary or tools folder, read its README and docs/quickstart.md, then install it into my current workspace.
+Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git into a temporary or tools folder, read its README, docs/quickstart.md, and docs/codex-assisted-install.md, then install it into my current workspace.
 
 Follow this order:
 1. Run the guided project-local installer if available.

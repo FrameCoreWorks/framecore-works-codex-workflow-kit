@@ -18,6 +18,7 @@
 - Added release-readiness checks for package metadata, changelog coverage, and optional tag/version alignment.
 - Added provider-neutral boundary documentation for built-in image generation, coded-video guidance, optional adapters, and release gates.
 - Added a v1.0 readiness checklist covering install lifecycle, onboarding, examples, docs, validation gates, halt conditions, and sign-off.
+- Added a dedicated Codex-assisted install guide with paste-in instructions, expected onboarding questions, stop conditions, and expected result.
 - Added explicit first-run onboarding questions for delivery behavior while keeping external delivery integrations out of the public kit.
 - Added public contract fixtures so every artifact schema has validated fixture coverage.
 - Added machine-checked `workflow.json` manifests for all public examples.
