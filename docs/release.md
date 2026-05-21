@@ -32,7 +32,7 @@ This project uses GitHub releases as the public release record. npm publication 
 6. Inspect package contents when you want the raw npm dry-run list:
 
    ```bash
-   npm pack --dry-run
+   npm run package:list
    ```
 
 7. Confirm the package contains only intended source, docs, examples, scripts, tests, and config files.
@@ -52,6 +52,7 @@ npm run validate
 npm test
 npm run check
 npm run package:audit
+npm run package:list
 npm run release:check
 npm pack --dry-run
 ```
@@ -64,7 +65,7 @@ Run the manual `cross-platform` workflow before a public version tag, after chan
 
 Review the `npm run package:audit` result before each release. The package should contain source skills, agent templates, config examples, docs, examples, scripts, and tests. It should not contain local configs, generated outputs, caches, backups, machine metadata, archives, logs, or user-specific files.
 
-`package:audit` parses `npm pack --json --dry-run` with a temporary npm cache and rejects unexpected package roots or forbidden package file patterns. Use `npm pack --dry-run` only when you want to manually inspect the raw npm file list.
+`package:audit` parses `npm pack --json --dry-run` with a temporary npm cache and rejects unexpected package roots or forbidden package file patterns. Use `npm run package:list` when you want to manually inspect the raw npm file list with the same temporary-cache behavior. Use plain `npm pack --dry-run` only when you intentionally want to test your local npm cache as well.
 
 Example folders should include their `workflow.json` manifests. These are source fixtures used by validation, not generated outputs.
 
@@ -113,6 +114,8 @@ After the tag workflow passes, create a GitHub release from the tag. Release not
 - validation or privacy audit changes
 - known limitations
 - links to `README.md`, `docs/quickstart.md`, and `docs/troubleshooting.md`
+
+Use [Release Notes Template](release-notes-template.md) to keep release notes consistent.
 
 Do not paste secrets, private URLs, local paths, private project names, or generated confidential outputs into release notes.
 

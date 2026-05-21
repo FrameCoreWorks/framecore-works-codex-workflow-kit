@@ -16,6 +16,23 @@ Do not include vulnerability details, exploit steps, private URLs, credentials, 
 
 If private vulnerability reporting is unavailable, open a minimal public issue asking for a private security contact path. Do not include sensitive technical details in that issue.
 
+## Response Process
+
+Maintainers should acknowledge valid private reports as soon as practical, triage whether the issue affects installer safety, privacy, package contents, workflow files, or documentation, and keep sensitive details out of public issues until a fix is available.
+
+Security fixes should include the smallest useful patch, relevant tests or validation updates, and release notes that describe impact without exposing exploit details or private data.
+
+## Useful Evidence
+
+Useful private report details include:
+
+- affected version, tag, or commit SHA
+- operating system and Node.js version
+- sanitized command sequence
+- sanitized finding codes or error output
+- expected behavior and actual behavior
+- whether the issue occurs during install, update, repair, uninstall, validation, packaging, or GitHub Actions
+
 ## Release Checks
 
 Run before publishing:

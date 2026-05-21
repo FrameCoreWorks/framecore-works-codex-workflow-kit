@@ -12,6 +12,8 @@
 - Added repo formatting defaults through `.editorconfig`, `.gitattributes`, and validation coverage for cross-platform line-ending consistency.
 - Added an Apache-2.0 `NOTICE` file and validation coverage for redistribution notice hygiene.
 - Added roadmap documentation for current scope, known limitations, v1.0 readiness, non-goals, and release discipline.
+- Added a public-safe release notes template and validation coverage for release-note hygiene.
+- Added a temporary-cache package listing command plus clearer support and security reporting guidance.
 - Added public contract fixtures so every artifact schema has validated fixture coverage.
 - Added machine-checked `workflow.json` manifests for all public examples.
 - Added artifact schema registry validation for gate-required artifacts, templates, and example fixtures.

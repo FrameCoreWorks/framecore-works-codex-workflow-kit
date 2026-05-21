@@ -239,6 +239,7 @@ See also:
 - [Troubleshooting](docs/troubleshooting.md)
 - [Compatibility](docs/compatibility.md)
 - [Release Guide](docs/release.md)
+- [Release Notes Template](docs/release-notes-template.md)
 - [Roadmap](docs/roadmap.md)
 - [Architecture](docs/architecture.md)
 - [Artifact Schemas](docs/artifact-schemas.md)

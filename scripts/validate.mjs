@@ -445,6 +445,7 @@ const requiredDocs = [
   "docs/compatibility.md",
   "docs/roadmap.md",
   "docs/release.md",
+  "docs/release-notes-template.md",
   "docs/architecture.md",
   "docs/artifact-schemas.md",
   "docs/workflow-stages.md",
@@ -510,6 +511,18 @@ if (existsSync(roadmapDoc)) {
   }
 }
 
+const releaseNotesTemplate = join(validationRoot, "docs/release-notes-template.md");
+if (existsSync(releaseNotesTemplate)) {
+  const text = read(releaseNotesTemplate);
+  const sections = markdownSections(text);
+  for (const section of ["Version", "Summary", "Install And Update Notes", "Onboarding Notes", "Workflow Changes", "Validation And Package Checks", "Security And Privacy Review", "Known Limitations", "Links"]) {
+    if (!sections.has(section)) addFinding("WEAK_RELEASE_NOTES_TEMPLATE", `Release notes template is missing required section: ${section}`, [releaseNotesTemplate]);
+  }
+  for (const phrase of ["provider-neutral", "project-local", "npm run release:check", "npm run package:audit", "npm run package:list", "npm pack --dry-run", "No secrets", "No bundled external paid execution providers", "GPT Image 2", "Full Hipson remains separate and optional"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_RELEASE_NOTES_TEMPLATE", `Release notes template is missing required release-safety phrase: ${phrase}`, [releaseNotesTemplate]);
+  }
+}
+
 const readmePath = join(validationRoot, "README.md");
 if (existsSync(readmePath)) {
   const text = read(readmePath);
@@ -545,6 +558,7 @@ const requiredRepoFiles = [
   "config/artifact-schemas.json",
   "scripts/doctor.mjs",
   "scripts/guided-install.mjs",
+  "scripts/package-list.mjs",
   "scripts/package-audit.mjs",
   "scripts/manifest.mjs"
 ];
@@ -626,6 +640,30 @@ if (existsSync(releaseDoc)) {
   }
 }
 
+const supportDoc = join(validationRoot, "SUPPORT.md");
+if (existsSync(supportDoc)) {
+  const text = read(supportDoc);
+  const sections = markdownSections(text);
+  for (const section of ["What To Include"]) {
+    if (!sections.has(section)) addFinding("WEAK_SUPPORT_DOC", `Support guide is missing required section: ${section}`, [supportDoc]);
+  }
+  for (const phrase of ["kit version", "operating system", "Node.js version", "install mode", "sanitized output", ".framecore/manifest.json", "SECURITY.md"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_SUPPORT_DOC", `Support guide is missing required triage phrase: ${phrase}`, [supportDoc]);
+  }
+}
+
+const securityDoc = join(validationRoot, "SECURITY.md");
+if (existsSync(securityDoc)) {
+  const text = read(securityDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Supported Versions", "Reporting A Vulnerability", "Response Process", "Useful Evidence", "Release Checks", "Scope"]) {
+    if (!sections.has(section)) addFinding("WEAK_SECURITY_DOC", `Security guide is missing required section: ${section}`, [securityDoc]);
+  }
+  for (const phrase of ["private vulnerability reporting", "acknowledge", "sanitized", "version, tag, or commit SHA", "operating system and Node.js version"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_SECURITY_DOC", `Security guide is missing required reporting phrase: ${phrase}`, [securityDoc]);
+  }
+}
+
 const repositorySettingsDoc = join(validationRoot, "docs/repository-settings.md");
 if (existsSync(repositorySettingsDoc)) {
   const text = read(repositorySettingsDoc);
@@ -647,6 +685,9 @@ if (existsSync(packageJsonPath)) {
   }
   if (!String(scripts["package:audit"] ?? "").includes("scripts/package-audit.mjs")) {
     addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json must expose package:audit using scripts/package-audit.mjs.", [packageJsonPath]);
+  }
+  if (!String(scripts["package:list"] ?? "").includes("scripts/package-list.mjs")) {
+    addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json must expose package:list using scripts/package-list.mjs.", [packageJsonPath]);
   }
 }
 

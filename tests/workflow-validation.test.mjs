@@ -199,6 +199,7 @@ test("cli scripts expose non-mutating help output", () => {
       "scripts/render-agents.mjs",
       "scripts/validate.mjs",
       "scripts/audit-privacy.mjs",
+      "scripts/package-list.mjs",
       "scripts/package-audit.mjs",
       "scripts/cleanup-appledouble.mjs",
     ]) {
@@ -695,6 +696,21 @@ test("validation rejects weak roadmap documentation", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_ROADMAP_DOC/);
 });
 
+test("validation rejects weak release notes template", () => {
+  const dir = copyRepoFixture("framecore-validate-release-notes-template-");
+  const template = join(dir, "docs/release-notes-template.md");
+  writeFileSync(
+    template,
+    readFileSync(template, "utf8")
+      .replace("## Security And Privacy Review", "## Review")
+      .replace("No bundled external paid execution providers", "External providers")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_RELEASE_NOTES_TEMPLATE/);
+});
+
 test("validation rejects weak release readiness docs and workflow safety", () => {
   const dir = copyRepoFixture("framecore-validate-release-weak-");
   const releaseDoc = join(dir, "docs/release.md");
@@ -725,6 +741,29 @@ test("validation rejects weak release readiness docs and workflow safety", () =>
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_RELEASE_CHECK_SCRIPT/);
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_RELEASE_WORKFLOW/);
   assert.match(`${result.stderr}${result.stdout}`, /UNSAFE_RELEASE_WORKFLOW/);
+});
+
+test("validation rejects weak support and security docs", () => {
+  const dir = copyRepoFixture("framecore-validate-support-security-");
+  const supportDoc = join(dir, "SUPPORT.md");
+  const securityDoc = join(dir, "SECURITY.md");
+  writeFileSync(
+    supportDoc,
+    readFileSync(supportDoc, "utf8")
+      .replace("## What To Include", "## Details")
+      .replace("Node.js version", "runtime version")
+  );
+  writeFileSync(
+    securityDoc,
+    readFileSync(securityDoc, "utf8")
+      .replace("## Response Process", "## Handling")
+      .replace("version, tag, or commit SHA", "version")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_SUPPORT_DOC/);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_SECURITY_DOC/);
 });
 
 test("validation rejects weak repository settings documentation", () => {
