@@ -39,6 +39,7 @@ Briefly describe what changed and who benefits from the release.
 Confirm these passed before publishing:
 
 - `npm run release:check`
+- `npm run release:readiness`
 - `npm run package:audit`
 - `npm run package:list`
 - `npm pack --dry-run`

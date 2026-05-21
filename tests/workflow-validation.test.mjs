@@ -201,6 +201,7 @@ test("cli scripts expose non-mutating help output", () => {
       "scripts/audit-privacy.mjs",
       "scripts/package-list.mjs",
       "scripts/package-audit.mjs",
+      "scripts/release-readiness.mjs",
       "scripts/cleanup-appledouble.mjs",
     ]) {
       const output = run([script, "--help", "--target", dir]);
@@ -215,6 +216,24 @@ test("cli scripts expose non-mutating help output", () => {
   } finally {
     rmSync(sidecar, { force: true });
   }
+});
+
+test("release readiness validates package metadata, changelog, and tag alignment", () => {
+  assert.match(run(["scripts/release-readiness.mjs", "--tag", "v0.1.0"]), /release readiness passed/);
+
+  const dir = copyRepoFixture("framecore-release-readiness-");
+  const packageJson = join(dir, "package.json");
+  const pkg = JSON.parse(readFileSync(packageJson, "utf8"));
+  pkg.version = "0.2.0";
+  writeFileSync(packageJson, `${JSON.stringify(pkg, null, 2)}\n`);
+
+  const missingChangelog = failRun(["scripts/release-readiness.mjs"], { cwd: dir });
+  assert.notEqual(missingChangelog.status, 0);
+  assert.match(combinedOutput(missingChangelog), /CHANGELOG\.md must contain a release entry/);
+
+  const tagMismatch = failRun(["scripts/release-readiness.mjs", "--tag", "v0.1.0"], { cwd: dir });
+  assert.notEqual(tagMismatch.status, 0);
+  assert.match(combinedOutput(tagMismatch), /release tag v0\.1\.0 must match package version v0\.2\.0/);
 });
 
 test("doctor passes clean target without mutating or leaking target path", () => {

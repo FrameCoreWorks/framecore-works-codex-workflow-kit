@@ -14,6 +14,7 @@
 - Added roadmap documentation for current scope, known limitations, v1.0 readiness, non-goals, and release discipline.
 - Added a public-safe release notes template and validation coverage for release-note hygiene.
 - Added a temporary-cache package listing command plus clearer support and security reporting guidance.
+- Added release-readiness checks for package metadata, changelog coverage, and optional tag/version alignment.
 - Added public contract fixtures so every artifact schema has validated fixture coverage.
 - Added machine-checked `workflow.json` manifests for all public examples.
 - Added artifact schema registry validation for gate-required artifacts, templates, and example fixtures.

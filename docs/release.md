@@ -23,6 +23,12 @@ This project uses GitHub releases as the public release record. npm publication 
    npm run release:check
    ```
 
+   For a tag-specific local check before creating a GitHub release:
+
+   ```bash
+   npm run release:readiness -- --tag v0.1.0
+   ```
+
 5. Audit package contents:
 
    ```bash
@@ -53,11 +59,14 @@ npm test
 npm run check
 npm run package:audit
 npm run package:list
+npm run release:readiness
 npm run release:check
 npm pack --dry-run
 ```
 
 The release-check workflow must remain non-publishing, read-only, and secret-free. It should verify the same local gate a maintainer runs before release.
+
+`release:readiness` checks package metadata, required package file roots, changelog coverage for the package version, and optional release tag alignment. In GitHub tag workflows, the tag must match `v` plus the `package.json` version.
 
 Run the manual `cross-platform` workflow before a public version tag, after changes to installer behavior, path handling, manifest handling, onboarding, validation scripts, or package contents. The default `validate` workflow stays Linux-only for fast push feedback; the manual cross-platform workflow checks Ubuntu, macOS, Windows, tests, and package audit without making every commit depend on all hosted runner families.
 

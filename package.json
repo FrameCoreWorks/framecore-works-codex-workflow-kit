@@ -62,7 +62,8 @@
     "package:audit": "node scripts/package-audit.mjs",
     "package:list": "node scripts/package-list.mjs",
     "render:agents": "node scripts/render-agents.mjs",
-    "release:check": "npm run check && npm run package:audit",
+    "release:readiness": "node scripts/release-readiness.mjs",
+    "release:check": "npm run check && npm run package:audit && npm run release:readiness",
     "test": "node --test",
     "validate": "node scripts/validate.mjs",
     "check": "npm run audit:privacy && npm run validate && npm test"
