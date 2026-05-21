@@ -26,3 +26,5 @@ jobs:
         run: npm run validate
       - name: Tests
         run: npm test
+      - name: Package audit
+        run: npm run package:audit

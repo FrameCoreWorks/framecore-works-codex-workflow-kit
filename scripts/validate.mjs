@@ -602,8 +602,8 @@ if (existsSync(releaseWorkflow)) {
 const crossPlatformWorkflow = join(validationRoot, ".github/workflows/cross-platform.yml");
 if (existsSync(crossPlatformWorkflow)) {
   const text = read(crossPlatformWorkflow);
-  if (!text.includes("workflow_dispatch") || !text.includes("ubuntu-latest") || !text.includes("macos-latest") || !text.includes("windows-latest") || !/permissions:\s*\n\s*contents:\s*read/.test(text)) {
-    addFinding("WEAK_CROSS_PLATFORM_WORKFLOW", "cross-platform workflow must be manual, read-only, and cover Ubuntu, macOS, and Windows.", [crossPlatformWorkflow]);
+  if (!text.includes("workflow_dispatch") || !text.includes("ubuntu-latest") || !text.includes("macos-latest") || !text.includes("windows-latest") || !text.includes("npm run package:audit") || !/permissions:\s*\n\s*contents:\s*read/.test(text)) {
+    addFinding("WEAK_CROSS_PLATFORM_WORKFLOW", "cross-platform workflow must be manual, read-only, cover Ubuntu, macOS, and Windows, and run package audit.", [crossPlatformWorkflow]);
   }
   if (unsafeWorkflowPatterns.some((pattern) => pattern.test(text))) {
     addFinding("UNSAFE_CROSS_PLATFORM_WORKFLOW", "cross-platform workflow must not publish, upload artifacts, use secrets, or request write permissions.", [crossPlatformWorkflow]);

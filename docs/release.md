@@ -58,7 +58,7 @@ npm pack --dry-run
 
 The release-check workflow must remain non-publishing, read-only, and secret-free. It should verify the same local gate a maintainer runs before release.
 
-Run the manual `cross-platform` workflow before a public version tag, after changes to installer behavior, path handling, manifest handling, onboarding, or validation scripts. The default `validate` workflow stays Linux-only for fast push feedback; the manual cross-platform workflow checks Ubuntu, macOS, and Windows without making every commit depend on all hosted runner families.
+Run the manual `cross-platform` workflow before a public version tag, after changes to installer behavior, path handling, manifest handling, onboarding, validation scripts, or package contents. The default `validate` workflow stays Linux-only for fast push feedback; the manual cross-platform workflow checks Ubuntu, macOS, Windows, tests, and package audit without making every commit depend on all hosted runner families.
 
 ## Package Contents Review
 
