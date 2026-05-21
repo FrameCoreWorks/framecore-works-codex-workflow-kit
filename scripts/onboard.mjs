@@ -37,8 +37,8 @@ What will be installed project-locally:
 - skills and templates for briefs, reference packs, prompt packs, review gates, and manifests
 - Humanizer for natural rewriting and voice polish
 - HyperFrames workflow knowledge for coded video planning
-- validation and privacy audit scripts
 - a local framecore.config.json with your preferences
+- a local manifest so update, repair, and uninstall know what FrameCore manages
 
 How this improves your work:
 - Codex starts by confirming the task instead of rushing into output

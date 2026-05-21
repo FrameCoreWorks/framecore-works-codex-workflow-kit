@@ -39,14 +39,13 @@ node scripts/doctor.mjs --help
 
    You can also replace `$FRAMECORE_TARGET` in the commands below with the actual target path.
 
-4. Run preflight and preview the install:
+4. Run preflight:
 
    ```bash
    npm run doctor -- --target "$FRAMECORE_TARGET"
-   npm run install:dry-run -- --target "$FRAMECORE_TARGET"
    ```
 
-   The doctor command checks target readiness without writing files. Review the planned writes from dry run. The installer should report `would write` lines and should not create files during dry run.
+   The doctor command checks target readiness without writing files.
 
 5. Run onboarding:
 
@@ -62,19 +61,33 @@ node scripts/doctor.mjs --help
    node scripts/onboard.mjs --defaults --target "$FRAMECORE_TARGET"
    ```
 
-6. Install project-locally:
+6. Preview the install after onboarding:
+
+   ```bash
+   npm run install:dry-run -- --target "$FRAMECORE_TARGET"
+   ```
+
+   Review the planned writes from dry run. The installer should report `would write` lines and should not create managed workflow files during dry run.
+
+7. Install project-locally:
 
    ```bash
    node scripts/install.mjs --mode project-local --target "$FRAMECORE_TARGET"
    ```
 
-7. Review the installed files:
+8. Review the installed files:
 
    ```bash
    find "$FRAMECORE_TARGET/.framecore" "$FRAMECORE_TARGET/.agents" "$FRAMECORE_TARGET/.codex" -maxdepth 3 -type f | sort
    ```
 
-8. Open the target project in Codex and ask it to read the project instructions. If your target already had `AGENTS.md`, read both `AGENTS.md` and `AGENTS.framecore.md`.
+   PowerShell equivalent:
+
+   ```powershell
+   Get-ChildItem "$env:FRAMECORE_TARGET/.framecore", "$env:FRAMECORE_TARGET/.agents", "$env:FRAMECORE_TARGET/.codex" -Recurse -File | Sort-Object FullName
+   ```
+
+9. Open the target project in Codex and ask it to read the project instructions. If your target already had `AGENTS.md`, read both `AGENTS.md` and `AGENTS.framecore.md`.
 
 ## Codex-Assisted Quickstart
 
@@ -85,15 +98,26 @@ Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git i
 
 Follow this order:
 1. Run npm run check in the kit repo.
-2. Run install dry-run against my current workspace.
+2. Run doctor/preflight against my current workspace.
 3. Run onboarding for my current workspace.
-4. Install project-local only.
-5. Show me the changed files and the final installed tree.
+4. Run install dry-run against my current workspace after onboarding.
+5. Install project-local only.
+6. Show me the changed files and the final installed tree.
 
 Do not use global install and do not enable external execution tools unless I explicitly ask for them.
 ```
 
 Codex should stop if dry run reports user-owned file conflicts. Resolve those conflicts intentionally before running the real install.
+
+## PowerShell Target Setup
+
+On Windows PowerShell, set the target path like this:
+
+```powershell
+$env:FRAMECORE_TARGET = "C:\path\to\your\project"
+```
+
+Then run the same `npm` and `node` commands from this guide.
 
 ## Expected Installed Tree
 

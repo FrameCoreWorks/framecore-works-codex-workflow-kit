@@ -530,6 +530,22 @@ test("validation rejects missing release readiness files", () => {
   assert.match(`${result.stderr}${result.stdout}`, /MISSING_REPO_FILE/);
 });
 
+test("validation rejects weak onboarding guide and assisted install prompt", () => {
+  const dir = copyRepoFixture("framecore-validate-onboarding-docs-");
+  const readme = join(dir, "README.md");
+  const onboardingDoc = join(dir, "docs/onboarding.md");
+  const quickstartDoc = join(dir, "docs/quickstart.md");
+  writeFileSync(readme, readFileSync(readme, "utf8").replace("2. Run doctor/preflight", "2. Run install dry-run"));
+  writeFileSync(onboardingDoc, readFileSync(onboardingDoc, "utf8").replace("## Interactive Questions", "## Setup Questions"));
+  writeFileSync(quickstartDoc, readFileSync(quickstartDoc, "utf8").replace("project-local only", "project-local"));
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_README_INSTALL_PROMPT/);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_ONBOARDING_DOC/);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_INSTALL_PROMPT/);
+});
+
 test("validation rejects weak release readiness docs and workflow safety", () => {
   const dir = copyRepoFixture("framecore-validate-release-weak-");
   const releaseDoc = join(dir, "docs/release.md");
@@ -657,6 +673,8 @@ test("interactive onboarding explains the workflow and can keep default role nam
   assert.match(result.stdout, /This installer adds a structured creative workflow/);
   assert.match(result.stdout, /How this improves your work/);
   assert.match(result.stdout, /Hipson in this setup/);
+  assert.match(result.stdout, /local manifest/);
+  assert.doesNotMatch(result.stdout, /validation and privacy audit scripts/);
   assert.match(result.stdout, /Use default role names/);
   const config = JSON.parse(readFileSync(join(dir, "framecore.config.json"), "utf8"));
   assert.deepEqual(config.agent_display_names, {});

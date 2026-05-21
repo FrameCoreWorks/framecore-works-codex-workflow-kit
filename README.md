@@ -10,9 +10,10 @@ Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git i
 
 Follow this order:
 1. Run the repository checks.
-2. Run install dry-run against my current workspace.
+2. Run doctor/preflight against my current workspace.
 3. Run onboarding for my current workspace.
-4. Install project-local only.
+4. Run install dry-run against my current workspace after onboarding.
+5. Install project-local only.
 
 Do not use global install and do not enable external execution tools unless I explicitly ask for them.
 ```
@@ -72,14 +73,13 @@ Public docs and source assets are English. Installed workspaces can still use lo
    npm run check
    ```
 
-3. Run preflight and dry run:
+3. Run preflight:
 
    ```bash
    npm run doctor -- --target /path/to/your/project
-   npm run install:dry-run -- --target /path/to/your/project
    ```
 
-4. Review the preflight result and planned writes. The installer refuses to overwrite user-owned files by default.
+4. Review the preflight result. The installer refuses to overwrite user-owned files by default.
 
 5. Run onboarding:
 
@@ -87,7 +87,13 @@ Public docs and source assets are English. Installed workspaces can still use lo
    node scripts/onboard.mjs --target /path/to/your/project
    ```
 
-6. Install project-local:
+6. Run dry run after onboarding so rendered agents use the final local config:
+
+   ```bash
+   npm run install:dry-run -- --target /path/to/your/project
+   ```
+
+7. Install project-local:
 
    ```bash
    node scripts/install.mjs --mode project-local --target /path/to/your/project

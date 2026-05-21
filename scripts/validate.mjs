@@ -132,6 +132,16 @@ function artifactFieldSet(text) {
   return new Set([...text.matchAll(/^-\s+([A-Za-z][A-Za-z0-9_ /-]*):/gm)].map((match) => match[1].trim()));
 }
 
+function appearsInOrder(text, phrases) {
+  let index = -1;
+  for (const phrase of phrases) {
+    const nextIndex = text.indexOf(phrase, index + 1);
+    if (nextIndex === -1) return false;
+    index = nextIndex;
+  }
+  return true;
+}
+
 function isPublicFixturePath(value) {
   if (typeof value !== "string") return false;
   if (!value.startsWith("examples/") || !value.endsWith(".md")) return false;
@@ -400,6 +410,33 @@ const requiredDocs = [
 ];
 for (const doc of requiredDocs) {
   if (!existsSync(join(validationRoot, doc))) addFinding("MISSING_DOC", `Required documentation file is missing: ${doc}`, [join(validationRoot, doc)]);
+}
+
+const onboardingDoc = join(validationRoot, "docs/onboarding.md");
+if (existsSync(onboardingDoc)) {
+  const sections = markdownSections(read(onboardingDoc));
+  for (const section of ["Purpose", "Defaults", "Interactive Questions", "Installed Files", "Hipson Adapter And Full Hipson", "Safety Boundaries", "Generated Files"]) {
+    if (!sections.has(section)) addFinding("WEAK_ONBOARDING_DOC", `Onboarding guide is missing required section: ${section}`, [onboardingDoc]);
+  }
+}
+
+const quickstartDoc = join(validationRoot, "docs/quickstart.md");
+if (existsSync(quickstartDoc)) {
+  const text = read(quickstartDoc);
+  for (const phrase of ["## Codex-Assisted Quickstart", "temporary or tools folder", "npm run check", "doctor/preflight", "onboarding", "install dry-run", "after onboarding", "project-local only", "Do not use global install", "Show me the changed files", "PowerShell"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_INSTALL_PROMPT", `Codex-assisted quickstart is missing required safety phrase: ${phrase}`, [quickstartDoc]);
+  }
+  if (!appearsInOrder(text, ["Run npm run check", "Run doctor/preflight", "Run onboarding", "Run install dry-run", "after onboarding", "Install project-local only"])) {
+    addFinding("WEAK_INSTALL_PROMPT", "Codex-assisted quickstart must keep canonical order: check, doctor, onboarding, post-onboarding dry-run, project-local install.", [quickstartDoc]);
+  }
+}
+
+const readmePath = join(validationRoot, "README.md");
+if (existsSync(readmePath)) {
+  const text = read(readmePath);
+  if (!appearsInOrder(text, ["Run the repository checks", "Run doctor/preflight", "Run onboarding", "Run install dry-run", "after onboarding", "Install project-local only"])) {
+    addFinding("WEAK_README_INSTALL_PROMPT", "README install prompt must keep canonical order: check, doctor, onboarding, post-onboarding dry-run, project-local install.", [readmePath]);
+  }
 }
 
 const requiredRepoFiles = [

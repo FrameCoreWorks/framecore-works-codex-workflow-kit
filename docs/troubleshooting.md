@@ -18,6 +18,23 @@ Use the failure category to decide the next step:
 - `validate` failure: a required agent template, skill file, pipeline reference, gate, handoff, artifact template, or text-image policy marker is missing or inconsistent.
 - `npm test` failure: inspect the named test and keep fixes focused on the behavior under test.
 
+## `npm pack --dry-run` Fails With A Cache Error
+
+Some local npm caches can fail independently of the package contents. Retry with a temporary cache:
+
+```bash
+NPM_CONFIG_CACHE=/tmp/framecore-npm-cache npm pack --dry-run
+```
+
+PowerShell equivalent:
+
+```powershell
+$env:NPM_CONFIG_CACHE = "$env:TEMP\framecore-npm-cache"
+npm pack --dry-run
+```
+
+If this passes, the package contents are valid and the failure is local npm cache state. Clear or replace the default npm cache before release work.
+
 ## Privacy Audit Categories
 
 The privacy audit is intentionally strict for public-source safety. Common categories:
