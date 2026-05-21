@@ -528,6 +528,7 @@ const requiredRepoFiles = [
   "SECURITY.md",
   "SUPPORT.md",
   "CODE_OF_CONDUCT.md",
+  "NOTICE",
   "config/artifact-schemas.json",
   "scripts/doctor.mjs",
   "scripts/guided-install.mjs",
@@ -546,6 +547,14 @@ if (existsSync(contributingDoc)) {
   }
   if (/CI runs the same checks on Linux, macOS, and Windows with Node 20 and 22/.test(text)) {
     addFinding("WEAK_CONTRIBUTING_CI_DOC", "Contributing guide must not imply every PR runs cross-platform Node 20/22 checks.", [contributingDoc]);
+  }
+}
+
+const noticeFile = join(validationRoot, "NOTICE");
+if (existsSync(noticeFile)) {
+  const text = read(noticeFile);
+  for (const phrase of ["FrameCore Works: Creative Workflow Skill Kit for Codex", "Apache-2.0", "third-party notices"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_NOTICE_FILE", `NOTICE is missing required redistribution phrase: ${phrase}`, [noticeFile]);
   }
 }
 

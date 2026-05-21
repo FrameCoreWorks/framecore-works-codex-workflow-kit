@@ -626,6 +626,16 @@ test("validation rejects weak repository format config", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_REPO_FORMAT_CONFIG/);
 });
 
+test("validation rejects weak NOTICE file", () => {
+  const dir = copyRepoFixture("framecore-validate-notice-");
+  const notice = join(dir, "NOTICE");
+  writeFileSync(notice, "FrameCore Works\n");
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_NOTICE_FILE/);
+});
+
 test("validation rejects weak issue template hygiene", () => {
   const dir = copyRepoFixture("framecore-validate-issue-template-");
   const config = join(dir, ".github/ISSUE_TEMPLATE/config.yml");

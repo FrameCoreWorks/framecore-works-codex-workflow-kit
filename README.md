@@ -3,6 +3,8 @@
 [![validate](https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/actions/workflows/validate.yml/badge.svg)](https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/actions/workflows/validate.yml)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
 
+Licensed under Apache-2.0. See [NOTICE](NOTICE) for redistribution notice details.
+
 From the Codex workspace where you want to install the kit, give Codex this instruction:
 
 ```text

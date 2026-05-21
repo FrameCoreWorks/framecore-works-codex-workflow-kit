@@ -22,6 +22,7 @@ const allowedRootFiles = new Set([
   "CODE_OF_CONDUCT.md",
   "CONTRIBUTING.md",
   "LICENSE",
+  "NOTICE",
   "README.md",
   "SECURITY.md",
   "SUPPORT.md",
