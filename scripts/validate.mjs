@@ -444,6 +444,7 @@ const requiredDocs = [
   "docs/troubleshooting.md",
   "docs/compatibility.md",
   "docs/provider-neutral-boundary.md",
+  "docs/v1-readiness.md",
   "docs/roadmap.md",
   "docs/release.md",
   "docs/release-notes-template.md",
@@ -513,6 +514,18 @@ if (existsSync(providerNeutralDoc)) {
   }
   for (const phrase of ["external paid media-provider clients", "provider CLIs", "endpoint catalogs", "provider credentials", "API-key setup flows", "GPT Image 2", "HyperFrames", "Full Hipson remains separate and optional", "config/provider-neutral-policy.json"]) {
     if (!text.includes(phrase)) addFinding("WEAK_PROVIDER_NEUTRAL_BOUNDARY_DOC", `Provider-neutral boundary guide is missing required boundary phrase: ${phrase}`, [providerNeutralDoc]);
+  }
+}
+
+const v1ReadinessDoc = join(validationRoot, "docs/v1-readiness.md");
+if (existsSync(v1ReadinessDoc)) {
+  const text = read(v1ReadinessDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Purpose", "Required State", "Install And Lifecycle", "Onboarding", "Examples", "Documentation", "Validation Gates", "Halt Conditions", "Sign-Off"]) {
+    if (!sections.has(section)) addFinding("WEAK_V1_READINESS_DOC", `v1.0 readiness guide is missing required section: ${section}`, [v1ReadinessDoc]);
+  }
+  for (const phrase of ["project-local install is the default", "global install is clearly marked advanced", "provider-neutral boundary is documented and validated", "GPT Image 2 one-pass policy", "Full Hipson remains separate and optional", "workflow.json", "npm run release:readiness -- --tag v1.0.0", "manual cross-platform GitHub Actions workflow", "Do not tag v1.0"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_V1_READINESS_DOC", `v1.0 readiness guide is missing required release-readiness phrase: ${phrase}`, [v1ReadinessDoc]);
   }
 }
 

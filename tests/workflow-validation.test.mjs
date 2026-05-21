@@ -715,6 +715,21 @@ test("validation rejects weak provider-neutral boundary documentation", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_PROVIDER_NEUTRAL_BOUNDARY_DOC/);
 });
 
+test("validation rejects weak v1 readiness documentation", () => {
+  const dir = copyRepoFixture("framecore-validate-v1-readiness-");
+  const v1ReadinessDoc = join(dir, "docs/v1-readiness.md");
+  writeFileSync(
+    v1ReadinessDoc,
+    readFileSync(v1ReadinessDoc, "utf8")
+      .replace("## Validation Gates", "## Checks")
+      .replace("npm run release:readiness -- --tag v1.0.0", "npm run release:readiness")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_V1_READINESS_DOC/);
+});
+
 test("validation rejects weak roadmap documentation", () => {
   const dir = copyRepoFixture("framecore-validate-roadmap-");
   const roadmapDoc = join(dir, "docs/roadmap.md");

@@ -47,7 +47,7 @@ Potential future work:
 
 ## v1.0 Readiness
 
-Before a v1.0 release, maintainers should confirm:
+Before a v1.0 release, maintainers should follow [v1.0 Readiness](v1-readiness.md) and confirm:
 
 - installation, update, repair, and uninstall behavior are stable across supported operating systems
 - onboarding copy is clear for beginner users

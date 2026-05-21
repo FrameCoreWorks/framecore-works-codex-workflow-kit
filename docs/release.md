@@ -15,9 +15,10 @@ This project uses GitHub releases as the public release record. npm publication 
 ## Pre-Release Checklist
 
 1. Confirm the version target and release scope.
-2. Update `package.json` version when the release changes the package version.
-3. Update `CHANGELOG.md` with user-visible changes, compatibility notes, and migration notes.
-4. Run the full local release check:
+2. For v1.0, complete [v1.0 Readiness](v1-readiness.md).
+3. Update `package.json` version when the release changes the package version.
+4. Update `CHANGELOG.md` with user-visible changes, compatibility notes, and migration notes.
+5. Run the full local release check:
 
    ```bash
    npm run release:check
@@ -29,25 +30,25 @@ This project uses GitHub releases as the public release record. npm publication 
    npm run release:readiness -- --tag v0.1.0
    ```
 
-5. Audit package contents:
+6. Audit package contents:
 
    ```bash
    npm run package:audit
    ```
 
-6. Inspect package contents when you want the raw npm dry-run list:
+7. Inspect package contents when you want the raw npm dry-run list:
 
    ```bash
    npm run package:list
    ```
 
-7. Confirm the package contains only intended source, docs, examples, scripts, tests, and config files.
-8. Confirm the privacy audit passes without allowlisting sensitive content.
-9. Confirm the text-bearing image policy still references native Codex/ChatGPT image generation powered by GPT Image 2.
-10. Confirm Hipson remains a lightweight adapter unless a user explicitly connects the separate full Hipson repo.
-11. Confirm public examples include validated `workflow.json` manifests.
-12. Confirm workflow self-improvement remains explicit-only and proposal-only.
-13. Confirm [Provider-Neutral Boundary](provider-neutral-boundary.md) still matches `config/provider-neutral-policy.json`.
+8. Confirm the package contains only intended source, docs, examples, scripts, tests, and config files.
+9. Confirm the privacy audit passes without allowlisting sensitive content.
+10. Confirm the text-bearing image policy still references native Codex/ChatGPT image generation powered by GPT Image 2.
+11. Confirm Hipson remains a lightweight adapter unless a user explicitly connects the separate full Hipson repo.
+12. Confirm public examples include validated `workflow.json` manifests.
+13. Confirm workflow self-improvement remains explicit-only and proposal-only.
+14. Confirm [Provider-Neutral Boundary](provider-neutral-boundary.md) still matches `config/provider-neutral-policy.json`.
 
 ## Required Checks
 

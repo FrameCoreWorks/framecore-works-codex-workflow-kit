@@ -41,6 +41,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: l
 - Checking supported environments and install modes: read [Compatibility](docs/compatibility.md).
 - Want the mental model first: read [Architecture](docs/architecture.md).
 - Want to understand current limits and planned direction: read [Roadmap](docs/roadmap.md).
+- Preparing for a stable public release: read [v1.0 Readiness](docs/v1-readiness.md).
 - Checking what provider-neutral allows and forbids: read [Provider-Neutral Boundary](docs/provider-neutral-boundary.md).
 - Want to compare workflow paths: open [Examples Index](examples/README.md).
 - Want to see a complete workflow specimen: open [End-To-End Creative Workflow Example](examples/end-to-end-creative-workflow/README.md).
@@ -240,6 +241,7 @@ See also:
 - [Troubleshooting](docs/troubleshooting.md)
 - [Compatibility](docs/compatibility.md)
 - [Provider-Neutral Boundary](docs/provider-neutral-boundary.md)
+- [v1.0 Readiness](docs/v1-readiness.md)
 - [Release Guide](docs/release.md)
 - [Release Notes Template](docs/release-notes-template.md)
 - [Roadmap](docs/roadmap.md)
