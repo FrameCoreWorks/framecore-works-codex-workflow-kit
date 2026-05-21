@@ -40,6 +40,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: l
 - Installation failed or produced an unexpected result: read [Troubleshooting](docs/troubleshooting.md).
 - Checking supported environments and install modes: read [Compatibility](docs/compatibility.md).
 - Want the mental model first: read [Architecture](docs/architecture.md).
+- Want to understand current limits and planned direction: read [Roadmap](docs/roadmap.md).
 - Want to compare workflow paths: open [Examples Index](examples/README.md).
 - Want to see a complete workflow specimen: open [End-To-End Creative Workflow Example](examples/end-to-end-creative-workflow/README.md).
 - Maintaining example routes: use each example's checked `workflow.json`.
@@ -238,6 +239,7 @@ See also:
 - [Troubleshooting](docs/troubleshooting.md)
 - [Compatibility](docs/compatibility.md)
 - [Release Guide](docs/release.md)
+- [Roadmap](docs/roadmap.md)
 - [Architecture](docs/architecture.md)
 - [Artifact Schemas](docs/artifact-schemas.md)
 - [Workflow Stages](docs/workflow-stages.md)

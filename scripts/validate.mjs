@@ -443,6 +443,7 @@ const requiredDocs = [
   "docs/quickstart.md",
   "docs/troubleshooting.md",
   "docs/compatibility.md",
+  "docs/roadmap.md",
   "docs/release.md",
   "docs/architecture.md",
   "docs/artifact-schemas.md",
@@ -494,6 +495,18 @@ if (existsSync(compatibilityDoc)) {
   }
   for (const phrase of ["Node.js 20 or newer", "macOS", "Linux", "Windows", ".codex/agents/*.toml", "project-local", "--confirm-global", ".framecore/manifest.json", "provider-neutral", "GPT Image 2"]) {
     if (!text.includes(phrase)) addFinding("WEAK_COMPATIBILITY_DOC", `Compatibility guide is missing required compatibility phrase: ${phrase}`, [compatibilityDoc]);
+  }
+}
+
+const roadmapDoc = join(validationRoot, "docs/roadmap.md");
+if (existsSync(roadmapDoc)) {
+  const text = read(roadmapDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Purpose", "Current Scope", "Known Limitations", "Near-Term Priorities", "Future Candidates", "v1.0 Readiness", "Non-Goals", "Release Discipline"]) {
+    if (!sections.has(section)) addFinding("WEAK_ROADMAP_DOC", `Roadmap is missing required section: ${section}`, [roadmapDoc]);
+  }
+  for (const phrase of ["provider-neutral", "project-local", "guided installer", "artifact schemas", "full Hipson", "v1.0", "no bundled external paid execution provider"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_ROADMAP_DOC", `Roadmap is missing required planning phrase: ${phrase}`, [roadmapDoc]);
   }
 }
 

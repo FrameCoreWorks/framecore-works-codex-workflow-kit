@@ -680,6 +680,21 @@ test("validation rejects weak compatibility documentation", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_COMPATIBILITY_DOC/);
 });
 
+test("validation rejects weak roadmap documentation", () => {
+  const dir = copyRepoFixture("framecore-validate-roadmap-");
+  const roadmapDoc = join(dir, "docs/roadmap.md");
+  writeFileSync(
+    roadmapDoc,
+    readFileSync(roadmapDoc, "utf8")
+      .replace("## Known Limitations", "## Notes")
+      .replace("project-local", "workspace")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_ROADMAP_DOC/);
+});
+
 test("validation rejects weak release readiness docs and workflow safety", () => {
   const dir = copyRepoFixture("framecore-validate-release-weak-");
   const releaseDoc = join(dir, "docs/release.md");
