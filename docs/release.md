@@ -51,6 +51,8 @@ npm pack --dry-run
 
 The release-check workflow must remain non-publishing, read-only, and secret-free. It should verify the same local gate a maintainer runs before release.
 
+Run the manual `cross-platform` workflow before a public version tag, after changes to installer behavior, path handling, manifest handling, onboarding, or validation scripts. The default `validate` workflow stays Linux-only for fast push feedback; the manual cross-platform workflow checks Ubuntu, macOS, and Windows without making every commit depend on all hosted runner families.
+
 ## Package Contents Review
 
 Review the `npm pack --dry-run` file list before each release. The package should contain source skills, agent templates, config examples, docs, examples, scripts, and tests. It should not contain local configs, generated outputs, caches, backups, machine metadata, or user-specific files.
@@ -109,6 +111,8 @@ Do not paste secrets, private URLs, local paths, private project names, or gener
 `.github/workflows/release-check.yml` is intentionally non-publishing. It runs on manual dispatch and version tags, uses read-only permissions, runs validation and packaging checks, and does not require repository secrets.
 
 If a future release process publishes to a registry, add that in a separate workflow with explicit maintainer review and documentation.
+
+`.github/workflows/cross-platform.yml` is intentionally manual. It is a smoke check for operating system portability, not a publishing or deployment workflow.
 
 ## Rollback
 

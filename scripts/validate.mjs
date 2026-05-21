@@ -405,6 +405,7 @@ for (const doc of requiredDocs) {
 const requiredRepoFiles = [
   ".github/workflows/validate.yml",
   ".github/workflows/release-check.yml",
+  ".github/workflows/cross-platform.yml",
   ".github/ISSUE_TEMPLATE/install_support.yml",
   ".github/pull_request_template.md",
   "CONTRIBUTING.md",
@@ -454,6 +455,28 @@ if (existsSync(releaseWorkflow)) {
   ];
   if (unsafePatterns.some((pattern) => pattern.test(text))) {
     addFinding("UNSAFE_RELEASE_WORKFLOW", "release-check workflow must not publish, upload artifacts, use secrets, or request write permissions.", [releaseWorkflow]);
+  }
+}
+
+const crossPlatformWorkflow = join(validationRoot, ".github/workflows/cross-platform.yml");
+if (existsSync(crossPlatformWorkflow)) {
+  const text = read(crossPlatformWorkflow);
+  if (!text.includes("workflow_dispatch") || !text.includes("ubuntu-latest") || !text.includes("macos-latest") || !text.includes("windows-latest") || !/permissions:\s*\n\s*contents:\s*read/.test(text)) {
+    addFinding("WEAK_CROSS_PLATFORM_WORKFLOW", "cross-platform workflow must be manual, read-only, and cover Ubuntu, macOS, and Windows.", [crossPlatformWorkflow]);
+  }
+  const unsafePatterns = [
+    /pull_request_target/,
+    /contents:\s*write/,
+    /id-token:\s*write/,
+    /packages:\s*write/,
+    /\bsecrets\./,
+    /\bnpm\s+publish\b/,
+    /\bgh\s+release\s+create\b/,
+    /softprops\/action-gh-release/,
+    /actions\/upload-artifact/,
+  ];
+  if (unsafePatterns.some((pattern) => pattern.test(text))) {
+    addFinding("UNSAFE_CROSS_PLATFORM_WORKFLOW", "cross-platform workflow must not publish, upload artifacts, use secrets, or request write permissions.", [crossPlatformWorkflow]);
   }
 }
 

@@ -561,6 +561,28 @@ test("validation rejects weak release readiness docs and workflow safety", () =>
   assert.match(`${result.stderr}${result.stdout}`, /UNSAFE_RELEASE_WORKFLOW/);
 });
 
+test("validation rejects weak cross-platform workflow safety", () => {
+  const dir = copyRepoFixture("framecore-validate-cross-platform-weak-");
+  const workflow = join(dir, ".github/workflows/cross-platform.yml");
+  writeFileSync(workflow, [
+    "name: cross-platform",
+    "on:",
+    "  push:",
+    "permissions:",
+    "  contents: write",
+    "jobs:",
+    "  smoke:",
+    "    runs-on: ubuntu-latest",
+    "    steps:",
+    "      - run: npm publish",
+  ].join("\n"));
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_CROSS_PLATFORM_WORKFLOW/);
+  assert.match(`${result.stderr}${result.stdout}`, /UNSAFE_CROSS_PLATFORM_WORKFLOW/);
+});
+
 test("onboarding renders project-local config and agent templates", () => {
   const dir = mkdtempSync(join(tmpdir(), "framecore-onboard-"));
   run(["scripts/onboard.mjs", "--defaults", "--target", dir]);
