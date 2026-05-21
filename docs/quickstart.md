@@ -25,6 +25,12 @@ node scripts/doctor.mjs --help
 
 2. Check the kit before installing it:
 
+   On macOS, if the repo was copied through Finder, AirDrop, archive extraction, or an external drive, first remove AppleDouble metadata sidecars:
+
+   ```bash
+   npm run cleanup:appledouble -- --apply
+   ```
+
    ```bash
    npm run check
    ```
