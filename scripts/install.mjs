@@ -216,6 +216,9 @@ function install({ mode }) {
 
   if (!dryRun) {
     mkdirSync(join(target, ".framecore"), { recursive: true });
+    if (existsSync(manifestPath)) {
+      writeFileSync(nextBackupPath(manifestPath), readFileSync(manifestPath, "utf8"));
+    }
     writeFileSync(manifestPath, `${JSON.stringify(buildManifest({ target, managedPaths: manifestManaged, manifestRel }), null, 2)}\n`);
   }
 

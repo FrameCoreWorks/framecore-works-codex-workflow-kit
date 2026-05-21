@@ -934,6 +934,22 @@ test("update and repair require a manifest", () => {
   }
 });
 
+test("update rotates manifest backups before rewriting", () => {
+  const dir = mkdtempSync(join(tmpdir(), "framecore-manifest-backup-"));
+  run(["scripts/onboard.mjs", "--defaults", "--target", dir]);
+  run(["scripts/install.mjs", "--mode", "project-local", "--target", dir]);
+
+  const manifestPath = join(dir, ".framecore/manifest.json");
+  const firstManifest = readFileSync(manifestPath, "utf8");
+  assert.equal(existsSync(`${manifestPath}.bak`), false);
+
+  run(["scripts/install.mjs", "--mode", "update", "--target", dir]);
+  assert.equal(readFileSync(`${manifestPath}.bak`, "utf8"), firstManifest);
+
+  run(["scripts/install.mjs", "--mode", "update", "--target", dir]);
+  assert.ok(existsSync(`${manifestPath}.bak.1`));
+});
+
 test("repair only rewrites manifest-recorded paths while update expands managed set", () => {
   const dir = mkdtempSync(join(tmpdir(), "framecore-repair-update-"));
   run(["scripts/onboard.mjs", "--defaults", "--target", dir]);
