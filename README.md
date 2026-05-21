@@ -10,12 +10,14 @@ Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git i
 
 Follow this order:
 1. Run the guided project-local installer if available.
-2. If guided install is not available, use this manual fallback:
+2. If guided install completes successfully, show me the changed files and final installed tree, then stop.
+3. If guided install is not available or fails before writing managed files, use this manual fallback:
    - Run the repository checks.
    - Run doctor/preflight against my current workspace.
    - Run onboarding for my current workspace.
    - Run install dry-run against my current workspace after onboarding.
    - Install project-local only.
+   - Show me the changed files and final installed tree.
 
 Do not use global install and do not enable external execution tools unless I explicitly ask for them.
 ```
