@@ -26,7 +26,7 @@ Do not use global install and do not enable external execution tools unless I ex
 
 FrameCore Works Skill Kit is a provider-neutral workflow system for Codex. It installs role-based agents, skills, templates, handoff rules, QA gates, Humanizer, HyperFrames workflow knowledge, a lightweight Hipson Adapter, and an explicit workflow self-improvement loop.
 
-Provider-neutral means this kit does not ship external paid media-provider clients, endpoint catalogs, provider CLIs, API-key workflows, or paid execution routes. The text-bearing image rule may still route to the native Codex/ChatGPT image generator when that built-in capability is available.
+Provider-neutral means this kit does not ship external paid media-provider clients, endpoint catalogs, provider CLIs, API-key workflows, or paid execution routes. The text-bearing image rule may still route to the native Codex/ChatGPT image generator when that built-in capability is available. See [Provider-Neutral Boundary](docs/provider-neutral-boundary.md).
 
 ## Mental Model
 
@@ -41,6 +41,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: l
 - Checking supported environments and install modes: read [Compatibility](docs/compatibility.md).
 - Want the mental model first: read [Architecture](docs/architecture.md).
 - Want to understand current limits and planned direction: read [Roadmap](docs/roadmap.md).
+- Checking what provider-neutral allows and forbids: read [Provider-Neutral Boundary](docs/provider-neutral-boundary.md).
 - Want to compare workflow paths: open [Examples Index](examples/README.md).
 - Want to see a complete workflow specimen: open [End-To-End Creative Workflow Example](examples/end-to-end-creative-workflow/README.md).
 - Maintaining example routes: use each example's checked `workflow.json`.
@@ -238,6 +239,7 @@ See also:
 - [Quickstart](docs/quickstart.md)
 - [Troubleshooting](docs/troubleshooting.md)
 - [Compatibility](docs/compatibility.md)
+- [Provider-Neutral Boundary](docs/provider-neutral-boundary.md)
 - [Release Guide](docs/release.md)
 - [Release Notes Template](docs/release-notes-template.md)
 - [Roadmap](docs/roadmap.md)

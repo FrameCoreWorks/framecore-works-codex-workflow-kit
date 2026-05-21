@@ -700,6 +700,21 @@ test("validation rejects weak compatibility documentation", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_COMPATIBILITY_DOC/);
 });
 
+test("validation rejects weak provider-neutral boundary documentation", () => {
+  const dir = copyRepoFixture("framecore-validate-provider-neutral-boundary-");
+  const providerNeutralDoc = join(dir, "docs/provider-neutral-boundary.md");
+  writeFileSync(
+    providerNeutralDoc,
+    readFileSync(providerNeutralDoc, "utf8")
+      .replace("## Built-In Chat Image Exception", "## Image Notes")
+      .replace("provider credentials", "credentials")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_PROVIDER_NEUTRAL_BOUNDARY_DOC/);
+});
+
 test("validation rejects weak roadmap documentation", () => {
   const dir = copyRepoFixture("framecore-validate-roadmap-");
   const roadmapDoc = join(dir, "docs/roadmap.md");

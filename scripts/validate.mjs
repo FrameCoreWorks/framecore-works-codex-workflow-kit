@@ -443,6 +443,7 @@ const requiredDocs = [
   "docs/quickstart.md",
   "docs/troubleshooting.md",
   "docs/compatibility.md",
+  "docs/provider-neutral-boundary.md",
   "docs/roadmap.md",
   "docs/release.md",
   "docs/release-notes-template.md",
@@ -496,6 +497,18 @@ if (existsSync(compatibilityDoc)) {
   }
   for (const phrase of ["Node.js 20 or newer", "macOS", "Linux", "Windows", ".codex/agents/*.toml", "project-local", "--confirm-global", ".framecore/manifest.json", "provider-neutral", "GPT Image 2"]) {
     if (!text.includes(phrase)) addFinding("WEAK_COMPATIBILITY_DOC", `Compatibility guide is missing required compatibility phrase: ${phrase}`, [compatibilityDoc]);
+  }
+}
+
+const providerNeutralDoc = join(validationRoot, "docs/provider-neutral-boundary.md");
+if (existsSync(providerNeutralDoc)) {
+  const text = read(providerNeutralDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Purpose", "What Provider-Neutral Means", "Built-In Chat Image Exception", "Coded Video Boundary", "Hipson Boundary", "User-Configured Extensions", "Release Gate"]) {
+    if (!sections.has(section)) addFinding("WEAK_PROVIDER_NEUTRAL_BOUNDARY_DOC", `Provider-neutral boundary guide is missing required section: ${section}`, [providerNeutralDoc]);
+  }
+  for (const phrase of ["external paid media-provider clients", "provider CLIs", "endpoint catalogs", "provider credentials", "API-key setup flows", "GPT Image 2", "HyperFrames", "Full Hipson remains separate and optional", "config/provider-neutral-policy.json"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_PROVIDER_NEUTRAL_BOUNDARY_DOC", `Provider-neutral boundary guide is missing required boundary phrase: ${phrase}`, [providerNeutralDoc]);
   }
 }
 

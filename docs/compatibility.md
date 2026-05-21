@@ -64,6 +64,8 @@ External paid execution tools, provider credentials, endpoint catalogs, private 
 
 The text-bearing image policy is the intentional built-in image-generation path: static raster graphics with visible text should use native Codex or ChatGPT image generation powered by GPT Image 2 in one pass when that capability is available.
 
+For the full boundary, see [Provider-Neutral Boundary](provider-neutral-boundary.md).
+
 ## Support Baseline
 
 When reporting compatibility issues, include only sanitized information:

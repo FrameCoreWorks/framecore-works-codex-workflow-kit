@@ -47,6 +47,7 @@ This project uses GitHub releases as the public release record. npm publication 
 10. Confirm Hipson remains a lightweight adapter unless a user explicitly connects the separate full Hipson repo.
 11. Confirm public examples include validated `workflow.json` manifests.
 12. Confirm workflow self-improvement remains explicit-only and proposal-only.
+13. Confirm [Provider-Neutral Boundary](provider-neutral-boundary.md) still matches `config/provider-neutral-policy.json`.
 
 ## Required Checks
 
