@@ -27,7 +27,7 @@ This project uses GitHub releases as the public release record. npm publication 
    For a tag-specific local check before creating a GitHub release:
 
    ```bash
-   npm run release:readiness -- --tag v0.1.0
+   npm run release:readiness -- --tag v1.0.0
    ```
 
 6. Audit package contents:
@@ -112,8 +112,8 @@ Before creating a GitHub release, confirm:
 Use semantic version tags:
 
 ```bash
-git tag v0.1.0
-git push origin v0.1.0
+git tag v1.0.0
+git push origin v1.0.0
 ```
 
 After the tag workflow passes, create a GitHub release from the tag. Release notes should include:

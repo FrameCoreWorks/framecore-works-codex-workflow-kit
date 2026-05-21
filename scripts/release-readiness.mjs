@@ -107,7 +107,7 @@ function fail(findings) {
 if (hasHelpFlag()) {
   printHelpAndExit(`
 Usage:
-  node scripts/release-readiness.mjs [--tag v0.1.0]
+  node scripts/release-readiness.mjs [--tag v1.0.0]
 
 Purpose:
   Verify release metadata, changelog entries, and optional tag/version alignment.

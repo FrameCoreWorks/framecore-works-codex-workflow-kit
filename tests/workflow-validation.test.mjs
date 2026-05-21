@@ -219,7 +219,7 @@ test("cli scripts expose non-mutating help output", () => {
 });
 
 test("release readiness validates package metadata, changelog, and tag alignment", () => {
-  assert.match(run(["scripts/release-readiness.mjs", "--tag", "v0.1.0"]), /release readiness passed/);
+  assert.match(run(["scripts/release-readiness.mjs", "--tag", "v1.0.0"]), /release readiness passed/);
 
   const dir = copyRepoFixture("framecore-release-readiness-");
   const packageJson = join(dir, "package.json");
@@ -298,7 +298,7 @@ test("doctor validates existing installs and operation-specific manifest require
   run(["scripts/install.mjs", "--mode", "project-local", "--target", dir]);
   const manifest = JSON.parse(readFileSync(join(dir, ".framecore/manifest.json"), "utf8"));
   assert.equal(manifest.kit.name, "framecore-works-codex-workflow-kit");
-  assert.equal(manifest.kit.version, "0.1.0");
+  assert.equal(manifest.kit.version, "1.0.0");
   assert.match(manifest.managed_hashes[".agents/skills/humanizer/SKILL.md"], /^[a-f0-9]{64}$/);
   assert.equal(
     manifest.managed_hashes[".agents/skills/humanizer/SKILL.md"],

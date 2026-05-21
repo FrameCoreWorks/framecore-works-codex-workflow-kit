@@ -36,7 +36,7 @@ body:
     attributes:
       label: Version Or Commit
       description: Which release, tag, or commit are you using?
-      placeholder: "v0.1.0 or commit SHA"
+      placeholder: "v1.0.0 or commit SHA"
   - type: textarea
     id: sanitized_commands
     attributes:
