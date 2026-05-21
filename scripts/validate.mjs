@@ -442,6 +442,7 @@ if (existsSync(artifactTemplates)) {
 const requiredDocs = [
   "docs/quickstart.md",
   "docs/troubleshooting.md",
+  "docs/compatibility.md",
   "docs/release.md",
   "docs/architecture.md",
   "docs/artifact-schemas.md",
@@ -481,6 +482,18 @@ if (existsSync(quickstartDoc)) {
   }
   if (!appearsInOrder(text, ["Run npm run check", "Run doctor/preflight", "Run onboarding", "Run install dry-run", "after onboarding", "Install project-local only"])) {
     addFinding("WEAK_INSTALL_PROMPT", "Codex-assisted quickstart must keep canonical order: check, doctor, onboarding, post-onboarding dry-run, project-local install.", [quickstartDoc]);
+  }
+}
+
+const compatibilityDoc = join(validationRoot, "docs/compatibility.md");
+if (existsSync(compatibilityDoc)) {
+  const text = read(compatibilityDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Purpose", "Runtime Requirements", "Operating Systems", "Codex Environment", "Install Modes", "Manifest Compatibility", "External Tool Boundary", "Support Baseline"]) {
+    if (!sections.has(section)) addFinding("WEAK_COMPATIBILITY_DOC", `Compatibility guide is missing required section: ${section}`, [compatibilityDoc]);
+  }
+  for (const phrase of ["Node.js 20 or newer", "macOS", "Linux", "Windows", ".codex/agents/*.toml", "project-local", "--confirm-global", ".framecore/manifest.json", "provider-neutral", "GPT Image 2"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_COMPATIBILITY_DOC", `Compatibility guide is missing required compatibility phrase: ${phrase}`, [compatibilityDoc]);
   }
 }
 

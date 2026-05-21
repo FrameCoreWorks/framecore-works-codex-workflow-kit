@@ -36,6 +36,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: l
 
 - New to the kit: read [Quickstart](docs/quickstart.md).
 - Installation failed or produced an unexpected result: read [Troubleshooting](docs/troubleshooting.md).
+- Checking supported environments and install modes: read [Compatibility](docs/compatibility.md).
 - Want the mental model first: read [Architecture](docs/architecture.md).
 - Want to compare workflow paths: open [Examples Index](examples/README.md).
 - Want to see a complete workflow specimen: open [End-To-End Creative Workflow Example](examples/end-to-end-creative-workflow/README.md).
@@ -233,6 +234,7 @@ See also:
 
 - [Quickstart](docs/quickstart.md)
 - [Troubleshooting](docs/troubleshooting.md)
+- [Compatibility](docs/compatibility.md)
 - [Release Guide](docs/release.md)
 - [Architecture](docs/architecture.md)
 - [Artifact Schemas](docs/artifact-schemas.md)

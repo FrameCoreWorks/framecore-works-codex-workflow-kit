@@ -91,7 +91,7 @@ Before creating a GitHub release, confirm:
 
 - The tag matches `package.json` version.
 - `CHANGELOG.md` has the final release entry.
-- README, Quickstart, Troubleshooting, Security, Support, and this Release Guide still match current behavior.
+- README, Quickstart, Compatibility, Troubleshooting, Security, Support, and this Release Guide still match current behavior.
 - Repository settings match the current maintenance mode documented in [Repository Settings](repository-settings.md).
 - The release notes do not include sensitive data.
 - No npm publication or registry upload is happening from this release workflow.

@@ -642,6 +642,21 @@ test("validation rejects weak onboarding guide and assisted install prompt", () 
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_INSTALL_PROMPT/);
 });
 
+test("validation rejects weak compatibility documentation", () => {
+  const dir = copyRepoFixture("framecore-validate-compatibility-");
+  const compatibilityDoc = join(dir, "docs/compatibility.md");
+  writeFileSync(
+    compatibilityDoc,
+    readFileSync(compatibilityDoc, "utf8")
+      .replace("## Runtime Requirements", "## Runtime")
+      .replace("Node.js 20 or newer", "Node.js")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_COMPATIBILITY_DOC/);
+});
+
 test("validation rejects weak release readiness docs and workflow safety", () => {
   const dir = copyRepoFixture("framecore-validate-release-weak-");
   const releaseDoc = join(dir, "docs/release.md");
