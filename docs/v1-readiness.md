@@ -65,6 +65,7 @@ Public examples should cover the main workflow categories:
 - image prompt pack
 - HyperFrames coded-video workflow
 - document workflow
+- QA and delivery-only review
 - no external execution mode
 
 Each example should have a validated `workflow.json` manifest and should avoid private context, local paths, credentials, private cloud references, and generated confidential output.

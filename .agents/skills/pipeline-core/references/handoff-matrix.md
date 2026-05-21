@@ -4,6 +4,7 @@
 |---|---|---|
 | intent-confirmation | workflow-orchestrator | confirmed_goal, excluded_scope, work_mode, expected_output, immediate_next_step |
 | workflow-orchestrator | brief-architect | goal, raw_context, constraints, expected_artifact |
+| workflow-orchestrator | asset-manifest | existing_files, review_goal, acceptance_criteria, delivery_need |
 | workflow-orchestrator | instruction-packet-factory | target_role, packet_type, context, goal, exclusions, output_need |
 | instruction-packet-factory | research-evidence | packet_id, goal, source_rules, acceptance_criteria, output_schema |
 | instruction-packet-factory | reference-curator | packet_id, reference_goals, suppression_rules, output_schema |

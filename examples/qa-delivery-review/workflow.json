@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "example_id": "qa-delivery-review",
+  "blueprint": "qa-and-delivery-only",
+  "route": [
+    "intent-confirmation",
+    "workflow-orchestrator",
+    "asset-manifest",
+    "qa-iteration",
+    "delivery-documentation"
+  ],
+  "gates": [
+    "intent_lock",
+    "workflow_route",
+    "asset_manifest_fit",
+    "post_execution_fit",
+    "delivery_fit"
+  ],
+  "artifacts": [
+    "Task Confirmation",
+    "Project State",
+    "Asset Manifest",
+    "QA / Iteration Report",
+    "Delivery Manifest"
+  ],
+  "handoffs": [
+    "intent-confirmation->workflow-orchestrator",
+    "workflow-orchestrator->asset-manifest",
+    "asset-manifest->qa-iteration",
+    "qa-iteration->delivery-documentation"
+  ],
+  "execution_boundary": "Reviews existing local artifacts only. No generation, upload, publishing, or external execution happens unless the user explicitly requests it."
+}
