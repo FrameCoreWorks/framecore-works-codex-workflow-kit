@@ -313,5 +313,6 @@ your-project/
 - [Troubleshooting](troubleshooting.md)
 - [Onboarding](onboarding.md)
 - [Customization](customization.md)
+- [Migration Guide](migration-guide.md)
 - [Text-Bearing Image Policy](text-image-policy.md)
 - [End-To-End Creative Workflow Example](../examples/end-to-end-creative-workflow/README.md)

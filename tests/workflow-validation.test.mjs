@@ -700,6 +700,21 @@ test("validation rejects weak team configuration guide", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_TEAM_CONFIGURATION_DOC/);
 });
 
+test("validation rejects weak migration guide", () => {
+  const dir = copyRepoFixture("framecore-validate-migration-guide-");
+  const doc = join(dir, "docs/migration-guide.md");
+  writeFileSync(
+    doc,
+    readFileSync(doc, "utf8")
+      .replace("## Validation Checklist", "## Checks")
+      .replace("do not migrate provider credentials", "migrate provider settings when useful")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_MIGRATION_GUIDE/);
+});
+
 test("validation rejects weak Codex-assisted install guide", () => {
   const dir = copyRepoFixture("framecore-validate-codex-assisted-install-");
   const doc = join(dir, "docs/codex-assisted-install.md");

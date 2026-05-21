@@ -21,6 +21,7 @@
 - Added a dedicated Codex-assisted install guide with paste-in instructions, expected onboarding questions, stop conditions, and expected result.
 - Added a validated ecommerce product visual example for hero, lifestyle, feature close-up, and marketplace asset planning.
 - Added team configuration guidance for personal installs, shared team installs, local config, and privacy review.
+- Expanded migration guidance for role ID migration, local config boundaries, manifests, update/repair/rollback, validation, and release notes.
 - Added explicit first-run onboarding questions for delivery behavior while keeping external delivery integrations out of the public kit.
 - Added public contract fixtures so every artifact schema has validated fixture coverage.
 - Added machine-checked `workflow.json` manifests for all public examples.

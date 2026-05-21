@@ -493,6 +493,18 @@ if (existsSync(teamConfigurationDoc)) {
   }
 }
 
+const migrationDoc = join(validationRoot, "docs/migration-guide.md");
+if (existsSync(migrationDoc)) {
+  const text = read(migrationDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Purpose", "Migration Principles", "Source Audit", "Role And Naming Migration", "Skill And Agent Migration", "Config And Manifest Migration", "Update Repair And Rollback", "Validation Checklist", "Release Notes", "Halt Conditions"]) {
+    if (!sections.has(section)) addFinding("WEAK_MIGRATION_GUIDE", `Migration guide is missing required section: ${section}`, [migrationDoc]);
+  }
+  for (const phrase of ["role IDs", "display names stay local", "framecore.config.json", ".framecore/manifest.json", "schema_version", "provider-neutral boundary", "do not migrate provider credentials", "update", "repair", "rollback", "npm run audit:privacy", "npm run validate", "Do not tag v1.0"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_MIGRATION_GUIDE", `Migration guide is missing required migration phrase: ${phrase}`, [migrationDoc]);
+  }
+}
+
 const quickstartDoc = join(validationRoot, "docs/quickstart.md");
 if (existsSync(quickstartDoc)) {
   const text = read(quickstartDoc);

@@ -78,6 +78,7 @@ v1.0 docs should give a new user a complete path:
 - Troubleshooting covers common install, privacy, package, config, Codex loading, update, repair, uninstall, and text-image issues
 - Architecture explains roles, skills, gates, handoffs, artifacts, examples, and provider boundaries
 - Compatibility explains Node.js, OS expectations, Codex assumptions, install modes, manifests, external tool boundary, and support baseline
+- Migration Guide explains role ID migration, local config boundaries, manifest lifecycle, update, repair, rollback, validation, and release notes
 - Release, Roadmap, Repository Settings, Security, Support, and Contributing stay aligned with current behavior
 - Team Configuration explains what stays local, what may be shared intentionally, and how to review shared config
 
