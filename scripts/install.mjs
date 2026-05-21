@@ -23,6 +23,7 @@ function ensureTarget(target, mode, createTarget) {
     if (!createTarget) {
       throw new Error("target workspace does not exist. Create or choose the workspace first, or rerun with --create-target.");
     }
+    if (mode === "dry-run") return;
     mkdirSync(target, { recursive: true });
   }
   if (!statSync(target).isDirectory()) {
@@ -230,7 +231,7 @@ Options:
   --target <path>  Target workspace for project-local, dry-run, update, repair, or uninstall.
   --force          Allow overwriting user-owned conflicting files after creating backups.
   --yes            Apply uninstall removals after preview.
-  --create-target  Create a missing target folder before project-local install or dry-run.
+  --create-target  Allow a missing target path. Dry-run simulates it without creating folders; write modes create it.
 
 Modes:
   dry-run        Report planned writes without changing files.

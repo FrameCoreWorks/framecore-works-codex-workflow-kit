@@ -128,6 +128,8 @@ node scripts/onboard.mjs --target /path/to/new/project --defaults --create-targe
 node scripts/install.mjs --mode dry-run --target /path/to/new/project --create-target
 ```
 
+In install dry-run mode, `--create-target` only allows the installer to simulate a missing target path. It does not create the folder. Write modes create the target only when `--create-target` is present.
+
 Do not use `--create-target` when you meant to install into an existing project and may have mistyped the path.
 
 ## Dry Run Reports User-Owned File Conflicts

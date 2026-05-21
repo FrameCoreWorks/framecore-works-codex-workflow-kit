@@ -788,7 +788,10 @@ test("install rejects missing targets unless explicitly created", () => {
 
   const output = run(["scripts/install.mjs", "--mode", "dry-run", "--target", missing, "--create-target"]);
   assert.match(output, /would write/);
-  assert.ok(existsSync(missing));
+  assert.equal(existsSync(missing), false);
+
+  run(["scripts/install.mjs", "--mode", "project-local", "--target", missing, "--create-target"]);
+  assert.ok(existsSync(join(missing, ".framecore/manifest.json")));
 });
 
 test("interactive onboarding explains the workflow and can keep default role names", async () => {
