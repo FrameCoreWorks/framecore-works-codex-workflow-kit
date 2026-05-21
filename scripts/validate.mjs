@@ -535,7 +535,7 @@ if (existsSync(releaseNotesTemplate)) {
   for (const section of ["Version", "Summary", "Install And Update Notes", "Onboarding Notes", "Workflow Changes", "Validation And Package Checks", "Security And Privacy Review", "Known Limitations", "Links"]) {
     if (!sections.has(section)) addFinding("WEAK_RELEASE_NOTES_TEMPLATE", `Release notes template is missing required section: ${section}`, [releaseNotesTemplate]);
   }
-  for (const phrase of ["provider-neutral", "project-local", "npm run release:check", "npm run release:readiness", "npm run package:audit", "npm run package:list", "npm pack --dry-run", "No secrets", "No bundled external paid execution providers", "GPT Image 2", "Full Hipson remains separate and optional"]) {
+  for (const phrase of ["provider-neutral", "project-local", "npm run release:check", "npm run release:readiness", "npm run package:audit", "npm run package:list", "No secrets", "No bundled external paid execution providers", "GPT Image 2", "Full Hipson remains separate and optional"]) {
     if (!text.includes(phrase)) addFinding("WEAK_RELEASE_NOTES_TEMPLATE", `Release notes template is missing required release-safety phrase: ${phrase}`, [releaseNotesTemplate]);
   }
 }

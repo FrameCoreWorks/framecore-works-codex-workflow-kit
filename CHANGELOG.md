@@ -14,6 +14,7 @@
 - Added roadmap documentation for current scope, known limitations, v1.0 readiness, non-goals, and release discipline.
 - Added a public-safe release notes template and validation coverage for release-note hygiene.
 - Added a temporary-cache package listing command plus clearer support and security reporting guidance.
+- Made `npm run package:list` the documented package preview path instead of relying on a user's local npm cache.
 - Added release-readiness checks for package metadata, changelog coverage, and optional tag/version alignment.
 - Added provider-neutral boundary documentation for built-in image generation, coded-video guidance, optional adapters, and release gates.
 - Added explicit first-run onboarding questions for delivery behavior while keeping external delivery integrations out of the public kit.

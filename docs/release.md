@@ -62,7 +62,6 @@ npm run package:audit
 npm run package:list
 npm run release:readiness
 npm run release:check
-npm pack --dry-run
 ```
 
 The release-check workflow must remain non-publishing, read-only, and secret-free. It should verify the same local gate a maintainer runs before release.
@@ -75,7 +74,7 @@ Run the manual `cross-platform` workflow before a public version tag, after chan
 
 Review the `npm run package:audit` result before each release. The package should contain source skills, agent templates, config examples, docs, examples, scripts, and tests. It should not contain local configs, generated outputs, caches, backups, machine metadata, archives, logs, or user-specific files.
 
-`package:audit` parses `npm pack --json --dry-run` with a temporary npm cache and rejects unexpected package roots or forbidden package file patterns. Use `npm run package:list` when you want to manually inspect the raw npm file list with the same temporary-cache behavior. Use plain `npm pack --dry-run` only when you intentionally want to test your local npm cache as well.
+`package:audit` parses `npm pack --json --dry-run` with a temporary npm cache and rejects unexpected package roots or forbidden package file patterns. Use `npm run package:list` when you want to manually inspect the raw npm file list with the same temporary-cache behavior. Plain `npm pack --dry-run` is optional and only useful when you intentionally want to test your local npm cache as well.
 
 Example folders should include their `workflow.json` manifests. These are source fixtures used by validation, not generated outputs.
 

@@ -227,7 +227,7 @@ npm run validate
 npm test
 npm run check
 npm run release:check
-npm pack --dry-run
+npm run package:list
 node scripts/doctor.mjs --help
 node scripts/install.mjs --help
 ```

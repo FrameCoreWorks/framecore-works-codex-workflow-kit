@@ -42,7 +42,6 @@ Confirm these passed before publishing:
 - `npm run release:readiness`
 - `npm run package:audit`
 - `npm run package:list`
-- `npm pack --dry-run`
 - latest GitHub Actions `validate` run on `main`
 - manual `cross-platform` run when portability-sensitive behavior changed
 
