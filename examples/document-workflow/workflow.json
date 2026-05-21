@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "example_id": "document-workflow",
+  "blueprint": "document-or-text-workflow",
   "route": [
     "intent-confirmation",
     "workflow-orchestrator",
@@ -27,7 +28,10 @@
   ],
   "handoffs": [
     "intent-confirmation->workflow-orchestrator",
-    "workflow-orchestrator->brief-architect"
+    "workflow-orchestrator->brief-architect",
+    "brief-architect->research-evidence",
+    "research-evidence->copy-voice",
+    "copy-voice->delivery-documentation"
   ],
   "execution_boundary": "Local document-ready text only unless the user explicitly asks for delivery or upload."
 }

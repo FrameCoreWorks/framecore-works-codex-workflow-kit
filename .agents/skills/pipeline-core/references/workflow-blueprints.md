@@ -2,6 +2,26 @@
 
 Use these blueprints as starting routes. The workflow-orchestrator may shorten or expand them, but it must preserve required gates, handoffs, and missing-artifact loopbacks.
 
+## Minimal Planning Route
+
+Use for small planning requests, first-install smoke tests, and tasks where the user needs a clean brief or delivery note without the full creative pipeline.
+
+Route:
+
+1. `intent-confirmation`
+2. `workflow-orchestrator`
+3. `brief-architect`
+4. `delivery-documentation` when a final summary or package note is needed
+
+Required gates:
+
+- `intent_lock`
+- `workflow_route`
+- `brief_completeness`
+- `delivery_fit` when delivery documentation is produced
+
+Boundary: stop at planning unless the user asks for references, direction, prompt packs, execution, QA, or delivery packaging.
+
 ## Static Campaign Or E-Commerce Graphic
 
 Use for posters, banners, product graphics, paid/social creative, marketplace images, and static campaign assets.
@@ -165,6 +185,32 @@ Required gates:
 - `delivery_fit`
 
 Boundary: stop before `tool-routing-cost` unless the current user request explicitly asks for execution planning.
+
+## Document Or Text Workflow
+
+Use for structured notes, written documents, delivery text, research-backed text, summaries, and workspace documentation tasks.
+
+Route:
+
+1. `intent-confirmation`
+2. `workflow-orchestrator`
+3. `brief-architect`
+4. `research-evidence` when factual support is needed
+5. `copy-voice` when wording, tone, or readability matters
+6. `qa-iteration` when there is a concrete draft or output to review
+7. `delivery-documentation`
+
+Required gates:
+
+- `intent_lock`
+- `workflow_route`
+- `brief_completeness`
+- `evidence_fit` when research is used
+- `copy_fit` when copy is produced or polished
+- `post_execution_fit` when a draft/output is reviewed
+- `delivery_fit`
+
+Boundary: this path produces local text artifacts by default. Upload, publishing, or external delivery requires an explicit user request.
 
 ## QA And Delivery Only
 

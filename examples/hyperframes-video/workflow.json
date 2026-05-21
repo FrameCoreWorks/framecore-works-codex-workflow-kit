@@ -1,9 +1,12 @@
 {
   "schema_version": 1,
   "example_id": "hyperframes-video",
+  "blueprint": "hyperframes-coded-video",
   "route": [
     "intent-confirmation",
     "workflow-orchestrator",
+    "brief-architect",
+    "reference-curator",
     "motion-direction",
     "storyboard-architect",
     "copy-voice",
@@ -15,6 +18,8 @@
   "gates": [
     "intent_lock",
     "workflow_route",
+    "brief_completeness",
+    "reference_authority_fit",
     "direction_fit",
     "structure_fit",
     "copy_fit",
@@ -26,6 +31,8 @@
   "artifacts": [
     "Task Confirmation",
     "Project State",
+    "Brief Contract",
+    "Reference Pack",
     "Direction Contract",
     "Storyboard Contract",
     "Copy Pack",
@@ -36,8 +43,14 @@
   ],
   "handoffs": [
     "intent-confirmation->workflow-orchestrator",
+    "workflow-orchestrator->brief-architect",
+    "brief-architect->reference-curator",
+    "reference-curator->motion-direction",
     "motion-direction->storyboard-architect",
+    "storyboard-architect->copy-voice",
     "storyboard-architect->hyperframes-producer",
+    "copy-voice->hyperframes-producer",
+    "hyperframes-producer->asset-manifest",
     "asset-manifest->qa-iteration",
     "qa-iteration->delivery-documentation"
   ],

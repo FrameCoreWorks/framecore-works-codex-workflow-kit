@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "example_id": "static-campaign",
+  "blueprint": "static-campaign-or-e-commerce-graphic",
   "route": [
     "intent-confirmation",
     "workflow-orchestrator",
@@ -39,8 +40,10 @@
     "workflow-orchestrator->brief-architect",
     "brief-architect->reference-curator",
     "reference-curator->static-direction",
+    "static-direction->copy-voice",
     "static-direction->image-prompting",
     "copy-voice->image-prompting",
+    "image-prompting->qa-iteration",
     "qa-iteration->delivery-documentation"
   ],
   "execution_boundary": "Prompts and QA criteria only unless the user explicitly requests generation."

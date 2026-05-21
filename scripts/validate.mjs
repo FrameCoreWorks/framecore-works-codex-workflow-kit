@@ -142,6 +142,42 @@ function appearsInOrder(text, phrases) {
   return true;
 }
 
+function isConditionalBlueprintLine(line) {
+  return /\bwhen\b|\bif\b|\boptional\b|\bas needed\b|\bor\b/i.test(line);
+}
+
+function backtickTokens(line) {
+  return [...line.matchAll(/`([^`]+)`/g)].map((match) => match[1].trim()).filter(Boolean);
+}
+
+function parseWorkflowBlueprintContracts(text) {
+  const contracts = new Map();
+  for (const section of markdownSections(text)) {
+    const body = markdownSectionBody(text, section);
+    const contract = { requiredRoles: new Set(), requiredGates: new Set() };
+    let mode = null;
+    for (const rawLine of body.split(/\r?\n/)) {
+      const line = rawLine.trim();
+      if (line === "Route:") {
+        mode = "route";
+        continue;
+      }
+      if (line === "Required gates:") {
+        mode = "gates";
+        continue;
+      }
+      if (mode === "route" && /^\d+\.\s+/.test(line) && !isConditionalBlueprintLine(line)) {
+        for (const token of backtickTokens(line)) contract.requiredRoles.add(token);
+      }
+      if (mode === "gates" && /^-\s+/.test(line) && !isConditionalBlueprintLine(line)) {
+        for (const token of backtickTokens(line)) contract.requiredGates.add(token);
+      }
+    }
+    contracts.set(markdownSlug(section), contract);
+  }
+  return contracts;
+}
+
 function isPublicFixturePath(value) {
   if (typeof value !== "string") return false;
   if (!value.startsWith("examples/") || !value.endsWith(".md")) return false;
@@ -226,6 +262,8 @@ let artifactSchemas = null;
 let artifactSchemaNames = new Set();
 let knownGates = new Map();
 let knownHandoffPairs = new Set();
+let knownWorkflowBlueprints = new Set();
+let workflowBlueprintContracts = new Map();
 if (existsSync(artifactSchemasPath)) {
   try {
     artifactSchemas = JSON.parse(read(artifactSchemasPath));
@@ -333,8 +371,11 @@ if (existsSync(handoffMatrix)) {
 }
 
 if (existsSync(workflowBlueprints)) {
-  const sections = markdownSections(read(workflowBlueprints));
-  for (const section of ["Static Campaign Or E-Commerce Graphic", "Video Campaign Or Storyboard", "Storyboard Board Artifact", "HyperFrames Coded Video", "Prompt Pack Without Execution", "QA And Delivery Only", "Workflow Self-Improvement Review"]) {
+  const blueprintText = read(workflowBlueprints);
+  const sections = markdownSections(blueprintText);
+  knownWorkflowBlueprints = new Set([...sections].map((section) => markdownSlug(section)));
+  workflowBlueprintContracts = parseWorkflowBlueprintContracts(blueprintText);
+  for (const section of ["Minimal Planning Route", "Static Campaign Or E-Commerce Graphic", "Video Campaign Or Storyboard", "Storyboard Board Artifact", "HyperFrames Coded Video", "Prompt Pack Without Execution", "Document Or Text Workflow", "QA And Delivery Only", "Workflow Self-Improvement Review"]) {
     if (!sections.has(section)) addFinding("WEAK_WORKFLOW_BLUEPRINTS", `Workflow blueprints are missing required section: ${section}`, [workflowBlueprints]);
   }
 }
@@ -596,6 +637,27 @@ for (const readmePath of exampleReadmes) {
   if (workflow.example_id !== expectedId) {
     addFinding("INVALID_EXAMPLE_WORKFLOW", `Example workflow example_id must match folder name: ${expectedId}`, [workflowPath]);
   }
+  if (typeof workflow.blueprint !== "string" || workflow.blueprint.trim().length === 0) {
+    addFinding("INVALID_EXAMPLE_WORKFLOW", "Example workflow must define blueprint.", [workflowPath]);
+  } else if (!knownWorkflowBlueprints.has(workflow.blueprint)) {
+    addFinding("UNKNOWN_EXAMPLE_BLUEPRINT", `Example workflow blueprint is not listed in workflow blueprints: ${workflow.blueprint}`, [workflowPath, workflowBlueprints]);
+  } else {
+    const blueprintContract = workflowBlueprintContracts.get(workflow.blueprint);
+    if (blueprintContract) {
+      const routeSet = new Set(Array.isArray(workflow.route) ? workflow.route : []);
+      const gateSet = new Set(Array.isArray(workflow.gates) ? workflow.gates : []);
+      for (const role of blueprintContract.requiredRoles) {
+        if (!routeSet.has(role)) {
+          addFinding("MISSING_EXAMPLE_BLUEPRINT_ROLE", `Example workflow route is missing required blueprint role: ${role}`, [workflowPath, workflowBlueprints]);
+        }
+      }
+      for (const gate of blueprintContract.requiredGates) {
+        if (!gateSet.has(gate)) {
+          addFinding("MISSING_EXAMPLE_BLUEPRINT_GATE", `Example workflow gates are missing required blueprint gate: ${gate}`, [workflowPath, workflowBlueprints]);
+        }
+      }
+    }
+  }
   if (typeof workflow.execution_boundary !== "string" || workflow.execution_boundary.trim().length === 0) {
     addFinding("INVALID_EXAMPLE_WORKFLOW", "Example workflow must define execution_boundary.", [workflowPath]);
   }
@@ -619,6 +681,20 @@ for (const readmePath of exampleReadmes) {
   if (!Array.isArray(workflow.handoffs)) {
     addFinding("INVALID_EXAMPLE_WORKFLOW", "Example workflow must define handoffs as an array.", [workflowPath]);
   } else {
+    const declaredHandoffs = new Set(workflow.handoffs);
+    if (Array.isArray(workflow.route)) {
+      for (let index = 0; index < workflow.route.length - 1; index += 1) {
+        const from = workflow.route[index];
+        const to = workflow.route[index + 1];
+        if (typeof from !== "string" || typeof to !== "string") continue;
+        const pair = `${from}->${to}`;
+        if (!knownHandoffPairs.has(pair)) {
+          addFinding("UNKNOWN_EXAMPLE_ROUTE_HANDOFF", `Example workflow route step is not listed in handoff matrix: ${pair}`, [workflowPath, handoffMatrix]);
+        } else if (!declaredHandoffs.has(pair)) {
+          addFinding("MISSING_EXAMPLE_ROUTE_HANDOFF", `Example workflow route step must be declared in handoffs: ${pair}`, [workflowPath]);
+        }
+      }
+    }
     for (const pair of workflow.handoffs) {
       if (typeof pair !== "string" || !/^[a-z0-9-]+->[a-z0-9-]+$/.test(pair)) {
         addFinding("INVALID_EXAMPLE_WORKFLOW", `Example workflow handoff must use from->to format: ${pair}`, [workflowPath]);

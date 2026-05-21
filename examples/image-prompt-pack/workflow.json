@@ -1,9 +1,13 @@
 {
   "schema_version": 1,
   "example_id": "image-prompt-pack",
+  "blueprint": "prompt-pack-without-execution",
   "route": [
     "intent-confirmation",
     "workflow-orchestrator",
+    "brief-architect",
+    "reference-curator",
+    "static-direction",
     "image-prompting",
     "qa-iteration",
     "delivery-documentation"
@@ -11,6 +15,9 @@
   "gates": [
     "intent_lock",
     "workflow_route",
+    "brief_completeness",
+    "reference_authority_fit",
+    "direction_fit",
     "promptability_fit",
     "post_execution_fit",
     "delivery_fit"
@@ -18,6 +25,9 @@
   "artifacts": [
     "Task Confirmation",
     "Project State",
+    "Brief Contract",
+    "Reference Pack",
+    "Direction Contract",
     "Prompt Pack",
     "Image Prompt Contract",
     "QA / Iteration Report",
@@ -25,6 +35,11 @@
   ],
   "handoffs": [
     "intent-confirmation->workflow-orchestrator",
+    "workflow-orchestrator->brief-architect",
+    "brief-architect->reference-curator",
+    "reference-curator->static-direction",
+    "static-direction->image-prompting",
+    "image-prompting->qa-iteration",
     "qa-iteration->delivery-documentation"
   ],
   "execution_boundary": "Prompt text only. Image generation requires an explicit user request."

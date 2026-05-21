@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "example_id": "no-provider-mode",
+  "blueprint": "static-campaign-or-e-commerce-graphic",
   "route": [
     "intent-confirmation",
     "workflow-orchestrator",
@@ -39,8 +40,10 @@
     "workflow-orchestrator->brief-architect",
     "brief-architect->reference-curator",
     "reference-curator->static-direction",
+    "static-direction->copy-voice",
     "static-direction->image-prompting",
     "copy-voice->image-prompting",
+    "image-prompting->qa-iteration",
     "qa-iteration->delivery-documentation"
   ],
   "execution_boundary": "Planning artifacts only. No external execution tools are selected or invoked."

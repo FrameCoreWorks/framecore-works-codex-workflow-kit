@@ -2,7 +2,7 @@
 
 Use these examples to choose the smallest workflow path that fits the task. Each example shows the expected stages, produced artifacts, and where the workflow stops when no external execution is requested.
 
-Each example directory includes a `workflow.json` manifest. The manifest is the machine-checked contract for the route, gates, artifacts, declared handoffs, and execution boundary. README files explain the workflow for humans; `npm run validate` checks the manifests against the role roster, gate registry, handoff matrix, and artifact schemas.
+Each example directory includes a `workflow.json` manifest. The manifest is the machine-checked contract for the blueprint, route, gates, artifacts, declared handoffs, and execution boundary. README files explain the workflow for humans; `npm run validate` checks the manifests against the workflow blueprints, role roster, gate registry, handoff matrix, and artifact schemas.
 
 Additional minimal contract fixtures live under `contract-fixtures/artifacts/`. They are validation fixtures for artifact schemas, not full workflow examples.
 
@@ -22,5 +22,6 @@ Additional minimal contract fixtures live under `contract-fixtures/artifacts/`. 
 - Treat each example as a workflow route, not a fixed template for every task.
 - Use the listed artifacts to understand what the next role expects.
 - Treat `workflow.json` as the canonical checked route when contributing changes.
+- Keep `blueprint` aligned with a section slug from [Workflow Blueprints](../.agents/skills/pipeline-core/references/workflow-blueprints.md).
 - Keep provider-neutral boundaries unless the user explicitly chooses an execution path.
 - Keep local preferences, display names, and output paths out of public examples.

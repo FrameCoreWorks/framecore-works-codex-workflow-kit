@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "example_id": "video-storyboard",
+  "blueprint": "video-campaign-or-storyboard",
   "route": [
     "intent-confirmation",
     "workflow-orchestrator",
@@ -43,8 +44,10 @@
     "brief-architect->reference-curator",
     "reference-curator->motion-direction",
     "motion-direction->storyboard-architect",
+    "storyboard-architect->copy-voice",
     "storyboard-architect->video-prompting",
     "copy-voice->video-prompting",
+    "video-prompting->qa-iteration",
     "qa-iteration->delivery-documentation"
   ],
   "execution_boundary": "Storyboard and prompt planning only. No video generation by default."

@@ -499,6 +499,45 @@ test("validation rejects missing example workflow manifests", () => {
   assert.match(`${result.stderr}${result.stdout}`, /MISSING_EXAMPLE_WORKFLOW/);
 });
 
+test("validation rejects unknown example workflow blueprints", () => {
+  const dir = copyRepoFixture("framecore-validate-example-blueprint-");
+  const file = join(dir, "examples/static-campaign/workflow.json");
+  const workflow = JSON.parse(readFileSync(file, "utf8"));
+  workflow.blueprint = "unregistered-blueprint";
+  writeFileSync(file, `${JSON.stringify(workflow, null, 2)}\n`);
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /UNKNOWN_EXAMPLE_BLUEPRINT/);
+});
+
+test("validation rejects example workflows missing required blueprint coverage", () => {
+  const dir = copyRepoFixture("framecore-validate-example-blueprint-coverage-");
+  const file = join(dir, "examples/static-campaign/workflow.json");
+  const workflow = JSON.parse(readFileSync(file, "utf8"));
+  workflow.route = workflow.route.filter((role) => role !== "delivery-documentation");
+  workflow.gates = workflow.gates.filter((gate) => gate !== "delivery_fit");
+  writeFileSync(file, `${JSON.stringify(workflow, null, 2)}\n`);
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  const output = `${result.stderr}${result.stdout}`;
+  assert.notEqual(result.status, 0);
+  assert.match(output, /MISSING_EXAMPLE_BLUEPRINT_ROLE/);
+  assert.match(output, /MISSING_EXAMPLE_BLUEPRINT_GATE/);
+});
+
+test("validation rejects example routes without declared handoff continuity", () => {
+  const dir = copyRepoFixture("framecore-validate-example-route-continuity-");
+  const file = join(dir, "examples/static-campaign/workflow.json");
+  const workflow = JSON.parse(readFileSync(file, "utf8"));
+  workflow.handoffs = workflow.handoffs.filter((pair) => pair !== "copy-voice->image-prompting");
+  writeFileSync(file, `${JSON.stringify(workflow, null, 2)}\n`);
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /MISSING_EXAMPLE_ROUTE_HANDOFF/);
+});
+
 test("validation rejects example workflow route, gate, artifact, and handoff drift", () => {
   const dir = copyRepoFixture("framecore-validate-example-workflow-drift-");
   const file = join(dir, "examples/static-campaign/workflow.json");

@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "example_id": "minimal-workflow",
+  "blueprint": "minimal-planning-route",
   "route": [
     "intent-confirmation",
     "workflow-orchestrator",
@@ -21,7 +22,8 @@
   ],
   "handoffs": [
     "intent-confirmation->workflow-orchestrator",
-    "workflow-orchestrator->brief-architect"
+    "workflow-orchestrator->brief-architect",
+    "brief-architect->delivery-documentation"
   ],
   "execution_boundary": "Planning only. No asset generation or external execution."
 }
