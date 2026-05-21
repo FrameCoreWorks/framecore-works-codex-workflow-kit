@@ -56,7 +56,7 @@
     "onboard:defaults": "node scripts/onboard.mjs --defaults",
     "render:agents": "node scripts/render-agents.mjs",
     "release:check": "npm run check && npm pack --dry-run",
-    "test": "node --test tests/*.test.mjs",
+    "test": "node --test",
     "validate": "node scripts/validate.mjs",
     "check": "npm run audit:privacy && npm run validate && npm test"
   },

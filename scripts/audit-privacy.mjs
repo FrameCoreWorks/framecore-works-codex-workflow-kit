@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { basename, join, relative, resolve } from "node:path";
-import { decodeBase64List, hasHelpFlag, isAppleDouble, printHelpAndExit, readJson, readText, repoRoot, reportFindings, walkFiles } from "./common.mjs";
+import { basename, join, resolve } from "node:path";
+import { decodeBase64List, hasHelpFlag, isAppleDouble, printHelpAndExit, readJson, readText, relativePosix, repoRoot, reportFindings, walkFiles } from "./common.mjs";
 
 if (hasHelpFlag()) {
   printHelpAndExit(`
@@ -31,7 +31,7 @@ function addFinding(code, message, files) {
   findings.push({
     code,
     message,
-    files: files.map((file) => relative(targetRoot, file)),
+    files: files.map((file) => relativePosix(targetRoot, file)),
   });
 }
 

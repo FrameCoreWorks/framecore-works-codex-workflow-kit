@@ -25,8 +25,16 @@ export function decodeBase64List(values) {
   return values.map((value) => Buffer.from(value, "base64").toString("utf8"));
 }
 
+export function toPosixPath(value) {
+  return value.replaceAll("\\", "/");
+}
+
+export function relativePosix(from, to) {
+  return toPosixPath(relative(from, to));
+}
+
 export function walkFiles(root, options = {}) {
-  const excludes = new Set(options.excludes ?? []);
+  const excludes = new Set((options.excludes ?? []).map(toPosixPath));
   const files = [];
 
   function visit(dir) {
@@ -34,7 +42,7 @@ export function walkFiles(root, options = {}) {
 
     for (const entry of readdirSync(dir)) {
       const path = join(dir, entry);
-      const rel = relative(root, path);
+      const rel = relativePosix(root, path);
 
       if ([...excludes].some((item) => rel === item || rel.startsWith(`${item}/`))) {
         continue;

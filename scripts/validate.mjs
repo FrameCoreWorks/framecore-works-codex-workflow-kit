@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { existsSync, readFileSync } from "node:fs";
-import { basename, dirname, join, relative, resolve } from "node:path";
-import { hasHelpFlag, isAppleDouble, printHelpAndExit, repoRoot, reportFindings, walkFiles } from "./common.mjs";
+import { basename, dirname, join, resolve } from "node:path";
+import { hasHelpFlag, isAppleDouble, printHelpAndExit, relativePosix, repoRoot, reportFindings, walkFiles } from "./common.mjs";
 
 if (hasHelpFlag()) {
   printHelpAndExit(`
@@ -23,7 +23,7 @@ const validationRoot = resolve(process.argv[2] ?? repoRoot);
 const findings = [];
 
 function addFinding(code, message, files) {
-  findings.push({ code, message, files: files.map((file) => relative(validationRoot, file)) });
+  findings.push({ code, message, files: files.map((file) => relativePosix(validationRoot, file)) });
 }
 
 function read(file) {
@@ -458,7 +458,7 @@ if (existsSync(releaseWorkflow)) {
 }
 
 const exampleReadmes = walkFiles(join(validationRoot, "examples"))
-  .filter((file) => !isAppleDouble(file) && file.endsWith("README.md") && relative(validationRoot, file).replaceAll("\\", "/") !== "examples/README.md");
+  .filter((file) => !isAppleDouble(file) && file.endsWith("README.md") && relativePosix(validationRoot, file) !== "examples/README.md");
 const requiredExampleSections = [
   "## Purpose",
   "## Starting User Request",
@@ -557,7 +557,7 @@ for (const file of endToEndFiles) {
 }
 
 const readme = read(join(validationRoot, "README.md"));
-for (const target of [...requiredDocs, ...exampleReadmes.map((file) => relative(validationRoot, file).replaceAll("\\", "/"))]) {
+for (const target of [...requiredDocs, ...exampleReadmes.map((file) => relativePosix(validationRoot, file))]) {
   if (!readme.includes(`](${target})`)) {
     addFinding("README_MISSING_DOC_LINK", `README must link to ${target}`, [join(validationRoot, "README.md")]);
   }

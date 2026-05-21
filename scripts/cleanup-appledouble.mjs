@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import { rmSync } from "node:fs";
-import { relative } from "node:path";
-import { hasHelpFlag, isAppleDouble, printHelpAndExit, repoRoot, walkFiles } from "./common.mjs";
+import { hasHelpFlag, isAppleDouble, printHelpAndExit, relativePosix, repoRoot, walkFiles } from "./common.mjs";
 
 if (hasHelpFlag()) {
   printHelpAndExit(`
@@ -23,7 +22,7 @@ const apply = process.argv.includes("--apply");
 const files = walkFiles(repoRoot, { excludes: [".git", "node_modules"] }).filter(isAppleDouble);
 
 for (const file of files) {
-  console.log(`${apply ? "delete" : "would delete"} ${relative(repoRoot, file)}`);
+  console.log(`${apply ? "delete" : "would delete"} ${relativePosix(repoRoot, file)}`);
   if (apply) rmSync(file);
 }
 
