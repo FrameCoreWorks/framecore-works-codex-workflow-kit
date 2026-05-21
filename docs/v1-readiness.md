@@ -19,6 +19,7 @@ Before v1.0, the repo should satisfy all of these:
 - text-bearing raster graphics keep the GPT Image 2 one-pass policy
 - Hipson Adapter remains lightweight. Full Hipson remains separate and optional.
 - workflow self-improvement remains explicit-only and proposal-only
+- workflow self-improvement governance documents invocation rules, evidence, report-only automation, adoption, forbidden actions, validation, and halt conditions
 - examples cover the main public workflow paths
 - package contents are audited before release
 - security, support, issue templates, and repository settings are aligned with public-source safety

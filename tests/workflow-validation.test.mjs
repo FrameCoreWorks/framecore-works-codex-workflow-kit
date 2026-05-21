@@ -760,6 +760,21 @@ test("validation rejects weak provider-neutral boundary documentation", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_PROVIDER_NEUTRAL_BOUNDARY_DOC/);
 });
 
+test("validation rejects weak workflow self-improvement governance docs", () => {
+  const dir = copyRepoFixture("framecore-validate-workflow-self-improvement-doc-");
+  const doc = join(dir, "docs/workflow-self-improvement.md");
+  writeFileSync(
+    doc,
+    readFileSync(doc, "utf8")
+      .replace("## Report-Only Automation", "## Automation")
+      .replace("explicit user or maintainer approval", "approval")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_WORKFLOW_SELF_IMPROVEMENT_DOC/);
+});
+
 test("validation rejects weak v1 readiness documentation", () => {
   const dir = copyRepoFixture("framecore-validate-v1-readiness-");
   const v1ReadinessDoc = join(dir, "docs/v1-readiness.md");

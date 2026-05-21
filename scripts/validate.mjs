@@ -555,6 +555,18 @@ if (existsSync(providerNeutralDoc)) {
   }
 }
 
+const workflowSelfImprovementDoc = join(validationRoot, "docs/workflow-self-improvement.md");
+if (existsSync(workflowSelfImprovementDoc)) {
+  const text = read(workflowSelfImprovementDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Purpose", "Invocation Rules", "Evidence Inputs", "Report-Only Automation", "Proposal Contract", "Adoption Flow", "Forbidden Actions", "Validation And Release Checks", "Halt Conditions", "Output Summary"]) {
+    if (!sections.has(section)) addFinding("WEAK_WORKFLOW_SELF_IMPROVEMENT_DOC", `Workflow self-improvement guide is missing required section: ${section}`, [workflowSelfImprovementDoc]);
+  }
+  for (const phrase of ["explicit-only", "report-only", "no automatic edits", "no uploads", "no external execution", "no destructive operations", "workflow-orchestrator", "qa-iteration", "explicit user or maintainer approval", "config/automation-recipes/workflow-self-improvement-review.example.json", "templates/improvement-log.md", "templates/change-proposal.md"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_WORKFLOW_SELF_IMPROVEMENT_DOC", `Workflow self-improvement guide is missing required governance phrase: ${phrase}`, [workflowSelfImprovementDoc]);
+  }
+}
+
 const v1ReadinessDoc = join(validationRoot, "docs/v1-readiness.md");
 if (existsSync(v1ReadinessDoc)) {
   const text = read(v1ReadinessDoc);

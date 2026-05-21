@@ -21,6 +21,7 @@
 - Added a dedicated Codex-assisted install guide with paste-in instructions, expected onboarding questions, stop conditions, and expected result.
 - Added a validated ecommerce product visual example for hero, lifestyle, feature close-up, and marketplace asset planning.
 - Added a QA and delivery-only review example for existing local artifacts, asset manifests, review reports, and delivery manifests.
+- Expanded workflow self-improvement governance docs and validation for explicit-only, report-only, proposal-only change adoption.
 - Added team configuration guidance for personal installs, shared team installs, local config, and privacy review.
 - Expanded migration guidance for role ID migration, local config boundaries, manifests, update/repair/rollback, validation, and release notes.
 - Added explicit first-run onboarding questions for delivery behavior while keeping external delivery integrations out of the public kit.
