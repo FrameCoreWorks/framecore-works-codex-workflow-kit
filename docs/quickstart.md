@@ -286,6 +286,7 @@ your-project/
 - Keep `framecore.config.json` local to the target workspace unless your team intentionally shares it.
 - Use `.framecore/manifest.json` to see which files are FrameCore-managed.
 - Run update or repair only after reviewing the current manifest. `update` can add new FrameCore-managed paths from the current kit; `repair` rewrites only paths already listed in the manifest:
+- Update and repair rotate backups for rewritten managed files and `.framecore/manifest.json`; uninstall preserves backup files for manual review.
 
   ```bash
   node scripts/doctor.mjs --mode update --target "$FRAMECORE_TARGET"

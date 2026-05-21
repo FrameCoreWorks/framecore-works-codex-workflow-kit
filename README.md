@@ -150,6 +150,8 @@ Repair also requires a manifest, but rewrites only paths already recorded in tha
 node scripts/install.mjs --mode repair --target /path/to/your/project
 ```
 
+Before update or repair rewrites managed files or the manifest, it creates numbered `.bak` backups such as `AGENTS.md.bak` or `.framecore/manifest.json.bak`.
+
 Uninstall previews removals by default:
 
 ```bash
@@ -163,6 +165,8 @@ node scripts/install.mjs --mode uninstall --target /path/to/your/project --yes
 ```
 
 Uninstall removes only exact files recorded in the manifest. It refuses directory removals and unsafe paths.
+
+Backup files are not added to the manifest and are preserved for manual review or removal.
 
 ## First-Run Onboarding
 

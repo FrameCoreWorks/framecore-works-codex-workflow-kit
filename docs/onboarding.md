@@ -54,6 +54,8 @@ When `framecore.config.json` already exists, onboarding writes a numbered backup
 
 The later project-local install writes the managed FrameCore workflow assets, rendered agent files, project instructions, and `.framecore/manifest.json`.
 
+When a later update or repair rewrites the manifest, the previous manifest is saved as `.framecore/manifest.json.bak`, `.framecore/manifest.json.bak.1`, and so on.
+
 ## Hipson Adapter And Full Hipson
 
 This repo includes the lightweight Hipson Adapter. Inside this architecture it works as a packet layer for:

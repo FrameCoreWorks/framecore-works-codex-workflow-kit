@@ -224,9 +224,11 @@ If the project had an existing `AGENTS.md`, explicitly tell Codex:
 Read AGENTS.md and AGENTS.framecore.md before continuing.
 ```
 
-## Repair Creates Backup Files
+## Update And Repair Create Backup Files
 
-When repair rewrites an existing managed file, it creates a `.bak` file first. This preserves the previous content for review.
+When update or repair rewrites an existing managed file, it creates a `.bak` file first. This preserves the previous content for review.
+
+Update and repair also rotate `.framecore/manifest.json.bak` before rewriting the manifest.
 
 If the backup is no longer needed, remove it intentionally after comparing it with the current managed file.
 
@@ -249,6 +251,8 @@ node scripts/install.mjs --mode uninstall --target /path/to/your/project --yes
 ```
 
 User-owned files, directories, local configs, and files not listed in the manifest are intentionally preserved.
+
+Backup files such as `.bak` are not manifest-managed and remain after uninstall unless you remove them manually.
 
 ## External Execution Tools Are Not Installed
 
