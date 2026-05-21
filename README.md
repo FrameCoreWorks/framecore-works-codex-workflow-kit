@@ -121,10 +121,17 @@ Manual fallback:
 
 If your project already has `AGENTS.md`, the installer writes `AGENTS.framecore.md` instead. Use `--force` only when you intentionally want FrameCore to overwrite a conflicting user-owned file.
 
-Global install is available for advanced users:
+Global install is available only for advanced users. It writes to the current user's home workspace, so preview it first:
 
 ```bash
-node scripts/install.mjs --mode global
+npm run doctor -- --mode global
+node scripts/install.mjs --mode dry-run --target "$HOME"
+```
+
+Apply global install only when that is intentional:
+
+```bash
+node scripts/install.mjs --mode global --confirm-global
 ```
 
 Use `--mode dry-run` first for every install target.

@@ -120,6 +120,23 @@ node scripts/doctor.mjs --help
 
 9. Open the target project in Codex and ask it to read the project instructions. If your target already had `AGENTS.md`, read both `AGENTS.md` and `AGENTS.framecore.md`.
 
+## Advanced Global Install
+
+Project-local install is the default and recommended path. Global install writes to the current user's home workspace, so use it only when you intentionally want FrameCore available outside a single project.
+
+Preview the home-workspace impact first:
+
+```bash
+npm run doctor -- --mode global
+node scripts/install.mjs --mode dry-run --target "$HOME"
+```
+
+Apply global install only after that review:
+
+```bash
+node scripts/install.mjs --mode global --confirm-global
+```
+
 ## Codex-Assisted Quickstart
 
 From the Codex workspace where you want to install the kit, paste this instruction:

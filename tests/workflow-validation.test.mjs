@@ -797,6 +797,19 @@ test("install rejects missing targets unless explicitly created", () => {
   assert.ok(existsSync(join(missing, ".framecore/manifest.json")));
 });
 
+test("global install requires explicit confirmation", () => {
+  const home = mkdtempSync(join(tmpdir(), "framecore-global-home-"));
+  const env = { ...process.env, HOME: home, USERPROFILE: home };
+
+  const blocked = failRun(["scripts/install.mjs", "--mode", "global"], { env });
+  assert.notEqual(blocked.status, 0);
+  assert.match(`${blocked.stderr}${blocked.stdout}`, /--confirm-global/);
+  assert.equal(existsSync(join(home, ".framecore/manifest.json")), false);
+
+  run(["scripts/install.mjs", "--mode", "global", "--confirm-global"], { env });
+  assert.ok(existsSync(join(home, ".framecore/manifest.json")));
+});
+
 test("interactive onboarding explains the workflow and can keep default role names", async () => {
   const dir = mkdtempSync(join(tmpdir(), "framecore-interactive-"));
   const result = await runInteractiveOnboarding(dir);

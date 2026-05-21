@@ -12,6 +12,10 @@ function argValue(name, fallback) {
   return index >= 0 ? process.argv[index + 1] : fallback;
 }
 
+function hasFlag(name) {
+  return process.argv.includes(name);
+}
+
 function targetForMode(mode) {
   if (mode === "global") return homedir();
   return argValue("--target", process.cwd());
@@ -126,8 +130,11 @@ function install({ mode }) {
   const repair = mode === "repair";
   const update = mode === "update";
   const target = targetForMode(mode);
-  const force = process.argv.includes("--force");
-  ensureTarget(target, mode, process.argv.includes("--create-target"));
+  const force = hasFlag("--force");
+  if (mode === "global" && !hasFlag("--confirm-global")) {
+    throw new Error("global install writes to the current user's home workspace. Re-run with --confirm-global only if this is intentional.");
+  }
+  ensureTarget(target, mode, hasFlag("--create-target"));
   const planned = [];
   const managed = [];
   const previousManifest = readManifest(target);
@@ -150,7 +157,7 @@ function install({ mode }) {
     }
     for (const item of removals) {
       console.log(`remove ${item.entry}`);
-      if (process.argv.includes("--yes")) rmSync(item.path, { force: true });
+      if (hasFlag("--yes")) rmSync(item.path, { force: true });
     }
     return;
   }
@@ -221,7 +228,7 @@ const mode = argValue("--mode", "dry-run");
 if (hasHelpFlag()) {
   printHelpAndExit(`
 Usage:
-  node scripts/install.mjs --mode <dry-run|project-local|global|update|repair|uninstall> [--target <path>] [--force] [--yes] [--create-target]
+  node scripts/install.mjs --mode <dry-run|project-local|global|update|repair|uninstall> [--target <path>] [--force] [--yes] [--create-target] [--confirm-global]
 
 Purpose:
   Install, update, repair, preview, or uninstall FrameCore-managed workflow files.
@@ -232,6 +239,7 @@ Options:
   --force          Allow overwriting user-owned conflicting files after creating backups.
   --yes            Apply uninstall removals after preview.
   --create-target  Allow a missing target path. Dry-run simulates it without creating folders; write modes create it.
+  --confirm-global Confirm that --mode global should write to the current user's home workspace.
 
 Modes:
   dry-run        Report planned writes without changing files.
@@ -244,6 +252,7 @@ Modes:
 Safety:
   --force only bypasses user-owned file overwrite protection. It does not bypass config validation.
   By default, project-local modes require an existing target workspace.
+  Global install requires --confirm-global.
 `);
 }
 const allowed = new Set(["dry-run", "project-local", "global", "update", "repair", "uninstall"]);
