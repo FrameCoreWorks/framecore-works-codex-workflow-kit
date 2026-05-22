@@ -41,6 +41,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: l
 - Already installed and ready to work: read [Using The Kit](docs/using-the-kit.md).
 - Installation failed or produced an unexpected result: read [Troubleshooting](docs/troubleshooting.md).
 - Checking supported environments and install modes: read [Compatibility](docs/compatibility.md).
+- Want command behavior and safety boundaries: read [CLI Reference](docs/cli-reference.md).
 - Want the mental model first: read [Architecture](docs/architecture.md).
 - Want to understand current limits and planned direction: read [Roadmap](docs/roadmap.md).
 - Preparing for a stable public release: read [v1.0 Readiness](docs/v1-readiness.md).
@@ -247,6 +248,7 @@ See also:
 - [Using The Kit](docs/using-the-kit.md)
 - [Troubleshooting](docs/troubleshooting.md)
 - [Compatibility](docs/compatibility.md)
+- [CLI Reference](docs/cli-reference.md)
 - [Provider-Neutral Boundary](docs/provider-neutral-boundary.md)
 - [v1.0 Readiness](docs/v1-readiness.md)
 - [Release Guide](docs/release.md)

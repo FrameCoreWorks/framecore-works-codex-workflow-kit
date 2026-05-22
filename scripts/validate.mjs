@@ -445,6 +445,7 @@ const requiredDocs = [
   "docs/using-the-kit.md",
   "docs/troubleshooting.md",
   "docs/compatibility.md",
+  "docs/cli-reference.md",
   "docs/provider-neutral-boundary.md",
   "docs/v1-readiness.md",
   "docs/roadmap.md",
@@ -599,6 +600,18 @@ if (existsSync(compatibilityDoc)) {
   }
   for (const phrase of ["Node.js 20 or newer", "macOS", "Linux", "Windows", ".codex/agents/*.toml", "project-local", "--confirm-global", ".framecore/manifest.json", "provider-neutral", "GPT Image 2"]) {
     if (!text.includes(phrase)) addFinding("WEAK_COMPATIBILITY_DOC", `Compatibility guide is missing required compatibility phrase: ${phrase}`, [compatibilityDoc]);
+  }
+}
+
+const cliReferenceDoc = join(validationRoot, "docs/cli-reference.md");
+if (existsSync(cliReferenceDoc)) {
+  const text = read(cliReferenceDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Purpose", "Command Groups", "Safe Install Order", "Non-Mutating Checks", "Mutating Commands", "Install Modes", "Packaging And Release Checks", "Safety Rules", "Related Docs"]) {
+    if (!sections.has(section)) addFinding("WEAK_CLI_REFERENCE_DOC", `CLI reference is missing required section: ${section}`, [cliReferenceDoc]);
+  }
+  for (const phrase of ["guided project-local installer", "npm run install:guided", "npm run doctor", "npm run install:dry-run", "npm run release:check", "npm run package:list", "project-local", "global install", "--confirm-global", "uninstall", "--yes", "Do not enable external execution providers"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_CLI_REFERENCE_DOC", `CLI reference is missing required command phrase: ${phrase}`, [cliReferenceDoc]);
   }
 }
 

@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added a CLI reference for command safety, install modes, package checks, and release checks, with validation coverage.
 - Expanded artifact schema and workflow stage docs with validation coverage for contract and routing guidance.
 - Expanded Hipson, HyperFrames, recurring workflow review, and text-bearing image policy docs with validation coverage for their public boundaries.
 - Clarified install and onboarding UX: clone location should stay outside the target workspace, `output_dir` should be a safe relative path, PowerShell commands are shown explicitly, and full Hipson remains an external optional extension.

@@ -827,6 +827,21 @@ test("validation rejects weak compatibility documentation", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_COMPATIBILITY_DOC/);
 });
 
+test("validation rejects weak CLI reference documentation", () => {
+  const dir = copyRepoFixture("framecore-validate-cli-reference-");
+  const cliReferenceDoc = join(dir, "docs/cli-reference.md");
+  writeFileSync(
+    cliReferenceDoc,
+    readFileSync(cliReferenceDoc, "utf8")
+      .replace("## Mutating Commands", "## Write Commands")
+      .replace("Do not enable external execution providers", "Enable providers when useful")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_CLI_REFERENCE_DOC/);
+});
+
 test("validation rejects weak artifact schema and workflow stage guides", () => {
   const dir = copyRepoFixture("framecore-validate-workflow-contract-docs-");
   const artifactSchemasDoc = join(dir, "docs/artifact-schemas.md");

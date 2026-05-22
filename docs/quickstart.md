@@ -20,6 +20,8 @@ node scripts/onboard.mjs --help
 node scripts/doctor.mjs --help
 ```
 
+For a full command map, including which commands write files and which are read-only checks, see [CLI Reference](cli-reference.md).
+
 ## Beginner-Friendly Guided Quickstart
 
 1. Open a terminal in this repository.
