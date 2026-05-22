@@ -709,6 +709,21 @@ test("validation rejects weak team configuration guide", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_TEAM_CONFIGURATION_DOC/);
 });
 
+test("validation rejects weak customization guide", () => {
+  const dir = copyRepoFixture("framecore-validate-customization-");
+  const doc = join(dir, "docs/customization.md");
+  writeFileSync(
+    doc,
+    readFileSync(doc, "utf8")
+      .replace("## Delivery Preferences", "## Delivery")
+      .replace("safe relative path", "path")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_CUSTOMIZATION_DOC/);
+});
+
 test("validation rejects weak migration guide", () => {
   const dir = copyRepoFixture("framecore-validate-migration-guide-");
   const doc = join(dir, "docs/migration-guide.md");

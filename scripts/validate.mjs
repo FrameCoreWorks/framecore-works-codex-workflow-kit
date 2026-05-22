@@ -498,6 +498,18 @@ if (existsSync(teamConfigurationDoc)) {
   }
 }
 
+const customizationDoc = join(validationRoot, "docs/customization.md");
+if (existsSync(customizationDoc)) {
+  const text = read(customizationDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Purpose", "Local Config File", "Safe Customizations", "Unsafe Customizations", "Output Directory", "Agent Display Names", "QA Strictness", "Delivery Preferences", "Hipson Settings", "Workflow Self-Improvement Settings", "Team Customization", "Update Repair And Uninstall", "Validation Checklist", "Related Docs"]) {
+    if (!sections.has(section)) addFinding("WEAK_CUSTOMIZATION_DOC", `Customization guide is missing required section: ${section}`, [customizationDoc]);
+  }
+  for (const phrase of ["framecore.config.json", "safe relative path", "agent_display_names", "qa_strictness", "auto_upload", "delivery_requires_current_user_request", "require_qa_allowlist_for_generated_assets", "Full Hipson remains separate and optional", "report-and-proposals-only", ".framecore/manifest.json", "npm run release:check"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_CUSTOMIZATION_DOC", `Customization guide is missing required customization phrase: ${phrase}`, [customizationDoc]);
+  }
+}
+
 const migrationDoc = join(validationRoot, "docs/migration-guide.md");
 if (existsSync(migrationDoc)) {
   const text = read(migrationDoc);
