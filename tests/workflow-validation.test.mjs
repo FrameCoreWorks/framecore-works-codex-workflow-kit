@@ -827,6 +827,21 @@ test("validation rejects weak compatibility documentation", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_COMPATIBILITY_DOC/);
 });
 
+test("validation rejects weak FAQ documentation", () => {
+  const dir = copyRepoFixture("framecore-validate-faq-");
+  const faqDoc = join(dir, "docs/faq.md");
+  writeFileSync(
+    faqDoc,
+    readFileSync(faqDoc, "utf8")
+      .replace("## Provider And Safety Questions", "## Provider Questions")
+      .replace("does not clone, install, or activate full Hipson", "can install full Hipson")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_FAQ_DOC/);
+});
+
 test("validation rejects weak CLI reference documentation", () => {
   const dir = copyRepoFixture("framecore-validate-cli-reference-");
   const cliReferenceDoc = join(dir, "docs/cli-reference.md");

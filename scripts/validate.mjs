@@ -444,6 +444,7 @@ const requiredDocs = [
   "docs/codex-assisted-install.md",
   "docs/using-the-kit.md",
   "docs/troubleshooting.md",
+  "docs/faq.md",
   "docs/compatibility.md",
   "docs/cli-reference.md",
   "docs/provider-neutral-boundary.md",
@@ -600,6 +601,18 @@ if (existsSync(compatibilityDoc)) {
   }
   for (const phrase of ["Node.js 20 or newer", "macOS", "Linux", "Windows", ".codex/agents/*.toml", "project-local", "--confirm-global", ".framecore/manifest.json", "provider-neutral", "GPT Image 2"]) {
     if (!text.includes(phrase)) addFinding("WEAK_COMPATIBILITY_DOC", `Compatibility guide is missing required compatibility phrase: ${phrase}`, [compatibilityDoc]);
+  }
+}
+
+const faqDoc = join(validationRoot, "docs/faq.md");
+if (existsSync(faqDoc)) {
+  const text = read(faqDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Purpose", "Install Questions", "Configuration Questions", "Workflow Questions", "Provider And Safety Questions", "Hipson And HyperFrames", "Updates And Uninstall", "Troubleshooting", "Related Docs"]) {
+    if (!sections.has(section)) addFinding("WEAK_FAQ_DOC", `FAQ is missing required section: ${section}`, [faqDoc]);
+  }
+  for (const phrase of ["guided installer", "project-local install", "global install", "--confirm-global", "framecore.config.json", "local display names", "AGENTS.framecore.md", "provider-neutral", "GPT Image 2", "Full Hipson remains separate and optional", "does not clone, install, or activate full Hipson", "HyperFrames", "uninstall", "--yes", "npm run release:check"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_FAQ_DOC", `FAQ is missing required user-answer phrase: ${phrase}`, [faqDoc]);
   }
 }
 

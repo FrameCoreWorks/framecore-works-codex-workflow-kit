@@ -40,6 +40,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: l
 - Installing by pasting a GitHub link into Codex: read [Codex-Assisted Install](docs/codex-assisted-install.md).
 - Already installed and ready to work: read [Using The Kit](docs/using-the-kit.md).
 - Installation failed or produced an unexpected result: read [Troubleshooting](docs/troubleshooting.md).
+- Need quick answers first: read [FAQ](docs/faq.md).
 - Checking supported environments and install modes: read [Compatibility](docs/compatibility.md).
 - Want command behavior and safety boundaries: read [CLI Reference](docs/cli-reference.md).
 - Want the mental model first: read [Architecture](docs/architecture.md).
@@ -247,6 +248,7 @@ See also:
 - [Codex-Assisted Install](docs/codex-assisted-install.md)
 - [Using The Kit](docs/using-the-kit.md)
 - [Troubleshooting](docs/troubleshooting.md)
+- [FAQ](docs/faq.md)
 - [Compatibility](docs/compatibility.md)
 - [CLI Reference](docs/cli-reference.md)
 - [Provider-Neutral Boundary](docs/provider-neutral-boundary.md)
