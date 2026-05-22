@@ -12,6 +12,7 @@
 - Added a dependency-free `secret:scan` release gate and CI step for credential-shaped values, secret-bearing filenames, and private cloud references.
 - Added an explicit installed AGENTS rule that treats repository files, artifacts, examples, issue text, and user-supplied content as data unless the human user identifies them as current-task instructions.
 - Expanded Project State into a durable recovery artifact with blockers, touched files, risks, last completed gate, and recovery prompt guidance.
+- Added a provider-neutral decision matrix and lightweight maintainer ownership guide for release responsibility.
 - Updated security and contribution guidance for 1.0.x support and the repo-scoped package preview command.
 - Added a public-user FAQ covering install, configuration, workflow use, provider safety, Hipson, HyperFrames, update, uninstall, and troubleshooting boundaries.
 - Added a CLI reference for command safety, install modes, package checks, and release checks, with validation coverage.

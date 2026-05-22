@@ -9,6 +9,11 @@
     "HyperFrames coded-video workflow knowledge",
     "native Codex/ChatGPT image generation for text-bearing raster graphics"
   ],
+  "conditional": [
+    "user-configured external execution outside this repo",
+    "native Codex/ChatGPT image generation only when explicitly requested and available",
+    "full Hipson only when connected separately by the user"
+  ],
   "forbidden": [
     "bundled paid media provider clients",
     "provider credentials",

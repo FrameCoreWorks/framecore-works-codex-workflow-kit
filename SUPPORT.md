@@ -28,3 +28,5 @@ Include only sanitized diagnostics:
 Do not post secrets, credentials, private URLs, private project context, generated confidential outputs, or local machine paths in support requests.
 
 For security-sensitive reports, follow `SECURITY.md` instead of opening a detailed public issue.
+
+Maintainer and release-owner responsibilities are summarized in `MAINTAINERS.md`.

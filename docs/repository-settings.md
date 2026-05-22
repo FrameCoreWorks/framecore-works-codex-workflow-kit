@@ -6,6 +6,8 @@ This guide describes recommended GitHub repository settings for maintainers of t
 
 These settings protect the public repo. They are not part of project-local installation and they are not required for people who only install the kit into their own Codex workspace.
 
+Maintainer and release-owner responsibilities are summarized in [Maintainers](../MAINTAINERS.md).
+
 ## Recommended Minimum
 
 For a solo maintainer using GitHub Desktop and direct pushes, start with a lightweight ruleset on `main`:

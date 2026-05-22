@@ -681,10 +681,10 @@ const providerNeutralDoc = join(validationRoot, "docs/provider-neutral-boundary.
 if (existsSync(providerNeutralDoc)) {
   const text = read(providerNeutralDoc);
   const sections = markdownSections(text);
-  for (const section of ["Purpose", "What Provider-Neutral Means", "Built-In Chat Image Exception", "Coded Video Boundary", "Hipson Boundary", "User-Configured Extensions", "Release Gate"]) {
+  for (const section of ["Purpose", "What Provider-Neutral Means", "Decision Matrix", "Built-In Chat Image Exception", "Coded Video Boundary", "Hipson Boundary", "User-Configured Extensions", "Release Gate"]) {
     if (!sections.has(section)) addFinding("WEAK_PROVIDER_NEUTRAL_BOUNDARY_DOC", `Provider-neutral boundary guide is missing required section: ${section}`, [providerNeutralDoc]);
   }
-  for (const phrase of ["external paid media-provider clients", "provider CLIs", "endpoint catalogs", "provider credentials", "API-key setup flows", "GPT Image 2", "HyperFrames", "Full Hipson remains separate and optional", "config/provider-neutral-policy.json"]) {
+  for (const phrase of ["external paid media-provider clients", "provider CLIs", "endpoint catalogs", "provider credentials", "API-key setup flows", "Allowed", "Conditional", "Forbidden", "GPT Image 2", "HyperFrames", "Full Hipson remains separate and optional", "config/provider-neutral-policy.json"]) {
     if (!text.includes(phrase)) addFinding("WEAK_PROVIDER_NEUTRAL_BOUNDARY_DOC", `Provider-neutral boundary guide is missing required boundary phrase: ${phrase}`, [providerNeutralDoc]);
   }
 }
@@ -823,6 +823,7 @@ const requiredRepoFiles = [
   "CONTRIBUTING.md",
   "SECURITY.md",
   "SUPPORT.md",
+  "MAINTAINERS.md",
   "CODE_OF_CONDUCT.md",
   "NOTICE",
   "config/artifact-schemas.json",
@@ -929,6 +930,18 @@ if (existsSync(supportDoc)) {
   }
   for (const phrase of ["kit version", "operating system", "Node.js version", "install mode", "sanitized output", ".framecore/manifest.json", "SECURITY.md"]) {
     if (!text.includes(phrase)) addFinding("WEAK_SUPPORT_DOC", `Support guide is missing required triage phrase: ${phrase}`, [supportDoc]);
+  }
+}
+
+const maintainersDoc = join(validationRoot, "MAINTAINERS.md");
+if (existsSync(maintainersDoc)) {
+  const text = read(maintainersDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Maintainer Responsibilities", "Release Ownership", "Escalation"]) {
+    if (!sections.has(section)) addFinding("WEAK_MAINTAINERS_DOC", `Maintainers guide is missing required section: ${section}`, [maintainersDoc]);
+  }
+  for (const phrase of ["provider-neutral Codex workflow kit", "npm run release:check", "GitHub Actions validation", "package contents", "provider-neutral boundaries", "SECURITY.md", "SUPPORT.md"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_MAINTAINERS_DOC", `Maintainers guide is missing required ownership phrase: ${phrase}`, [maintainersDoc]);
   }
 }
 

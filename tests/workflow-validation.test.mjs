@@ -933,6 +933,7 @@ test("validation rejects weak provider-neutral boundary documentation", () => {
     providerNeutralDoc,
     readFileSync(providerNeutralDoc, "utf8")
       .replace("## Built-In Chat Image Exception", "## Image Notes")
+      .replace("## Decision Matrix", "## Boundary List")
       .replace("provider credentials", "credentials")
   );
 
@@ -1094,6 +1095,21 @@ test("validation rejects weak support and security docs", () => {
   assert.notEqual(result.status, 0);
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_SUPPORT_DOC/);
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_SECURITY_DOC/);
+});
+
+test("validation rejects weak maintainer ownership docs", () => {
+  const dir = copyRepoFixture("framecore-validate-maintainers-");
+  const maintainersDoc = join(dir, "MAINTAINERS.md");
+  writeFileSync(
+    maintainersDoc,
+    readFileSync(maintainersDoc, "utf8")
+      .replace("## Release Ownership", "## Release Notes")
+      .replace("provider-neutral boundaries", "boundaries")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_MAINTAINERS_DOC/);
 });
 
 test("validation rejects weak repository settings documentation", () => {

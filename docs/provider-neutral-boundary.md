@@ -28,6 +28,19 @@ The kit must not ship:
 - private cloud delivery settings
 - generated confidential outputs
 
+## Decision Matrix
+
+| Category | Status | Boundary |
+| --- | --- | --- |
+| Briefs, references, direction, prompts, QA, and delivery notes | Allowed | Source workflow artifacts are provider-neutral and safe for the public kit. |
+| Tool-neutral execution manifests | Allowed | Manifests can describe approved inputs, risks, and handoff needs without bundling a provider client. |
+| HyperFrames coded-video workflow knowledge | Allowed | HyperFrames guidance is treated as coded-video planning, scene structure, animation, caption, render QA, and delivery guidance. |
+| Native Codex/ChatGPT image generation powered by GPT Image 2 | Conditional | Allowed only when static raster graphics with visible text are explicitly requested and the built-in capability is available. |
+| Full Hipson | Conditional | Full Hipson remains separate and optional; this kit ships only the lightweight adapter and does not clone or activate full Hipson. |
+| User-configured external execution tools | Conditional | Users may configure local tools in their own workspace, outside this repo and outside the default install path. |
+| Bundled paid media-provider clients, provider CLIs, endpoint catalogs, provider credentials, and API-key setup flows | Forbidden | These do not ship in the public kit and should stop a release if introduced. |
+| Private cloud delivery settings or generated confidential outputs | Forbidden | These remain user-local and must not enter public source, examples, package contents, or release notes. |
+
 ## Built-In Chat Image Exception
 
 The text-bearing image policy is an intentional built-in capability boundary, not an external paid provider integration.

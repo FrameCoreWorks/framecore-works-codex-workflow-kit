@@ -318,4 +318,5 @@ See also:
 - [Contributing](CONTRIBUTING.md)
 - [Security](SECURITY.md)
 - [Support](SUPPORT.md)
+- [Maintainers](MAINTAINERS.md)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
