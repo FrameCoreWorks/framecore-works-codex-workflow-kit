@@ -84,7 +84,7 @@ node scripts/doctor.mjs --help
    node scripts/onboard.mjs --target "$FRAMECORE_TARGET"
    ```
 
-   Onboarding creates `framecore.config.json` in the target workspace. It asks for working language, tone, output folder, QA strictness, local agent display names, and optional workflow self-improvement settings.
+   Onboarding creates `framecore.config.json` in the target workspace. It asks for working language, tone, output folder, QA strictness, local agent display names, and optional workflow self-improvement settings. Use a safe relative output path such as `output/framecore`; do not use absolute paths, `~`, URLs, cloud sync paths, or machine-specific folders.
 
    At the end, onboarding prints the next safe steps: dry-run, review planned writes, install project-local, open the target project in Codex, and use [Using The Kit](using-the-kit.md) for starter prompts.
 
@@ -148,7 +148,7 @@ For the full assistant-facing guide, read [Codex-Assisted Install](codex-assiste
 From the Codex workspace where you want to install the kit, paste this instruction:
 
 ```text
-Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git into a temporary or tools folder, read its README, docs/quickstart.md, and docs/codex-assisted-install.md, then install it into my current workspace.
+Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git into a temporary or tools folder outside the target workspace, read its README, docs/quickstart.md, and docs/codex-assisted-install.md, then install it into my current workspace.
 
 Follow this order:
 1. Run the guided project-local installer if available.
@@ -175,6 +175,16 @@ $env:FRAMECORE_TARGET = "C:\path\to\your\project"
 ```
 
 Then run the same `npm` and `node` commands from this guide.
+
+Common PowerShell commands:
+
+```powershell
+npm run install:guided -- --target "$env:FRAMECORE_TARGET"
+npm run doctor -- --target "$env:FRAMECORE_TARGET"
+node scripts/onboard.mjs --target "$env:FRAMECORE_TARGET"
+npm run install:dry-run -- --target "$env:FRAMECORE_TARGET"
+node scripts/install.mjs --mode project-local --target "$env:FRAMECORE_TARGET"
+```
 
 ## Expected Installed Tree
 

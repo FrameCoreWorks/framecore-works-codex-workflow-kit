@@ -22,11 +22,13 @@ Plan the creative workflow and prepare prompts, QA criteria, and delivery notes,
 2. `workflow-orchestrator`
 3. `brief-architect`
 4. `reference-curator`
-5. direction role as needed
+5. `static-direction`
 6. `copy-voice`
-7. prompt role as needed
+7. `image-prompting`
 8. `qa-iteration`
 9. `delivery-documentation`
+
+This example uses `static-direction` and `image-prompting`. Other no-provider routes may use a different direction or prompt role, but the checked `workflow.json` for this example stays specific.
 
 ## Gate Sequence
 

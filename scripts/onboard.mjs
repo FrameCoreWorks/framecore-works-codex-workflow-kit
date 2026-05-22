@@ -94,6 +94,8 @@ https://github.com/Hipson47/Hipson.git
 If you connect the full Hipson system later, it can add broader repo scanning,
 delta reviews, sidecar review agents, cross-repo orchestration, CLI commands,
 and a larger Hipson knowledge base. The adapter is enough to use this workflow now.
+Onboarding only records whether you intend to connect that optional external
+extension later; it does not clone, install, or activate full Hipson.
 `);
 }
 
@@ -123,14 +125,14 @@ export async function runOnboarding({ target = process.cwd(), defaults = false, 
     await rl.question("Press Enter to continue setup. ");
     config.working_language = await ask(rl, "Working language", defaultsConfig.working_language);
     config.response_tone = await ask(rl, "Response tone", defaultsConfig.response_tone);
-    config.output_dir = await ask(rl, "Output directory", defaultsConfig.output_dir);
+    config.output_dir = await ask(rl, "Output directory (safe relative path, for example output/framecore)", defaultsConfig.output_dir);
     config.qa_strictness = await askChoice(rl, "QA strictness", defaultsConfig.qa_strictness, ["light", "standard", "strict"]);
     config.delivery.auto_upload = await askYesNo(rl, "Allow automatic delivery uploads if you later add a delivery integration? yes/no", defaultsConfig.delivery.auto_upload);
     config.delivery.delivery_requires_current_user_request = await askYesNo(rl, "Require an explicit user request before delivery/export? yes/no", defaultsConfig.delivery.delivery_requires_current_user_request);
     config.delivery.require_qa_allowlist_for_generated_assets = await askYesNo(rl, "Require QA approval before generated asset delivery? yes/no", defaultsConfig.delivery.require_qa_allowlist_for_generated_assets);
     const recurring = await ask(rl, "Enable 24-hour workflow self-improvement review? yes/no", "no");
     config.workflow_self_improvement.recurring_review_enabled = /^y/i.test(recurring);
-    const fullHipson = await ask(rl, "Connect full Hipson now? yes/no", "no");
+    const fullHipson = await ask(rl, "Record intent to connect full Hipson later as an external extension? yes/no", "no");
     config.hipson.connect_full_repo = /^y/i.test(fullHipson);
 
     console.log("\nAgents use neutral role IDs by default. You can keep them or rename them locally for your own workspace.");
@@ -162,7 +164,7 @@ export async function runOnboarding({ target = process.cwd(), defaults = false, 
   }
 
   console.log(`wrote ${configPath}`);
-  console.log("Hipson Adapter is enabled. Full Hipson remains optional: https://github.com/Hipson47/Hipson.git");
+  console.log("Hipson Adapter is enabled. Full Hipson remains optional and external; onboarding did not clone, install, or activate it.");
   printNextSteps();
   return configPath;
 }

@@ -8,7 +8,7 @@ Licensed under Apache-2.0. See [NOTICE](NOTICE) for redistribution notice detail
 From the Codex workspace where you want to install the kit, give Codex this instruction:
 
 ```text
-Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git into a temporary or tools folder, read its README and docs/codex-assisted-install.md, then install it into my current workspace.
+Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git into a temporary or tools folder outside the target workspace, read its README and docs/codex-assisted-install.md, then install it into my current workspace.
 
 Follow this order:
 1. Run the guided project-local installer if available.
@@ -211,11 +211,11 @@ This repo includes only the lightweight Hipson Adapter. It works inside this arc
 - review packets
 - execution packets
 
-The full Hipson system is maintained separately at:
+The full Hipson system is an optional external extension maintained separately at:
 
 https://github.com/Hipson47/Hipson.git
 
-Onboarding explains the current adapter scope and lets the user choose whether to connect the full Hipson system later.
+Onboarding explains the current adapter scope and lets the user record whether they intend to connect the full Hipson system later. It does not clone, install, or activate full Hipson during kit setup.
 
 ## Workflow Self-Improvement
 

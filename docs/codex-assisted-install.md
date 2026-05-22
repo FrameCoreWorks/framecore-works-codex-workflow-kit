@@ -4,12 +4,12 @@
 
 This guide is for users who want Codex to install the kit for them from a GitHub link.
 
-The user should paste the install instruction into Codex from the workspace where the kit should be installed. Codex should then clone the repo into a temporary or tools folder, read the docs, run checks, run onboarding, preview the install, and install project-locally.
+The user should paste the install instruction into Codex from the workspace where the kit should be installed. Codex should then clone the repo into a temporary or tools folder outside the target workspace, read the docs, run checks, run onboarding, preview the install, and install project-locally.
 
 ## Paste-In Instruction
 
 ```text
-Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git into a temporary or tools folder, read its README, docs/quickstart.md, and docs/codex-assisted-install.md, then install it into my current workspace.
+Clone https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit.git into a temporary or tools folder outside the target workspace, read its README, docs/quickstart.md, and docs/codex-assisted-install.md, then install it into my current workspace.
 
 Follow this order:
 1. Run the guided project-local installer if available.
@@ -47,13 +47,13 @@ During interactive onboarding, Codex should explain the setup and ask for:
 
 - working language
 - response tone
-- output directory
+- output directory, using a safe relative path such as `output/framecore`, not an absolute path, `~`, URL, cloud sync path, or machine-specific folder
 - QA strictness
 - delivery upload behavior
 - explicit user-request requirement before delivery or export
 - QA requirement before generated asset delivery
 - optional 24-hour workflow self-improvement review
-- optional full Hipson expansion
+- optional full Hipson expansion configured outside this kit; onboarding records intent but does not clone or install full Hipson
 - whether to keep default neutral role display names
 - local display names for role IDs if the user does not keep defaults
 

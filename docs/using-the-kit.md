@@ -100,7 +100,7 @@ Use it for bounded packets:
 Use the Hipson Adapter to prepare an instruction packet for the reference-curator role. Include goal, context, exclusions, source rules, acceptance criteria, output schema, and handoff target.
 ```
 
-Full Hipson remains separate and optional. If you want full repository scanning or broader Hipson knowledge, connect the separate full Hipson repository outside this kit.
+Full Hipson remains separate and optional. If you want full repository scanning or broader Hipson knowledge, connect the separate full Hipson repository outside this kit. The public kit does not clone, install, or activate full Hipson during onboarding.
 
 ## What Codex Should Produce
 

@@ -35,13 +35,13 @@ Interactive onboarding asks:
 
 - `Working language`, the default language Codex should use in this workspace.
 - `Response tone`, the preferred communication style.
-- `Output directory`, the local folder for workflow outputs and delivery material.
+- `Output directory`, the local folder for workflow outputs and delivery material. Use a safe relative path such as `output/framecore`; do not use absolute paths, `~`, URLs, cloud sync paths, or machine-specific folders.
 - `QA strictness`, one of `light`, `standard`, or `strict`.
 - `Allow automatic delivery uploads if you later add a delivery integration?`, disabled by default.
 - `Require an explicit user request before delivery/export?`, enabled by default.
 - `Require QA approval before generated asset delivery?`, enabled by default.
 - `Enable 24-hour workflow self-improvement review?`, disabled by default.
-- `Connect full Hipson now?`, disabled by default.
+- `Connect full Hipson later as an external extension?`, disabled by default. Onboarding records this preference only; it does not clone, install, or activate full Hipson.
 - `Use default role names?`, enabled by default.
 
 If the user chooses not to keep default role names, onboarding asks for a local display name for every neutral role ID. These display names are local preferences, not source repo names.
@@ -87,6 +87,8 @@ Full Hipson is separate and optional:
 https://github.com/Hipson47/Hipson.git
 
 If the user connects the full Hipson system later, it can add broader repository scanning, delta reviews, sidecar review agents, cross-repo orchestration, CLI commands, and a larger Hipson knowledge base. The adapter is enough to use this workflow without that expansion.
+
+Onboarding does not clone, install, or activate full Hipson. It only records whether the user intends to connect that optional external extension outside this kit.
 
 ## Safety Boundaries
 
