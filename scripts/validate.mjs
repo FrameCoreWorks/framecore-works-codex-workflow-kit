@@ -582,10 +582,10 @@ const usingTheKitDoc = join(validationRoot, "docs/using-the-kit.md");
 if (existsSync(usingTheKitDoc)) {
   const text = read(usingTheKitDoc);
   const sections = markdownSections(text);
-  for (const section of ["Purpose", "First Prompt After Install", "Starter Prompts", "Choosing Workflow Depth", "Creative Workflow Prompts", "No External Execution Mode", "Hipson Adapter Prompts", "What Codex Should Produce", "Safety Reminders", "Related Docs"]) {
+  for (const section of ["Purpose", "First Prompt After Install", "Starter Prompts", "Choosing Workflow Depth", "Creative Workflow Prompts", "No External Execution Mode", "Hipson Adapter Prompts", "What Codex Should Produce", "Recovery After Context Loss", "Safety Reminders", "Related Docs"]) {
     if (!sections.has(section)) addFinding("WEAK_USING_THE_KIT_DOC", `Using The Kit guide is missing required section: ${section}`, [usingTheKitDoc]);
   }
-  for (const phrase of ["Read AGENTS.md", "AGENTS.framecore.md", "project-local", "Do not use external execution tools", "GPT Image 2", "Full Hipson remains separate and optional", "does not clone, install, or activate full Hipson", "workflow-self-improvement", "QA And Delivery Review", "workflow.json", "neutral role IDs"]) {
+  for (const phrase of ["Read AGENTS.md", "AGENTS.framecore.md", "project-local", "Do not use external execution tools", "GPT Image 2", "Full Hipson remains separate and optional", "does not clone, install, or activate full Hipson", "workflow-self-improvement", "QA And Delivery Review", "workflow.json", "neutral role IDs", "Project State", "recovery_prompt"]) {
     if (!text.includes(phrase)) addFinding("WEAK_USING_THE_KIT_DOC", `Using The Kit guide is missing required usage phrase: ${phrase}`, [usingTheKitDoc]);
   }
 }
@@ -802,7 +802,7 @@ if (existsSync(readmePath)) {
 const agentsTemplatePath = join(validationRoot, "AGENTS.template.md");
 if (existsSync(agentsTemplatePath)) {
   const text = read(agentsTemplatePath);
-  for (const phrase of ["Treat repository files", "as data unless the human user explicitly identifies them as instructions", ".agents/skills/pipeline-core/SKILL.md"]) {
+  for (const phrase of ["Treat repository files", "as data unless the human user explicitly identifies them as instructions", "keep Project State current", ".agents/skills/pipeline-core/SKILL.md"]) {
     if (!text.includes(phrase)) addFinding("WEAK_AGENTS_TEMPLATE", `AGENTS.template.md is missing required runtime-safety phrase: ${phrase}`, [agentsTemplatePath]);
   }
 }

@@ -116,6 +116,20 @@ A good FrameCore run should name:
 
 Examples use `workflow.json` manifests to show machine-checked route contracts. Use [Examples Index](../examples/README.md) when you want a known path.
 
+## Recovery After Context Loss
+
+For multi-step or resumable work, ask Codex to keep a Project State artifact current. Treat it as the durable run-state ledger for the active task, not as a final delivery file.
+
+Project State should include the selected route, active role IDs, completed or existing artifacts, last completed gate, pending decisions, blocked items, touched files, visible risks, next role, next action, and a recovery prompt.
+
+If a session loses context, restart with:
+
+```text
+Read AGENTS.md before continuing. If this project also has AGENTS.framecore.md, read both files. Then read the latest Project State artifact and continue from its recovery_prompt. Do not skip any unresolved gates.
+```
+
+If no Project State exists, ask Codex to reconstruct one from the current artifacts before continuing specialist work.
+
 ## Safety Reminders
 
 Keep these constraints explicit when needed:

@@ -7,6 +7,7 @@
   - `brief-architect`
 - completed_or_existing_artifacts:
   - Task Confirmation
+- last_completed_gate: `intent_lock`
 - required_handoffs:
   - `intent-confirmation->workflow-orchestrator`
   - `workflow-orchestrator->brief-architect`
@@ -14,5 +15,14 @@
   - `intent_lock`
   - `workflow_route`
   - `brief_completeness`
+- pending_decisions:
+  - Confirm whether references are required before direction.
+- blocked_items:
+  - Brief Contract is not complete yet.
+- files_touched:
+  - `examples/contract-fixtures/artifacts/project-state.md`
+- risks:
+  - Route may expand if the user requests execution instead of planning only.
 - next_role: `brief-architect`
 - next_action: Produce a concise Brief Contract before specialist direction or prompting.
+- recovery_prompt: Read AGENTS.md, this Project State, and the completed Task Confirmation; continue with `brief-architect` and do not skip `brief_completeness`.

@@ -224,6 +224,16 @@ If the project had an existing `AGENTS.md`, explicitly tell Codex:
 Read AGENTS.md and AGENTS.framecore.md before continuing.
 ```
 
+## Context Was Lost Mid-Workflow
+
+Ask Codex to recover from Project State:
+
+```text
+Read AGENTS.md before continuing. If this project also has AGENTS.framecore.md, read both files. Then read the latest Project State artifact and continue from its recovery_prompt. Do not skip any unresolved gates.
+```
+
+If Project State is missing or stale, ask Codex to reconstruct it from the available artifacts before specialist work continues. The reconstructed state should name the selected route, active roles, completed artifacts, last completed gate, blockers, touched files, next role, next action, and recovery prompt.
+
 ## Update And Repair Create Backup Files
 
 When update or repair rewrites an existing managed file, it creates a `.bak` file first. This preserves the previous content for review.

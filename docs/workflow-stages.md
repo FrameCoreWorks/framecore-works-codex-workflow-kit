@@ -42,6 +42,14 @@ Use this page when deciding where a task should enter the pipeline, which artifa
 
 Loopbacks should preserve accepted upstream artifacts unless the failed gate proves that an upstream decision is wrong or incomplete.
 
+## Durable Project State
+
+Project State is the recovery ledger for long-running work. It should be updated whenever the route changes, a review gate is completed, a blocker appears, or the next role changes.
+
+At minimum, Project State records the selected workflow blueprint, active roles, completed or existing artifacts, last completed gate, required handoffs, review gates, pending decisions, blocked items, touched files, visible risks, next role, next action, and a recovery prompt.
+
+When context is lost, a new Codex session should read `AGENTS.md`, `AGENTS.framecore.md` when present, and the latest Project State before continuing. If Project State is missing, reconstruct it from available artifacts before producing new specialist deliverables.
+
 ## No-Provider Mode
 
 The workflow remains useful without external execution. In no-provider mode, stop at planning artifacts such as Brief Contract, Reference Pack, Direction Contract, Prompt Pack, QA criteria, and Delivery Manifest.

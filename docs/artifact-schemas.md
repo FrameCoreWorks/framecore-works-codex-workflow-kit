@@ -30,6 +30,8 @@ Each schema entry should describe one artifact contract that the workflow can va
 
 Keep field names stable once public examples rely on them. If a field needs to change, update the schema, template section, fixture, example workflow manifest, and changelog together.
 
+Project State is the durable recovery artifact for active workflow runs. Its schema should keep enough information for a new Codex session to resume safely: last completed gate, unresolved decisions, blockers, touched files, visible risks, next action, and `recovery_prompt`.
+
 ## Fixture Rules
 
 Fixtures are public validation assets, not private production examples. They should be:

@@ -21,6 +21,7 @@ Before v1.0, the repo should satisfy all of these:
 - workflow self-improvement remains explicit-only and proposal-only
 - workflow self-improvement governance documents invocation rules, evidence, report-only automation, adoption, forbidden actions, validation, and halt conditions
 - examples cover the main public workflow paths
+- Project State includes durable recovery fields for context loss, blockers, touched files, next action, and `recovery_prompt`
 - package contents are audited before release
 - security, support, issue templates, and repository settings are aligned with public-source safety
 

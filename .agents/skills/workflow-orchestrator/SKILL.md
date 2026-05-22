@@ -38,10 +38,14 @@ Produce Project State with:
 - workflow blueprint
 - active roles and responsibilities
 - completed or missing artifacts
+- last completed gate
 - required handoffs
 - review gates
+- pending decisions and blocked items
+- files touched and visible risks
 - loopback decisions
 - next role and next action
+- recovery prompt for context loss
 
 ## Process
 
@@ -78,10 +82,16 @@ Hand off with:
 - `workflow_blueprint`
 - `active_roles`
 - `completed_or_existing_artifacts`
+- `last_completed_gate`
 - `required_handoffs`
 - `review_gates`
+- `pending_decisions`
+- `blocked_items`
+- `files_touched`
+- `risks`
 - `next_role`
 - `next_action`
+- `recovery_prompt`
 - `loopback_reason`
 
 ## QA Checklist

@@ -86,6 +86,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: l
 - Humanizer for natural copy polish and voice consistency.
 - HyperFrames workflow knowledge for coded video planning, scene structure, animation guidance, caption planning, render QA, and delivery manifests.
 - Hipson Adapter for research maps, internet mapping packets, bounded instruction packets, review packets, and execution packets.
+- Project State templates for durable run-state, context recovery, blockers, touched files, and next-action handoff.
 
 Project-local install writes only exact FrameCore-managed files:
 
