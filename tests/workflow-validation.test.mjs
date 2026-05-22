@@ -730,6 +730,21 @@ test("validation rejects weak Codex-assisted install guide", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_CODEX_ASSISTED_INSTALL_DOC/);
 });
 
+test("validation rejects weak post-install usage guide", () => {
+  const dir = copyRepoFixture("framecore-validate-using-the-kit-");
+  const doc = join(dir, "docs/using-the-kit.md");
+  writeFileSync(
+    doc,
+    readFileSync(doc, "utf8")
+      .replace("## Starter Prompts", "## Prompts")
+      .replace("Do not use external execution tools", "Use tools when helpful")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_USING_THE_KIT_DOC/);
+});
+
 test("validation rejects weak compatibility documentation", () => {
   const dir = copyRepoFixture("framecore-validate-compatibility-");
   const compatibilityDoc = join(dir, "docs/compatibility.md");

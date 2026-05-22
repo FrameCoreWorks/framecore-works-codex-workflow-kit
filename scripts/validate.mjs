@@ -442,6 +442,7 @@ if (existsSync(artifactTemplates)) {
 const requiredDocs = [
   "docs/quickstart.md",
   "docs/codex-assisted-install.md",
+  "docs/using-the-kit.md",
   "docs/troubleshooting.md",
   "docs/compatibility.md",
   "docs/provider-neutral-boundary.md",
@@ -528,6 +529,18 @@ if (existsSync(codexAssistedInstallDoc)) {
   }
   for (const phrase of ["temporary or tools folder", "guided project-local installer", "manual fallback", "Run onboarding", "Run install dry-run", "Install project-local only", "Do not use global install", "delivery upload behavior", "optional full Hipson expansion", "stop and ask the user", "user-owned file conflicts", "external execution tools", "AGENTS.framecore.md"]) {
     if (!text.includes(phrase)) addFinding("WEAK_CODEX_ASSISTED_INSTALL_DOC", `Codex-assisted install guide is missing required safety phrase: ${phrase}`, [codexAssistedInstallDoc]);
+  }
+}
+
+const usingTheKitDoc = join(validationRoot, "docs/using-the-kit.md");
+if (existsSync(usingTheKitDoc)) {
+  const text = read(usingTheKitDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Purpose", "First Prompt After Install", "Starter Prompts", "Choosing Workflow Depth", "Creative Workflow Prompts", "No External Execution Mode", "Hipson Adapter Prompts", "What Codex Should Produce", "Safety Reminders", "Related Docs"]) {
+    if (!sections.has(section)) addFinding("WEAK_USING_THE_KIT_DOC", `Using The Kit guide is missing required section: ${section}`, [usingTheKitDoc]);
+  }
+  for (const phrase of ["Read AGENTS.md", "AGENTS.framecore.md", "project-local", "Do not use external execution tools", "GPT Image 2", "Full Hipson remains separate and optional", "workflow-self-improvement", "QA And Delivery Review", "workflow.json", "neutral role IDs"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_USING_THE_KIT_DOC", `Using The Kit guide is missing required usage phrase: ${phrase}`, [usingTheKitDoc]);
   }
 }
 

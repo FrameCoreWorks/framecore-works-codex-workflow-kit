@@ -6,6 +6,7 @@
 
 ## 1.0.0 - 2026-05-22
 
+- Added a post-install usage guide with starter prompts, route selection guidance, execution boundaries, Hipson Adapter usage, and safety reminders.
 - Added a beginner-safe guided project-local installer with checks, doctor/preflight, onboarding, post-onboarding dry-run, and final install confirmation.
 - Required explicit `--confirm-global` for global installs and documented the advanced global install path separately from project-local setup.
 - Added numbered backups for manifest rewrites during update/repair and documented how update, repair, uninstall, and backup preservation behave.

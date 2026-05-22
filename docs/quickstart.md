@@ -120,6 +120,8 @@ node scripts/doctor.mjs --help
 
 9. Open the target project in Codex and ask it to read the project instructions. If your target already had `AGENTS.md`, read both `AGENTS.md` and `AGENTS.framecore.md`.
 
+10. For first real prompts after install, read [Using The Kit](using-the-kit.md).
+
 ## Advanced Global Install
 
 Project-local install is the default and recommended path. Global install writes to the current user's home workspace, so use it only when you intentionally want FrameCore available outside a single project.
@@ -309,6 +311,7 @@ your-project/
 ## Next Reading
 
 - [Architecture](architecture.md)
+- [Using The Kit](using-the-kit.md)
 - [Workflow Stages](workflow-stages.md)
 - [Troubleshooting](troubleshooting.md)
 - [Onboarding](onboarding.md)

@@ -77,6 +77,7 @@ v1.0 docs should give a new user a complete path:
 
 - README starts with a Codex-assisted install instruction and points to Quickstart
 - Quickstart covers guided install, manual install, global install safety, Windows target setup, installed tree, update, repair, and uninstall
+- Using The Kit gives post-install starter prompts, route choice guidance, execution boundaries, Hipson Adapter prompts, and safety reminders
 - Troubleshooting covers common install, privacy, package, config, Codex loading, update, repair, uninstall, and text-image issues
 - Architecture explains roles, skills, gates, handoffs, artifacts, examples, and provider boundaries
 - Compatibility explains Node.js, OS expectations, Codex assumptions, install modes, manifests, external tool boundary, and support baseline

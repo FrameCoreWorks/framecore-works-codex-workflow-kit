@@ -22,6 +22,7 @@ Additional minimal contract fixtures live under `contract-fixtures/artifacts/`. 
 ## How To Read The Examples
 
 - Treat each example as a workflow route, not a fixed template for every task.
+- For starter prompts after installation, read [Using The Kit](../docs/using-the-kit.md).
 - Use the listed artifacts to understand what the next role expects.
 - Treat `workflow.json` as the canonical checked route when contributing changes.
 - Keep `blueprint` aligned with a section slug from [Workflow Blueprints](../.agents/skills/pipeline-core/references/workflow-blueprints.md).
