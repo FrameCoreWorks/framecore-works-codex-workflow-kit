@@ -262,6 +262,7 @@ This is a GitHub-first repo. `package.json` provides local scripts, package meta
 ```bash
 npm run audit:privacy
 npm run secret:scan
+npm run syntax:check
 npm run validate
 npm test
 npm run check
@@ -272,7 +273,7 @@ node scripts/doctor.mjs --help
 node scripts/install.mjs --help
 ```
 
-`npm run check` is the expected CI path. It runs the privacy audit, dependency-free secret scan, workflow validation, and tests. `npm run release:check` adds the install smoke test, package audit, and release-readiness gate.
+`npm run check` is the expected CI path. It runs the privacy audit, dependency-free secret scan, syntax check, workflow validation, and tests. `npm run release:check` adds the install smoke test, package audit, and release-readiness gate.
 
 See also:
 

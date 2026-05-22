@@ -43,6 +43,8 @@ jobs:
         run: npm run audit:privacy
       - name: Secret scan
         run: npm run secret:scan
+      - name: Syntax check
+        run: npm run syntax:check
       - name: Workflow validation
         run: npm run validate
       - name: Tests

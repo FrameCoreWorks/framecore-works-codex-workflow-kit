@@ -67,9 +67,10 @@
     "release:check": "npm run check && npm run smoke:install && npm run package:audit && npm run release:readiness",
     "secret:scan": "node scripts/safety-scan.mjs",
     "smoke:install": "node scripts/smoke-install.mjs",
+    "syntax:check": "node scripts/syntax-check.mjs",
     "test": "node --test",
     "validate": "node scripts/validate.mjs",
-    "check": "npm run audit:privacy && npm run secret:scan && npm run validate && npm test"
+    "check": "npm run audit:privacy && npm run secret:scan && npm run syntax:check && npm run validate && npm test"
   },
   "engines": {
     "node": ">=20"

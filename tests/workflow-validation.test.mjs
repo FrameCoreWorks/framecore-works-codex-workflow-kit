@@ -179,6 +179,7 @@ test("cli scripts expose non-mutating help output", () => {
       "scripts/validate.mjs",
       "scripts/audit-privacy.mjs",
       "scripts/safety-scan.mjs",
+      "scripts/syntax-check.mjs",
       "scripts/package-list.mjs",
       "scripts/package-audit.mjs",
       "scripts/release-readiness.mjs",

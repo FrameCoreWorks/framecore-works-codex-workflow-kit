@@ -29,6 +29,7 @@ Before opening a pull request, run:
 ```bash
 npm run check
 npm run secret:scan
+npm run syntax:check
 npm run smoke:install
 npm run release:check
 npm run package:list
