@@ -20,6 +20,7 @@ Default recommendation: use the guided project-local installer unless you have a
 | `node scripts/install.mjs --mode repair --target <path>` | repair manifest-recorded files only | yes |
 | `node scripts/install.mjs --mode uninstall --target <path>` | uninstall preview | no unless `--yes` is passed |
 | `npm run audit:privacy` | privacy and banned-content audit | no |
+| `npm run secret:scan` | dependency-free credential and private-cloud scan | no |
 | `npm run validate` | workflow structure validation | no |
 | `npm test` | automated tests | no repo writes expected |
 | `npm run release:check` | full release gate | no repo writes expected |
@@ -45,6 +46,7 @@ The guided installer runs this sequence for project-local install and stops on t
 Use these before editing or releasing:
 
 - `npm run audit:privacy`
+- `npm run secret:scan`
 - `npm run validate`
 - `npm test`
 - `npm run check`
@@ -91,7 +93,7 @@ npm run release:check
 npm run package:list
 ```
 
-`release:check` runs privacy audit, workflow validation, tests, install smoke test, package audit, and release readiness. `package:list` is a read-only npm package dry-run preview so maintainers can inspect exactly what would ship.
+`release:check` runs privacy audit, secret scan, workflow validation, tests, install smoke test, package audit, and release readiness. `package:list` is a read-only npm package dry-run preview so maintainers can inspect exactly what would ship.
 
 ## Safety Rules
 

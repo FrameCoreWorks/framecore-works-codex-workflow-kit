@@ -33,6 +33,7 @@
 ## Verification
 
 - [ ] `npm run check`
+- [ ] `npm run secret:scan` when security, privacy, docs, examples, package, or workflow source changed
 - [ ] `npm run smoke:install` when install, path, manifest, onboarding, or package behavior changed
 - [ ] `npm run release:check`
 - [ ] `npm run package:list`

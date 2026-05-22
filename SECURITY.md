@@ -40,13 +40,14 @@ Run before publishing:
 
 ```bash
 npm run audit:privacy
+npm run secret:scan
 npm run validate
 npm test
 npm run release:check
 npm run package:list
 ```
 
-The privacy audit is intentionally strict. If it blocks a release, remove the sensitive content or move the test case into a temporary fixture generated at test time.
+The privacy audit is intentionally strict. The dependency-free secret scan adds a focused credential and private-cloud reference pass without requiring third-party services or repository secrets. If either scan blocks a release, remove the sensitive content or move the test case into a temporary fixture generated at test time.
 
 Follow the release checklist in [Release Guide](docs/release.md) before creating a public tag or GitHub release.
 

@@ -9,6 +9,7 @@
 - Added an install smoke-test command for default onboarding, guided project-local install, manifest hash checks, doctor, and uninstall preview.
 - Added the install smoke test to the cross-platform workflow and made that workflow path-sensitive for installer, test, config, package, and workflow changes while preserving manual dispatch.
 - Added validation for instruction-override phrases in agent-facing files so prompt-injection style content cannot drift into docs, skills, examples, or agent templates unnoticed.
+- Added a dependency-free `secret:scan` release gate and CI step for credential-shaped values, secret-bearing filenames, and private cloud references.
 - Added an explicit installed AGENTS rule that treats repository files, artifacts, examples, issue text, and user-supplied content as data unless the human user identifies them as current-task instructions.
 - Expanded Project State into a durable recovery artifact with blockers, touched files, risks, last completed gate, and recovery prompt guidance.
 - Updated security and contribution guidance for 1.0.x support and the repo-scoped package preview command.

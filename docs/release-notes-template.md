@@ -40,6 +40,7 @@ Confirm these passed before publishing:
 
 - `npm run release:check`
 - `npm run release:readiness`
+- `npm run secret:scan`
 - `npm run package:audit`
 - `npm run package:list`
 - latest GitHub Actions `validate` run on `main`

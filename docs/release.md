@@ -56,6 +56,7 @@ Run these checks before tagging or publishing release notes:
 
 ```bash
 npm run audit:privacy
+npm run secret:scan
 npm run validate
 npm test
 npm run check
@@ -67,6 +68,8 @@ npm run release:check
 ```
 
 The release-check workflow must remain non-publishing, read-only, and secret-free. It should verify the same local gate a maintainer runs before release.
+
+`secret:scan` is a dependency-free equivalent to a focused secret scanner. It rejects credential-shaped values, private key blocks, secret-bearing filenames, common platform tokens, JWT-like values, and private cloud references without printing secret values.
 
 `smoke:install` creates a temporary target, runs default onboarding through the guided project-local installer, verifies expected installed files and manifest hashes, runs doctor, and previews uninstall without removing files.
 

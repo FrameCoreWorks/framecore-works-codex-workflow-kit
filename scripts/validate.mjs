@@ -648,7 +648,7 @@ if (existsSync(cliReferenceDoc)) {
   for (const section of ["Purpose", "Command Groups", "Safe Install Order", "Non-Mutating Checks", "Mutating Commands", "Install Modes", "Packaging And Release Checks", "Safety Rules", "Related Docs"]) {
     if (!sections.has(section)) addFinding("WEAK_CLI_REFERENCE_DOC", `CLI reference is missing required section: ${section}`, [cliReferenceDoc]);
   }
-  for (const phrase of ["guided project-local installer", "npm run install:guided", "npm run doctor", "npm run install:dry-run", "npm run release:check", "npm run package:list", "project-local", "global install", "--confirm-global", "uninstall", "--yes", "Do not enable external execution providers"]) {
+  for (const phrase of ["guided project-local installer", "npm run install:guided", "npm run doctor", "npm run install:dry-run", "npm run secret:scan", "npm run release:check", "npm run package:list", "project-local", "global install", "--confirm-global", "uninstall", "--yes", "Do not enable external execution providers"]) {
     if (!text.includes(phrase)) addFinding("WEAK_CLI_REFERENCE_DOC", `CLI reference is missing required command phrase: ${phrase}`, [cliReferenceDoc]);
   }
 }
@@ -780,7 +780,7 @@ if (existsSync(releaseNotesTemplate)) {
   for (const section of ["Version", "Summary", "Install And Update Notes", "Onboarding Notes", "Workflow Changes", "Validation And Package Checks", "Security And Privacy Review", "Known Limitations", "Links"]) {
     if (!sections.has(section)) addFinding("WEAK_RELEASE_NOTES_TEMPLATE", `Release notes template is missing required section: ${section}`, [releaseNotesTemplate]);
   }
-  for (const phrase of ["provider-neutral", "project-local", "npm run release:check", "npm run release:readiness", "npm run package:audit", "npm run package:list", "No secrets", "No bundled external paid execution providers", "GPT Image 2", "Full Hipson remains separate and optional"]) {
+  for (const phrase of ["provider-neutral", "project-local", "npm run release:check", "npm run release:readiness", "npm run secret:scan", "npm run package:audit", "npm run package:list", "No secrets", "No bundled external paid execution providers", "GPT Image 2", "Full Hipson remains separate and optional"]) {
     if (!text.includes(phrase)) addFinding("WEAK_RELEASE_NOTES_TEMPLATE", `Release notes template is missing required release-safety phrase: ${phrase}`, [releaseNotesTemplate]);
   }
 }
@@ -830,6 +830,7 @@ const requiredRepoFiles = [
   "scripts/guided-install.mjs",
   "scripts/package-list.mjs",
   "scripts/package-audit.mjs",
+  "scripts/safety-scan.mjs",
   "scripts/release-readiness.mjs",
   "scripts/manifest.mjs"
 ];
@@ -840,7 +841,7 @@ for (const file of requiredRepoFiles) {
 const contributingDoc = join(validationRoot, "CONTRIBUTING.md");
 if (existsSync(contributingDoc)) {
   const text = read(contributingDoc);
-  for (const phrase of ["default validate workflow", "Ubuntu with Node 20 and 22", "path-sensitive cross-platform workflow", "Ubuntu, macOS, and Windows with Node 20", ".editorconfig", ".gitattributes", "npm run package:list"]) {
+  for (const phrase of ["default validate workflow", "Ubuntu with Node 20 and 22", "path-sensitive cross-platform workflow", "Ubuntu, macOS, and Windows with Node 20", ".editorconfig", ".gitattributes", "npm run secret:scan", "npm run package:list"]) {
     if (!text.includes(phrase)) addFinding("WEAK_CONTRIBUTING_CI_DOC", `Contributing guide must accurately describe CI coverage: ${phrase}`, [contributingDoc]);
   }
   if (/CI runs the same checks on Linux, macOS, and Windows with Node 20 and 22/.test(text)) {
@@ -851,7 +852,7 @@ if (existsSync(contributingDoc)) {
 const pullRequestTemplate = join(validationRoot, ".github/pull_request_template.md");
 if (existsSync(pullRequestTemplate)) {
   const text = read(pullRequestTemplate);
-  for (const phrase of ["npm run check", "npm run release:check", "npm run package:list", "No secrets", "Neutral role IDs", "Text-bearing image policy", "Release Impact"]) {
+  for (const phrase of ["npm run check", "npm run secret:scan", "npm run release:check", "npm run package:list", "No secrets", "Neutral role IDs", "Text-bearing image policy", "Release Impact"]) {
     if (!text.includes(phrase)) addFinding("WEAK_PULL_REQUEST_TEMPLATE", `Pull request template is missing required review phrase: ${phrase}`, [pullRequestTemplate]);
   }
 }
@@ -938,7 +939,7 @@ if (existsSync(securityDoc)) {
   for (const section of ["Supported Versions", "Reporting A Vulnerability", "Response Process", "Useful Evidence", "Release Checks", "Scope"]) {
     if (!sections.has(section)) addFinding("WEAK_SECURITY_DOC", `Security guide is missing required section: ${section}`, [securityDoc]);
   }
-  for (const phrase of ["1.0.x", "private vulnerability reporting", "acknowledge", "sanitized", "version, tag, or commit SHA", "operating system and Node.js version", "npm run package:list"]) {
+  for (const phrase of ["1.0.x", "private vulnerability reporting", "acknowledge", "sanitized", "version, tag, or commit SHA", "operating system and Node.js version", "npm run secret:scan", "npm run package:list"]) {
     if (!text.includes(phrase)) addFinding("WEAK_SECURITY_DOC", `Security guide is missing required reporting phrase: ${phrase}`, [securityDoc]);
   }
 }
@@ -950,7 +951,7 @@ if (existsSync(repositorySettingsDoc)) {
   for (const section of ["Purpose", "Recommended Minimum", "Stronger PR Workflow", "GitHub Actions", "Public Issue Hygiene", "Before Release", "What Stays Optional", "When To Revisit"]) {
     if (!sections.has(section)) addFinding("WEAK_REPOSITORY_SETTINGS_DOC", `Repository settings guide is missing required section: ${section}`, [repositorySettingsDoc]);
   }
-  for (const phrase of ["GitHub Desktop", "direct pushes", "Restrict deletions", "Block force pushes", "Require status checks", "read-only permissions", "repository secrets", "fork pull requests", "rotate exposed secrets", "npm run release:check", "npm run package:audit", "npm run package:list"]) {
+  for (const phrase of ["GitHub Desktop", "direct pushes", "Restrict deletions", "Block force pushes", "Require status checks", "read-only permissions", "repository secrets", "fork pull requests", "rotate exposed secrets", "npm run release:check", "npm run secret:scan", "npm run package:audit", "npm run package:list"]) {
     if (!text.includes(phrase)) addFinding("WEAK_REPOSITORY_SETTINGS_DOC", `Repository settings guide is missing required maintenance phrase: ${phrase}`, [repositorySettingsDoc]);
   }
 }
@@ -971,8 +972,14 @@ if (existsSync(packageJsonPath)) {
   if (!String(scripts["release:readiness"] ?? "").includes("scripts/release-readiness.mjs")) {
     addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json must expose release:readiness using scripts/release-readiness.mjs.", [packageJsonPath]);
   }
+  if (!String(scripts["secret:scan"] ?? "").includes("scripts/safety-scan.mjs")) {
+    addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json must expose secret:scan using scripts/safety-scan.mjs.", [packageJsonPath]);
+  }
   if (!releaseCheck.includes("npm run release:readiness")) {
     addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json release:check must run npm run release:readiness.", [packageJsonPath]);
+  }
+  if (!String(scripts.check ?? "").includes("npm run secret:scan")) {
+    addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json check must run npm run secret:scan.", [packageJsonPath]);
   }
 }
 
@@ -998,12 +1005,13 @@ if (existsSync(validateWorkflow)) {
     !text.includes("ubuntu-latest") ||
     !text.includes("node-version: [20, 22]") ||
     !text.includes("npm run audit:privacy") ||
+    !text.includes("npm run secret:scan") ||
     !text.includes("npm run validate") ||
     !text.includes("npm test") ||
     !text.includes("npm run package:audit") ||
     !/permissions:\s*\n\s*contents:\s*read/.test(text)
   ) {
-    addFinding("WEAK_VALIDATE_WORKFLOW", "validate workflow must be push/PR-triggered, read-only, Linux-based, test Node 20/22, and run audit, validation, tests, and package audit.", [validateWorkflow]);
+    addFinding("WEAK_VALIDATE_WORKFLOW", "validate workflow must be push/PR-triggered, read-only, Linux-based, test Node 20/22, and run privacy audit, secret scan, validation, tests, and package audit.", [validateWorkflow]);
   }
   if (/\$\{\{\s*runner\./.test(text)) {
     addFinding("UNSAFE_VALIDATE_WORKFLOW", "validate workflow must not use runner context in workflow or job-level expressions.", [validateWorkflow]);
@@ -1037,6 +1045,7 @@ if (existsSync(crossPlatformWorkflow)) {
     !text.includes("ubuntu-latest") ||
     !text.includes("macos-latest") ||
     !text.includes("windows-latest") ||
+    !text.includes("npm run secret:scan") ||
     !text.includes("npm run smoke:install") ||
     !text.includes("npm run package:audit") ||
     !/permissions:\s*\n\s*contents:\s*read/.test(text)

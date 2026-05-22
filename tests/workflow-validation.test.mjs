@@ -195,6 +195,26 @@ test("privacy audit catches secret filenames and credential-shaped values", () =
   assert.match(`${result.stderr}${result.stdout}`, /SECRET_LIKE_VALUE/);
 });
 
+test("secret scan passes and catches credential-shaped values", () => {
+  assert.match(run(["scripts/safety-scan.mjs"]), /safety scan passed/);
+
+  const dir = mkdtempSync(join(tmpdir(), "framecore-safety-scan-"));
+  const token = ["sk", "-", "abcdefghijklmnopqrstuvwxyz123456"].join("");
+  const cloud = [
+    "https://drive.google.com/drive/folders/",
+    "1AaBbCcDdEeFfGgHhIiJjKkLlMm"
+  ].join("");
+  writeFileSync(join(dir, ".env"), "SHOULD_NOT_SHIP=1\n");
+  writeFileSync(join(dir, "bad.md"), [`token = ${token}`, cloud].join("\n"));
+
+  const result = failRun(["scripts/safety-scan.mjs", dir]);
+  const output = combinedOutput(result);
+  assert.notEqual(result.status, 0);
+  assert.match(output, /SAFETY_SCAN_FILE_NAME/);
+  assert.match(output, /SAFETY_SCAN_VALUE/);
+  assert.match(output, /SAFETY_SCAN_PRIVATE_CLOUD/);
+});
+
 test("package audit passes on repo package and rejects local config package files", () => {
   assert.match(run(["scripts/package-audit.mjs"]), /package audit passed/);
 
@@ -224,6 +244,7 @@ test("cli scripts expose non-mutating help output", () => {
       "scripts/render-agents.mjs",
       "scripts/validate.mjs",
       "scripts/audit-privacy.mjs",
+      "scripts/safety-scan.mjs",
       "scripts/package-list.mjs",
       "scripts/package-audit.mjs",
       "scripts/release-readiness.mjs",

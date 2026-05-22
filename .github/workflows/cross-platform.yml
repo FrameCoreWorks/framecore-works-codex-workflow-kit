@@ -41,6 +41,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Privacy audit
         run: npm run audit:privacy
+      - name: Secret scan
+        run: npm run secret:scan
       - name: Workflow validation
         run: npm run validate
       - name: Tests

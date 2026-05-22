@@ -95,6 +95,7 @@ Before v1.0, these must pass locally:
 ```bash
 npm run cleanup:appledouble -- --apply
 npm run check
+npm run secret:scan
 npm run smoke:install
 npm run package:audit
 npm run package:list
