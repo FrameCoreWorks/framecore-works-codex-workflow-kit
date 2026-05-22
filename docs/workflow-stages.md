@@ -14,7 +14,7 @@ Read each row as an operational contract: the owner receives input, produces the
 | Instruction packet | `instruction-packet-factory` | target role, goal, exclusions | Instruction Packet | `instruction_packet_fit` | target specialist |
 | Direction | `static-direction`, `motion-direction`, `music-video-direction` | brief, references | Direction Contract | `direction_fit` | structure, copy, or prompt role |
 | Structure | `storyboard-architect` | motion direction, timing constraints | Storyboard Contract | `structure_fit` | video prompt or HyperFrames |
-| Storyboard board | `storyboard-board-architect` | storyboard, visual direction | Board Artifact Prompt | `storyboard_board_fit` | image prompt or delivery review |
+| Storyboard board | `storyboard-board-architect` | storyboard, visual direction | Board Artifact Prompt | `storyboard_board_fit` | `image-prompting` or `qa-iteration` |
 | Copy | `copy-voice` | direction, tone, audience | Copy Pack | `copy_fit` | prompt role |
 | Prompting | `image-prompting`, `video-prompting` | direction, copy, references | Prompt Pack | `promptability_fit` | `tool-routing-cost` or QA |
 | Tool routing | `tool-routing-cost` | prompt pack, approval status | Tool Routing Plan | `schema_pricing_fit` | `execution-manifest` |
@@ -46,4 +46,5 @@ Common workflow routes live in [Workflow Blueprints](../.agents/skills/pipeline-
 - [Handoff Matrix](../.agents/skills/pipeline-core/references/handoff-matrix.md)
 - [Workflow Blueprints](../.agents/skills/pipeline-core/references/workflow-blueprints.md)
 - [Artifact Templates](../.agents/skills/pipeline-core/templates/artifact-templates.md)
+- [Storyboard Board Example](../examples/storyboard-board/README.md)
 - [End-To-End Creative Workflow Example](../examples/end-to-end-creative-workflow/README.md)

@@ -19,8 +19,11 @@
 | motion-direction | copy-voice | motion_direction, audience, VO_or_caption_needs |
 | motion-direction | storyboard-architect | motion_direction, timing_constraints, continuity_rules |
 | storyboard-architect | copy-voice | storyboard_contract, shot_context, VO_or_caption_needs |
+| storyboard-architect | storyboard-board-architect | storyboard_contract, visual_direction, panel_count, timing, label_requirements |
 | storyboard-architect | video-prompting | storyboard_contract, shot_cards, continuity_rules |
 | storyboard-architect | hyperframes-producer | storyboard_contract, timing, copy, render_constraints |
+| storyboard-board-architect | image-prompting | board_artifact_prompt, exact_board_text, panel_layout, safe_margins, acceptance_criteria |
+| storyboard-board-architect | qa-iteration | board_artifact_prompt, expected_observables, acceptance_criteria |
 | copy-voice | image-prompting | exact_copy, tone_notes, text_lock |
 | copy-voice | video-prompting | VO, dialogue, supers, tone_notes |
 | copy-voice | hyperframes-producer | captions, titles, VO, overlay_text, tone_notes |

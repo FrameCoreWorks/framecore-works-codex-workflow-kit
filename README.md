@@ -271,6 +271,7 @@ See also:
 - [Static Campaign Example](examples/static-campaign/README.md)
 - [Ecommerce Product Visual Example](examples/ecommerce-product-visual/README.md)
 - [Video Storyboard Example](examples/video-storyboard/README.md)
+- [Storyboard Board Example](examples/storyboard-board/README.md)
 - [HyperFrames Video Example](examples/hyperframes-video/README.md)
 - [Image Prompt Pack Example](examples/image-prompt-pack/README.md)
 - [Document Workflow Example](examples/document-workflow/README.md)

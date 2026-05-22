@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "example_id": "storyboard-board",
+  "blueprint": "storyboard-board-artifact",
+  "route": [
+    "intent-confirmation",
+    "workflow-orchestrator",
+    "brief-architect",
+    "reference-curator",
+    "motion-direction",
+    "storyboard-architect",
+    "storyboard-board-architect",
+    "image-prompting",
+    "qa-iteration",
+    "delivery-documentation"
+  ],
+  "gates": [
+    "intent_lock",
+    "workflow_route",
+    "brief_completeness",
+    "reference_authority_fit",
+    "direction_fit",
+    "structure_fit",
+    "storyboard_board_fit",
+    "promptability_fit",
+    "post_execution_fit",
+    "delivery_fit"
+  ],
+  "artifacts": [
+    "Task Confirmation",
+    "Project State",
+    "Brief Contract",
+    "Reference Pack",
+    "Direction Contract",
+    "Storyboard Contract",
+    "Board Artifact Prompt",
+    "Image Prompt Contract",
+    "QA / Iteration Report",
+    "Delivery Manifest"
+  ],
+  "handoffs": [
+    "intent-confirmation->workflow-orchestrator",
+    "workflow-orchestrator->brief-architect",
+    "brief-architect->reference-curator",
+    "reference-curator->motion-direction",
+    "motion-direction->storyboard-architect",
+    "storyboard-architect->storyboard-board-architect",
+    "storyboard-board-architect->image-prompting",
+    "image-prompting->qa-iteration",
+    "qa-iteration->delivery-documentation"
+  ],
+  "execution_boundary": "Board artifact and image prompt planning only. Static image generation requires an explicit user request."
+}

@@ -537,6 +537,15 @@ test("validation rejects missing example workflow manifests", () => {
   assert.match(`${result.stderr}${result.stdout}`, /MISSING_EXAMPLE_WORKFLOW/);
 });
 
+test("validation rejects missing required examples", () => {
+  const dir = copyRepoFixture("framecore-validate-required-example-missing-");
+  rmSync(join(dir, "examples/storyboard-board/README.md"), { force: true });
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /MISSING_REQUIRED_EXAMPLE/);
+});
+
 test("validation rejects unknown example workflow blueprints", () => {
   const dir = copyRepoFixture("framecore-validate-example-blueprint-");
   const file = join(dir, "examples/static-campaign/workflow.json");

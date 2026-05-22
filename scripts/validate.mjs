@@ -870,6 +870,25 @@ if (existsSync(crossPlatformWorkflow)) {
 
 const exampleReadmes = walkFiles(join(validationRoot, "examples"))
   .filter((file) => !isAppleDouble(file) && file.endsWith("README.md") && relativePosix(validationRoot, file) !== "examples/README.md");
+const requiredExampleDirectories = [
+  "minimal-workflow",
+  "static-campaign",
+  "ecommerce-product-visual",
+  "video-storyboard",
+  "storyboard-board",
+  "hyperframes-video",
+  "image-prompt-pack",
+  "document-workflow",
+  "qa-delivery-review",
+  "no-provider-mode",
+  "end-to-end-creative-workflow"
+];
+for (const example of requiredExampleDirectories) {
+  for (const file of ["README.md", "workflow.json"]) {
+    const exampleFile = join(validationRoot, "examples", example, file);
+    if (!existsSync(exampleFile)) addFinding("MISSING_REQUIRED_EXAMPLE", `Required example is missing file: examples/${example}/${file}`, [exampleFile]);
+  }
+}
 const requiredExampleSections = [
   "## Purpose",
   "## Starting User Request",
