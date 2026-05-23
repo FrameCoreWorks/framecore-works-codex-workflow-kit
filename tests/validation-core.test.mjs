@@ -74,3 +74,21 @@ test("validation rejects instruction override phrases in agent-facing files", ()
   assert.notEqual(result.status, 0);
   assert.match(`${result.stderr}${result.stdout}`, /INSTRUCTION_OVERRIDE_PHRASE/);
 });
+
+test("validation rejects missing focused test suite files", () => {
+  const dir = copyRepoFixture("framecore-missing-focused-test-");
+  rmSync(join(dir, "tests/audit-security.test.mjs"), { force: true });
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /MISSING_TEST_SUITE_FILE/);
+});
+
+test("validation rejects the legacy monolithic test suite file", () => {
+  const dir = copyRepoFixture("framecore-monolithic-test-");
+  writeFileSync(join(dir, "tests/workflow-validation.test.mjs"), "import test from \"node:test\";\n");
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /MONOLITHIC_TEST_SUITE/);
+});

@@ -842,6 +842,24 @@ for (const file of requiredRepoFiles) {
   if (!existsSync(join(validationRoot, file))) addFinding("MISSING_REPO_FILE", `Required public repo file is missing: ${file}`, [join(validationRoot, file)]);
 }
 
+const requiredTestFiles = [
+  "tests/audit-security.test.mjs",
+  "tests/docs-validation.test.mjs",
+  "tests/doctor-manifest.test.mjs",
+  "tests/governance.test.mjs",
+  "tests/install-onboarding.test.mjs",
+  "tests/validation-contracts.test.mjs",
+  "tests/validation-core.test.mjs",
+  "tests/helpers.mjs"
+];
+for (const file of requiredTestFiles) {
+  if (!existsSync(join(validationRoot, file))) addFinding("MISSING_TEST_SUITE_FILE", `Required focused test suite file is missing: ${file}`, [join(validationRoot, file)]);
+}
+const legacyMonolithTest = join(validationRoot, "tests/workflow-validation.test.mjs");
+if (existsSync(legacyMonolithTest)) {
+  addFinding("MONOLITHIC_TEST_SUITE", "Tests should stay split by concern instead of returning to the workflow-validation monolith.", [legacyMonolithTest]);
+}
+
 const contributingDoc = join(validationRoot, "CONTRIBUTING.md");
 if (existsSync(contributingDoc)) {
   const text = read(contributingDoc);
