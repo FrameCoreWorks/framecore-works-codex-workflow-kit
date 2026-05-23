@@ -33,6 +33,10 @@ export function relativePosix(from, to) {
   return toPosixPath(relative(from, to));
 }
 
+/**
+ * Refuses managed writes that would escape the target workspace or pass through
+ * a symlink. This keeps install/update/repair from following pre-planted links.
+ */
 export function assertNoSymlinkPath(root, destination) {
   const resolvedRoot = resolve(root);
   const resolvedDestination = resolve(destination);
@@ -50,6 +54,10 @@ export function assertNoSymlinkPath(root, destination) {
   }
 }
 
+/**
+ * Recursively lists regular files without following symlinks. Callers can
+ * report symlinks through onSymlink while keeping outside targets unread.
+ */
 export function walkFiles(root, options = {}) {
   const excludes = new Set((options.excludes ?? []).map(toPosixPath));
   const files = [];

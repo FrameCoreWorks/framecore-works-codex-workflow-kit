@@ -16,6 +16,10 @@ function nextBackupPath(destination) {
   return `${first}.${index}`;
 }
 
+/**
+ * Normalizes local config values before inserting them into TOML templates.
+ * This prevents display names or paths from breaking the rendered file shape.
+ */
 function safeTemplateValue(value) {
   return String(value)
     .replace(/\r\n?/g, "\n")
@@ -25,6 +29,10 @@ function safeTemplateValue(value) {
     .replaceAll("\u0000", "");
 }
 
+/**
+ * Writes one rendered agent file with the same ownership, backup, and symlink
+ * protections used by the main installer.
+ */
 function writeRenderedFile({ target, destination, content, dryRun, previousManaged, force }) {
   const rel = toManifestPath(target, destination);
   assertNoSymlinkPath(target, destination);
@@ -40,6 +48,10 @@ function writeRenderedFile({ target, destination, content, dryRun, previousManag
   }
 }
 
+/**
+ * Renders neutral role templates into the target workspace, returning the exact
+ * files that install/update/repair should track in the manifest.
+ */
 export function renderAgents({ target, configPath, dryRun = false, previousManaged = new Set(), force = false, includeManagedPath = () => true }) {
   const sourceDir = join(repoRoot, ".codex/agents");
   const targetDir = join(target, ".codex/agents");

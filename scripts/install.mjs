@@ -45,6 +45,11 @@ function readManifest(target) {
   return JSON.parse(readFileSync(manifestPath, "utf8"));
 }
 
+/**
+ * Builds the ownership record for the target workspace. Hashes are captured
+ * only for files that already exist, so the first incomplete manifest can be
+ * written before managed files are copied.
+ */
 function buildManifest({ target, managedPaths, manifestRel, incomplete = false }) {
   const packageInfo = readJson(join(repoRoot, "package.json"));
   const managedHashes = {};
@@ -67,6 +72,10 @@ function buildManifest({ target, managedPaths, manifestRel, incomplete = false }
   };
 }
 
+/**
+ * Writes the manifest and optionally rotates the previous manifest first.
+ * Existing installs keep one backup before update/repair changes ownership.
+ */
 function writeManifestFile({ manifestPath, manifest, backupExisting }) {
   mkdirSync(dirname(manifestPath), { recursive: true });
   if (backupExisting && existsSync(manifestPath)) {
@@ -83,6 +92,10 @@ function nextBackupPath(destination) {
   return `${first}.${index}`;
 }
 
+/**
+ * Writes one FrameCore-managed file after ownership and symlink checks. Dry-run
+ * uses the same checks so conflicts are reported before real writes.
+ */
 function writeManagedFile({ target, destination, content, dryRun, planned, managed, previousManaged, force, includeManagedPath = () => true }) {
   const rel = toManifestPath(target, destination);
   if (!includeManagedPath(rel)) return false;
@@ -121,6 +134,10 @@ function copySkillFiles({ target, source, destination, dryRun, planned, managed,
   }
 }
 
+/**
+ * Chooses whether FrameCore may own AGENTS.md or must write AGENTS.framecore.md.
+ * Existing user instructions are preserved unless --force is explicit.
+ */
 function chooseAgentsInstructionPath({ target, previousManaged, force, repair }) {
   const primary = join(target, "AGENTS.md");
   const primaryRel = toManifestPath(target, primary);

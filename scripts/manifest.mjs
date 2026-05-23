@@ -6,6 +6,10 @@ function isPlainObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 
+/**
+ * Resolves a manifest entry only when it is a relative file path inside target.
+ * Manifest-driven operations must never accept absolute paths or traversal.
+ */
 export function resolveManagedPath(target, entry) {
   if (typeof entry !== "string" || entry.length === 0 || isAbsolute(entry) || entry.split(/[\\/]+/).includes("..")) {
     throw new Error(`refusing unsafe managed path: ${entry}`);
@@ -22,6 +26,10 @@ export function sha256File(path) {
   return createHash("sha256").update(readFileSync(path)).digest("hex");
 }
 
+/**
+ * Validates manifest shape and ownership boundaries before doctor, repair, or
+ * uninstall trust any recorded path.
+ */
 export function validateManifest(target, manifest) {
   const errors = [];
   if (!isPlainObject(manifest)) return ["manifest must be a JSON object"];
