@@ -30,6 +30,7 @@ Before opening a pull request, run:
 npm run check
 npm run secret:scan
 npm run syntax:check
+npm run agent:check
 npm run smoke:install
 npm run release:check
 npm run package:list

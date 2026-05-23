@@ -31,6 +31,8 @@ jobs:
         run: npm run syntax:check
       - name: Workflow validation
         run: npm run validate
+      - name: Agent compliance
+        run: npm run agent:check
       - name: Tests
         run: npm test
       - name: Package audit

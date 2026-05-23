@@ -264,6 +264,7 @@ npm run audit:privacy
 npm run secret:scan
 npm run syntax:check
 npm run validate
+npm run agent:check
 npm test
 npm run check
 npm run smoke:install
@@ -273,7 +274,7 @@ node scripts/doctor.mjs --help
 node scripts/install.mjs --help
 ```
 
-`npm run check` is the expected CI path. It runs the privacy audit, dependency-free secret scan, syntax check, workflow validation, and tests. `npm run release:check` adds the install smoke test, package audit, and release-readiness gate.
+`npm run check` is the expected CI path. It runs the privacy audit, dependency-free secret scan, syntax check, workflow validation, deterministic agent compliance, and tests. `npm run release:check` adds the install smoke test, package audit, and release-readiness gate.
 
 See also:
 

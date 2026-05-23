@@ -54,6 +54,7 @@
     "framecore-validate": "./scripts/validate.mjs"
   },
   "scripts": {
+    "agent:check": "node scripts/agent-compliance-check.mjs",
     "audit:privacy": "node scripts/audit-privacy.mjs",
     "cleanup:appledouble": "node scripts/cleanup-appledouble.mjs",
     "doctor": "node scripts/doctor.mjs",
@@ -70,7 +71,7 @@
     "syntax:check": "node scripts/syntax-check.mjs",
     "test": "node --test",
     "validate": "node scripts/validate.mjs",
-    "check": "npm run audit:privacy && npm run secret:scan && npm run syntax:check && npm run validate && npm test"
+    "check": "npm run audit:privacy && npm run secret:scan && npm run syntax:check && npm run validate && npm run agent:check && npm test"
   },
   "engines": {
     "node": ">=20"

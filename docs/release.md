@@ -59,6 +59,7 @@ npm run audit:privacy
 npm run secret:scan
 npm run syntax:check
 npm run validate
+npm run agent:check
 npm test
 npm run check
 npm run smoke:install
@@ -73,6 +74,8 @@ The release-check workflow must remain non-publishing, read-only, and secret-fre
 `secret:scan` is a dependency-free equivalent to a focused secret scanner. It rejects credential-shaped values, private key blocks, secret-bearing filenames, common platform tokens, JWT-like values, and private cloud references without printing secret values.
 
 `syntax:check` is a dependency-free JavaScript module check. It runs `node --check` against repository `.mjs` files so CI catches malformed scripts without adding lint or formatting dependencies.
+
+`agent:check` is a deterministic compliance fixture, not a live model evaluation. It verifies the installed AGENTS first move, intent confirmation handoff, workflow-orchestrator handoff, Task Confirmation fields, Project State fields, safety rules, and recovery prompt inside a temporary project-local target.
 
 `smoke:install` creates a temporary target, runs default onboarding through the guided project-local installer, verifies expected installed files and manifest hashes, runs doctor, and previews uninstall without removing files.
 

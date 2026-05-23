@@ -991,6 +991,9 @@ if (existsSync(packageJsonPath)) {
   if (!String(scripts["syntax:check"] ?? "").includes("scripts/syntax-check.mjs")) {
     addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json must expose syntax:check using scripts/syntax-check.mjs.", [packageJsonPath]);
   }
+  if (!String(scripts["agent:check"] ?? "").includes("scripts/agent-compliance-check.mjs")) {
+    addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json must expose agent:check using scripts/agent-compliance-check.mjs.", [packageJsonPath]);
+  }
   if (!releaseCheck.includes("npm run release:readiness")) {
     addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json release:check must run npm run release:readiness.", [packageJsonPath]);
   }
@@ -999,6 +1002,9 @@ if (existsSync(packageJsonPath)) {
   }
   if (!String(scripts.check ?? "").includes("npm run syntax:check")) {
     addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json check must run npm run syntax:check.", [packageJsonPath]);
+  }
+  if (!String(scripts.check ?? "").includes("npm run agent:check")) {
+    addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json check must run npm run agent:check.", [packageJsonPath]);
   }
 }
 
@@ -1027,6 +1033,7 @@ if (existsSync(validateWorkflow)) {
     !text.includes("npm run secret:scan") ||
     !text.includes("npm run syntax:check") ||
     !text.includes("npm run validate") ||
+    !text.includes("npm run agent:check") ||
     !text.includes("npm test") ||
     !text.includes("npm run package:audit") ||
     !/permissions:\s*\n\s*contents:\s*read/.test(text)
@@ -1067,6 +1074,7 @@ if (existsSync(crossPlatformWorkflow)) {
     !text.includes("windows-latest") ||
     !text.includes("npm run secret:scan") ||
     !text.includes("npm run syntax:check") ||
+    !text.includes("npm run agent:check") ||
     !text.includes("npm run smoke:install") ||
     !text.includes("npm run package:audit") ||
     !/permissions:\s*\n\s*contents:\s*read/.test(text)

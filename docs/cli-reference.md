@@ -10,6 +10,7 @@ Default recommendation: use the guided project-local installer unless you have a
 
 | Command | Main use | Writes files |
 | --- | --- | --- |
+| `npm run agent:check` | deterministic agent-workflow compliance fixture | writes only to a temporary target |
 | `npm run install:guided -- --target <path>` | beginner-safe project-local install | yes, after dry-run and confirmation |
 | `npm run doctor -- --target <path>` | non-mutating preflight | no |
 | `npm run onboard:defaults -- --target <path>` | default local config generation | yes |
@@ -50,6 +51,7 @@ Use these before editing or releasing:
 - `npm run secret:scan`
 - `npm run syntax:check`
 - `npm run validate`
+- `npm run agent:check`
 - `npm test`
 - `npm run check`
 - `npm run package:audit`
@@ -95,7 +97,9 @@ npm run release:check
 npm run package:list
 ```
 
-`release:check` runs privacy audit, secret scan, syntax check, workflow validation, tests, install smoke test, package audit, and release readiness. `package:list` is a read-only npm package dry-run preview so maintainers can inspect exactly what would ship.
+`release:check` runs privacy audit, secret scan, syntax check, workflow validation, deterministic agent compliance, tests, install smoke test, package audit, and release readiness. `package:list` is a read-only npm package dry-run preview so maintainers can inspect exactly what would ship.
+
+`agent:check` does not call a model or external runtime. It installs the kit into a temporary target and verifies the minimum agent path: `AGENTS.md` first move, `intent-confirmation`, `workflow-orchestrator`, Task Confirmation, Project State, safety rules, and recovery prompt.
 
 ## Safety Rules
 

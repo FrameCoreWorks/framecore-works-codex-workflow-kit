@@ -171,6 +171,7 @@ test("cli scripts expose non-mutating help output", () => {
   writeFileSync(sidecar, "");
   try {
     for (const script of [
+      "scripts/agent-compliance-check.mjs",
       "scripts/install.mjs",
       "scripts/guided-install.mjs",
       "scripts/doctor.mjs",
@@ -1305,6 +1306,10 @@ test("guided installer runs the safe project-local default path", () => {
 
 test("smoke install verifies the temporary project-local golden path", () => {
   assert.match(run(["scripts/smoke-install.mjs"]), /smoke install passed/);
+});
+
+test("agent compliance fixture verifies minimum installed workflow path", () => {
+  assert.match(run(["scripts/agent-compliance-check.mjs"]), /agent compliance check passed/);
 });
 
 test("guided installer rejects missing targets and kit repo self-install", () => {
