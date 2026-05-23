@@ -43,6 +43,7 @@ For most teams:
 
 - commit project instructions only when reviewed by the team
 - keep `framecore.config.json` local
+- use `framecore.config.shared.json` only for reviewed, portable team defaults
 - keep `.framecore/manifest.json` local unless the team explicitly manages FrameCore updates together
 - rerun onboarding locally for each user
 - use neutral display names for any committed agent files
@@ -74,6 +75,8 @@ Sharing config can be reasonable when:
 - every value has been reviewed for privacy and portability
 
 Even then, prefer a documented template or example over committing a user's live config.
+
+If the team does share settings, use `framecore.config.shared.json` rather than committing a user's live `framecore.config.json`. The installer and renderer merge configuration in this order: built-in defaults, then `framecore.config.shared.json`, then local `framecore.config.json`. Local preferences win, so each user can keep personal tone or display-name choices outside version control.
 
 ## Privacy Review
 

@@ -3,9 +3,9 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { homedir } from "node:os";
 import { join, relative, sep } from "node:path";
-import { hasHelpFlag, printHelpAndExit, readJson, repoRoot, walkFiles } from "./common.mjs";
+import { hasHelpFlag, printHelpAndExit, repoRoot, walkFiles } from "./common.mjs";
 import { resolveManagedPath, sha256File, validateManifest } from "./manifest.mjs";
-import { assertValidFrameCoreConfig } from "./config-validation.mjs";
+import { assertValidFrameCoreConfig, loadFrameCoreConfig } from "./config-validation.mjs";
 
 function argValue(name, fallback) {
   const index = process.argv.indexOf(name);
@@ -156,17 +156,20 @@ function runDoctor({ mode }) {
   }
 
   const configPath = join(target, "framecore.config.json");
-  if (existsSync(configPath)) {
+  const loadedConfig = loadFrameCoreConfig({ target, configPath });
+  if (loadedConfig.localPath || loadedConfig.sharedPath) {
     try {
-      assertValidFrameCoreConfig(readJson(configPath));
-      ok("framecore.config.json is valid.");
+      assertValidFrameCoreConfig(loadedConfig.config);
+      ok("FrameCore config is valid.");
+      if (loadedConfig.sharedPath) ok("framecore.config.shared.json was included.");
+      if (loadedConfig.localPath) ok("framecore.config.json was included.");
     } catch (error) {
-      fail(`framecore.config.json is invalid: ${error.message}`);
+      fail(`FrameCore config is invalid: ${error.message}`);
     }
   } else if (mode === "project-local" || mode === "update" || mode === "repair") {
-    warn("framecore.config.json is missing. Run onboarding before installation for tuned preferences.");
+    warn("FrameCore config is missing. Run onboarding before installation for tuned preferences.");
   } else {
-    ok("No framecore.config.json required for this preflight mode.");
+    ok("No FrameCore config required for this preflight mode.");
   }
 
   let manifest = null;

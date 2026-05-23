@@ -53,7 +53,7 @@ Project-local install copies only FrameCore-managed files into the target worksp
 - `AGENTS.framecore.md` when the project already has its own `AGENTS.md`
 - `.framecore/manifest.json`
 
-Onboarding writes `framecore.config.json` before installation. The installer reads that file when rendering local agent display names, language, tone, output folder, and QA preference into `.codex/agents/*.toml`.
+Onboarding writes `framecore.config.json` before installation. The installer reads that file when rendering local agent display names, language, tone, output folder, and QA preference into `.codex/agents/*.toml`. If a team provides `framecore.config.shared.json`, the effective config is built from built-in defaults, shared config, and then local config, with local values taking precedence.
 
 ## Ownership And Safety
 

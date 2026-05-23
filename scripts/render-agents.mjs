@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
-import { assertNoSymlinkPath, hasHelpFlag, printHelpAndExit, repoRoot, readJson } from "./common.mjs";
-import { assertValidFrameCoreConfig } from "./config-validation.mjs";
+import { assertNoSymlinkPath, hasHelpFlag, printHelpAndExit, repoRoot } from "./common.mjs";
+import { assertValidFrameCoreConfig, loadFrameCoreConfig } from "./config-validation.mjs";
 
 function toManifestPath(target, destination) {
   return relative(target, destination).replaceAll(sep, "/");
@@ -55,8 +55,8 @@ function writeRenderedFile({ target, destination, content, dryRun, previousManag
 export function renderAgents({ target, configPath, dryRun = false, previousManaged = new Set(), force = false, includeManagedPath = () => true }) {
   const sourceDir = join(repoRoot, ".codex/agents");
   const targetDir = join(target, ".codex/agents");
-  const config = existsSync(configPath) ? readJson(configPath) : {};
-  if (existsSync(configPath)) assertValidFrameCoreConfig(config);
+  const { config } = loadFrameCoreConfig({ target, configPath });
+  assertValidFrameCoreConfig(config);
   const names = config.agent_display_names ?? {};
   const language = safeTemplateValue(config.working_language ?? "en");
   const tone = safeTemplateValue(config.response_tone ?? "calm, direct, practical");

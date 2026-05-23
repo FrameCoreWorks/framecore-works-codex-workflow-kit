@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { isAbsolute, join, normalize } from "node:path";
 import { repoRoot, readJson } from "./common.mjs";
 
@@ -21,6 +22,41 @@ function requireBoolean(value, path, errors) {
 
 function requireString(value, path, errors) {
   if (typeof value !== "string" || value.trim().length === 0) errors.push(`${path} must be a non-empty string`);
+}
+
+function mergeObjects(base, override) {
+  const result = { ...base };
+  for (const [key, value] of Object.entries(override ?? {})) {
+    if (isPlainObject(result[key]) && isPlainObject(value)) {
+      result[key] = mergeObjects(result[key], value);
+    } else {
+      result[key] = value;
+    }
+  }
+  return result;
+}
+
+export function mergeFrameCoreConfig(...configs) {
+  return configs.reduce((merged, config) => mergeObjects(merged, config), {});
+}
+
+export function loadFrameCoreConfig({ target, configPath = join(target, "framecore.config.json") }) {
+  const defaultsPath = join(repoRoot, "config/defaults.example.json");
+  const sharedPath = join(target, "framecore.config.shared.json");
+  const layers = [readJson(defaultsPath)];
+  const loaded = {
+    defaultsPath,
+    sharedPath: existsSync(sharedPath) ? sharedPath : null,
+    localPath: existsSync(configPath) ? configPath : null,
+  };
+
+  if (loaded.sharedPath) layers.push(readJson(loaded.sharedPath));
+  if (loaded.localPath) layers.push(readJson(loaded.localPath));
+
+  return {
+    ...loaded,
+    config: mergeFrameCoreConfig(...layers),
+  };
 }
 
 export function validateFrameCoreConfig(config, { schema, roles } = {}) {

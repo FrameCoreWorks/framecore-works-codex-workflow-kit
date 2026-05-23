@@ -155,7 +155,15 @@ The recurring review is disabled by default and should be enabled only by explic
 
 The safe default is personal install. Keep `framecore.config.json` and `.framecore/manifest.json` local unless a team intentionally decides to manage FrameCore files together.
 
-If a team wants shared settings, prefer a documented template over committing a live user config. Review every shared value for privacy, portability, and provider-neutrality.
+If a team wants shared settings, prefer `framecore.config.shared.json` over committing a live user config. Shared config is optional and may contain reviewed team defaults such as `qa_strictness`, `response_tone`, neutral `agent_display_names`, or a portable `output_dir`.
+
+Config is merged in this order:
+
+1. built-in defaults
+2. `framecore.config.shared.json`
+3. local `framecore.config.json`
+
+Local config wins. Review every shared value for privacy, portability, and provider-neutrality.
 
 For team decisions, read [Team Configuration](team-configuration.md).
 

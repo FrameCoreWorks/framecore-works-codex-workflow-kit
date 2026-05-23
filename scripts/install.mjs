@@ -5,7 +5,7 @@ import { homedir } from "node:os";
 import { assertNoSymlinkPath, hasHelpFlag, printHelpAndExit, readJson, repoRoot, walkFiles } from "./common.mjs";
 import { assertValidManifest, resolveManagedPath, sha256File } from "./manifest.mjs";
 import { renderAgents } from "./render-agents.mjs";
-import { assertValidFrameCoreConfig } from "./config-validation.mjs";
+import { assertValidFrameCoreConfig, loadFrameCoreConfig } from "./config-validation.mjs";
 
 function argValue(name, fallback) {
   const index = process.argv.indexOf(name);
@@ -190,12 +190,11 @@ function install({ mode }) {
   }
 
   const configPath = join(target, "framecore.config.json");
-  if (!existsSync(configPath) && !dryRun) {
-    console.log("warning: framecore.config.json not found; rendering agents with built-in defaults. Run onboarding first for tuned preferences.");
+  const loadedConfig = loadFrameCoreConfig({ target, configPath });
+  if (!loadedConfig.localPath && !loadedConfig.sharedPath && !dryRun) {
+    console.log("warning: no FrameCore config found; rendering agents with built-in defaults. Run onboarding first for tuned preferences.");
   }
-  if (existsSync(configPath)) {
-    assertValidFrameCoreConfig(readJson(configPath));
-  }
+  assertValidFrameCoreConfig(loadedConfig.config);
   const skillsTarget = mode === "global" ? join(homedir(), ".agents/skills") : join(target, ".agents/skills");
   const installTarget = mode === "global" ? homedir() : target;
   const previousManaged = new Set(previousManifest?.managed_paths ?? []);

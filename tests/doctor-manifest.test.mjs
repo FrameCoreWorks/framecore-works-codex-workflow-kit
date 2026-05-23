@@ -10,7 +10,7 @@ test("doctor passes clean target without mutating or leaking target path", () =>
   const output = run(["scripts/doctor.mjs", "--target", dir]);
   assert.match(output, /FrameCore doctor: project-local preflight/);
   assert.match(output, /\[pass\] Target workspace exists/);
-  assert.match(output, /\[warn\] framecore\.config\.json is missing/);
+  assert.match(output, /\[warn\] FrameCore config is missing/);
   assert.equal(output.includes(dir), false);
   assert.equal(existsSync(join(dir, "framecore.config.json")), false);
   assert.equal(existsSync(join(dir, ".framecore/manifest.json")), false);
@@ -37,7 +37,7 @@ test("doctor rejects invalid config before any target writes", () => {
   const result = failRun(["scripts/doctor.mjs", "--target", dir]);
   const output = combinedOutput(result);
   assert.notEqual(result.status, 0);
-  assert.match(output, /framecore\.config\.json is invalid/);
+  assert.match(output, /FrameCore config is invalid/);
   assert.equal(existsSync(join(dir, ".framecore/manifest.json")), false);
   assert.equal(existsSync(join(dir, ".codex/agents")), false);
 });

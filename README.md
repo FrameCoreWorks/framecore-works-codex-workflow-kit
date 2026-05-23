@@ -225,7 +225,7 @@ Onboarding collects:
 
 Agent source files in this repo use neutral role IDs only. User-specific display names are generated locally and should not be committed.
 
-`framecore.config.json` is validated before rendering or installation. Invalid config values stop installation before managed files are written.
+`framecore.config.json` is validated before rendering or installation. Invalid config values stop installation before managed files are written. Teams can add an optional `framecore.config.shared.json` for reviewed shared defaults; local `framecore.config.json` still takes precedence.
 
 ## Text-Bearing Image Policy
 

@@ -523,7 +523,7 @@ if (existsSync(teamConfigurationDoc)) {
   for (const section of ["Purpose", "Personal Install", "Shared Team Install", "Recommended Team Pattern", "Files That Should Stay Local By Default", "When To Share Config", "Privacy Review", "Update And Repair In Teams"]) {
     if (!sections.has(section)) addFinding("WEAK_TEAM_CONFIGURATION_DOC", `Team configuration guide is missing required section: ${section}`, [teamConfigurationDoc]);
   }
-  for (const phrase of ["safe default is personal install", "framecore.config.json", ".framecore/manifest.json", "run `npm run audit:privacy`", "provider-neutral boundary", "Do not commit these by default", "repo-relative and portable", "update and repair"]) {
+  for (const phrase of ["safe default is personal install", "framecore.config.json", "framecore.config.shared.json", ".framecore/manifest.json", "run `npm run audit:privacy`", "provider-neutral boundary", "Do not commit these by default", "repo-relative and portable", "update and repair"]) {
     if (!text.includes(phrase)) addFinding("WEAK_TEAM_CONFIGURATION_DOC", `Team configuration guide is missing required local-config phrase: ${phrase}`, [teamConfigurationDoc]);
   }
 }
@@ -535,7 +535,7 @@ if (existsSync(customizationDoc)) {
   for (const section of ["Purpose", "Local Config File", "Safe Customizations", "Unsafe Customizations", "Output Directory", "Agent Display Names", "QA Strictness", "Delivery Preferences", "Hipson Settings", "Workflow Self-Improvement Settings", "Team Customization", "Update Repair And Uninstall", "Validation Checklist", "Related Docs"]) {
     if (!sections.has(section)) addFinding("WEAK_CUSTOMIZATION_DOC", `Customization guide is missing required section: ${section}`, [customizationDoc]);
   }
-  for (const phrase of ["framecore.config.json", "safe relative path", "agent_display_names", "qa_strictness", "auto_upload", "delivery_requires_current_user_request", "require_qa_allowlist_for_generated_assets", "Full Hipson remains separate and optional", "report-and-proposals-only", ".framecore/manifest.json", "npm run release:check"]) {
+  for (const phrase of ["framecore.config.json", "framecore.config.shared.json", "safe relative path", "agent_display_names", "qa_strictness", "auto_upload", "delivery_requires_current_user_request", "require_qa_allowlist_for_generated_assets", "Full Hipson remains separate and optional", "report-and-proposals-only", ".framecore/manifest.json", "npm run release:check"]) {
     if (!text.includes(phrase)) addFinding("WEAK_CUSTOMIZATION_DOC", `Customization guide is missing required customization phrase: ${phrase}`, [customizationDoc]);
   }
 }

@@ -65,6 +65,45 @@ test("config validation rejects invalid local config before rendering", () => {
   assert.match(`${result.stderr}${result.stdout}`, /output_dir/);
 });
 
+test("shared config merges with local overrides before agent rendering", () => {
+  const dir = mkdtempSync(join(tmpdir(), "framecore-shared-config-"));
+  writeFileSync(join(dir, "framecore.config.shared.json"), JSON.stringify({
+    working_language: "pl",
+    output_dir: "output/team",
+    qa_strictness: "strict",
+    agent_display_names: {
+      "intent-confirmation": "Shared Confirm"
+    }
+  }, null, 2));
+  writeFileSync(join(dir, "framecore.config.json"), JSON.stringify({
+    response_tone: "local concise tone",
+    agent_display_names: {
+      "intent-confirmation": "Local Confirm"
+    }
+  }, null, 2));
+
+  run(["scripts/render-agents.mjs", "--target", dir]);
+  const intent = readFileSync(join(dir, ".codex/agents/intent-confirmation.toml"), "utf8");
+  const execution = readFileSync(join(dir, ".codex/agents/execution-manifest.toml"), "utf8");
+  assert.match(intent, /Local Confirm/);
+  assert.match(intent, /Use pl for workflow artifacts/);
+  assert.match(intent, /Tone: local concise tone/);
+  assert.match(execution, /output\/team/);
+});
+
+test("doctor validates shared config without requiring local onboarding config", () => {
+  const dir = mkdtempSync(join(tmpdir(), "framecore-doctor-shared-config-"));
+  writeFileSync(join(dir, "framecore.config.shared.json"), JSON.stringify({
+    response_tone: "team tone",
+    qa_strictness: "strict"
+  }, null, 2));
+
+  const output = run(["scripts/doctor.mjs", "--target", dir]);
+  assert.match(output, /FrameCore config is valid/);
+  assert.match(output, /framecore\.config\.shared\.json was included/);
+  assert.doesNotMatch(output, /FrameCore config is missing/);
+});
+
 test("install rejects invalid local config before writing managed files", () => {
   const dir = mkdtempSync(join(tmpdir(), "framecore-bad-install-config-"));
   const config = JSON.parse(readFileSync(join(root, "config/defaults.example.json"), "utf8"));

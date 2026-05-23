@@ -301,7 +301,7 @@ your-project/
 
 ## After Installation
 
-- Keep `framecore.config.json` local to the target workspace unless your team intentionally shares it.
+- Keep `framecore.config.json` local to the target workspace. Teams that intentionally share reviewed defaults can use `framecore.config.shared.json`, with local config still taking precedence.
 - Read [Team Configuration](team-configuration.md) before committing installed workflow files or local config.
 - Use `.framecore/manifest.json` to see which files are FrameCore-managed.
 - Run update or repair only after reviewing the current manifest. `update` can add new FrameCore-managed paths from the current kit; `repair` rewrites only paths already listed in the manifest:
