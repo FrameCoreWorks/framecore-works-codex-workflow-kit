@@ -1,4 +1,4 @@
-import { existsSync, lstatSync, readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, lstatSync, readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { basename, dirname, join, relative, resolve, sep } from "node:path";
 
@@ -53,6 +53,7 @@ export function assertNoSymlinkPath(root, destination) {
 export function walkFiles(root, options = {}) {
   const excludes = new Set((options.excludes ?? []).map(toPosixPath));
   const files = [];
+  const onSymlink = typeof options.onSymlink === "function" ? options.onSymlink : () => {};
 
   function visit(dir) {
     if (!existsSync(dir)) return;
@@ -65,7 +66,11 @@ export function walkFiles(root, options = {}) {
         continue;
       }
 
-      const stats = statSync(path);
+      const stats = lstatSync(path);
+      if (stats.isSymbolicLink()) {
+        onSymlink(path);
+        continue;
+      }
       if (stats.isDirectory()) {
         visit(path);
       } else if (stats.isFile()) {

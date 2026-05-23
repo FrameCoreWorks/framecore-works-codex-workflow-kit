@@ -791,6 +791,9 @@ if (existsSync(readmePath)) {
   for (const phrase of ["docs/quickstart.md", "docs/codex-assisted-install.md", "If guided install completes successfully", "manual fallback", "Show me the changed files"]) {
     if (!text.includes(phrase)) addFinding("WEAK_README_INSTALL_PROMPT", `README install prompt is missing required safety phrase: ${phrase}`, [readmePath]);
   }
+  for (const phrase of ["## Supported Agent Surfaces", "OpenAI Codex CLI with custom-agent support", "Chat-only environments without shell access", "This kit ships the routing and contract layer", "symlinks"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_README_POSITIONING", `README is missing required positioning phrase: ${phrase}`, [readmePath]);
+  }
   for (const phrase of ["Global install is available only for advanced users", "writes to the current user's home workspace", "npm run doctor -- --mode global", "node scripts/install.mjs --mode dry-run --target \"$HOME\"", "node scripts/install.mjs --mode global --confirm-global"]) {
     if (!text.includes(phrase)) addFinding("WEAK_README_GLOBAL_INSTALL", `README must document global install safety: ${phrase}`, [readmePath]);
   }

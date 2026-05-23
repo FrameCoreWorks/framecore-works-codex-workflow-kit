@@ -71,7 +71,7 @@ npm run release:check
 
 The release-check workflow must remain non-publishing, read-only, and secret-free. It should verify the same local gate a maintainer runs before release.
 
-`secret:scan` is a dependency-free equivalent to a focused secret scanner. It rejects credential-shaped values, private key blocks, secret-bearing filenames, common platform tokens, JWT-like values, and private cloud references without printing secret values.
+`secret:scan` is a dependency-free equivalent to a focused secret scanner. It rejects credential-shaped values, private key blocks, secret-bearing filenames, common platform tokens, JWT-like values, private cloud references, and symlinks without printing secret values.
 
 `syntax:check` is a dependency-free JavaScript module check. It runs `node --check` against repository `.mjs` files so CI catches malformed scripts without adding lint or formatting dependencies.
 

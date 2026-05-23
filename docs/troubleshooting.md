@@ -76,6 +76,7 @@ npm run package:audit
 The privacy audit is intentionally strict for public-source safety. Common categories:
 
 - `APPLEDOUBLE_FILE`: remove macOS metadata sidecars with `npm run cleanup:appledouble -- --apply`.
+- `SYMLINK_FILE`: replace symlinked repo files with normal checked-in files. Public-source scans do not follow symlinks.
 - `LOCAL_ABSOLUTE_PATH`: replace machine-specific macOS, Linux, Windows, WSL, UNC, or `file://` paths with portable examples.
 - `EMAIL_ADDRESS`: remove personal or private emails from source examples and docs.
 - `SECRET_FILE_NAME`: remove files such as `.env`, `.npmrc`, private keys, or certificate/key material.

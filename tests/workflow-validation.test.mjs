@@ -129,6 +129,26 @@ test("privacy audit catches secret filenames and credential-shaped values", () =
   assert.match(`${result.stderr}${result.stdout}`, /SECRET_LIKE_VALUE/);
 });
 
+test("privacy audit rejects symlinks without following outside target", (t) => {
+  const dir = mkdtempSync(join(tmpdir(), "framecore-audit-symlink-"));
+  const outside = join(mkdtempSync(join(tmpdir(), "framecore-audit-symlink-outside-")), "outside.md");
+  const link = join(dir, "linked.md");
+  const outsideToken = ["sk", "-", "abcdefghijklmnopqrstuvwxyz123456"].join("");
+  writeFileSync(outside, `token = ${outsideToken}\n`);
+  try {
+    symlinkSync(outside, link);
+  } catch {
+    t.skip("symlink creation is unavailable in this environment");
+    return;
+  }
+
+  const result = failRun(["scripts/audit-privacy.mjs", dir]);
+  const output = combinedOutput(result);
+  assert.notEqual(result.status, 0);
+  assert.match(output, /SYMLINK_FILE/);
+  assert.doesNotMatch(output, /SECRET_LIKE_VALUE/);
+});
+
 test("secret scan passes and catches credential-shaped values", () => {
   assert.match(run(["scripts/safety-scan.mjs"]), /safety scan passed/);
 
@@ -147,6 +167,26 @@ test("secret scan passes and catches credential-shaped values", () => {
   assert.match(output, /SAFETY_SCAN_FILE_NAME/);
   assert.match(output, /SAFETY_SCAN_VALUE/);
   assert.match(output, /SAFETY_SCAN_PRIVATE_CLOUD/);
+});
+
+test("secret scan rejects symlinks without following outside target", (t) => {
+  const dir = mkdtempSync(join(tmpdir(), "framecore-safety-symlink-"));
+  const outside = join(mkdtempSync(join(tmpdir(), "framecore-safety-symlink-outside-")), "outside.md");
+  const link = join(dir, "linked.md");
+  const outsideToken = ["sk", "-", "abcdefghijklmnopqrstuvwxyz123456"].join("");
+  writeFileSync(outside, `token = ${outsideToken}\n`);
+  try {
+    symlinkSync(outside, link);
+  } catch {
+    t.skip("symlink creation is unavailable in this environment");
+    return;
+  }
+
+  const result = failRun(["scripts/safety-scan.mjs", dir]);
+  const output = combinedOutput(result);
+  assert.notEqual(result.status, 0);
+  assert.match(output, /SAFETY_SCAN_SYMLINK/);
+  assert.doesNotMatch(output, /SAFETY_SCAN_VALUE/);
 });
 
 test("package audit passes on repo package and rejects local config package files", () => {
@@ -1334,7 +1374,9 @@ test("install and uninstall preserve user-owned skills, agents, and AGENTS.md", 
   writeFileSync(join(dir, "AGENTS.md"), "user project instructions\n");
 
   run(["scripts/onboard.mjs", "--defaults", "--target", dir]);
-  run(["scripts/install.mjs", "--mode", "project-local", "--target", dir]);
+  const installOutput = run(["scripts/install.mjs", "--mode", "project-local", "--target", dir]);
+  assert.match(installOutput, /existing AGENTS\.md was preserved/);
+  assert.match(installOutput, /Also read AGENTS\.framecore\.md/);
 
   assert.equal(readFileSync(join(dir, "AGENTS.md"), "utf8"), "user project instructions\n");
   assert.ok(existsSync(join(dir, "AGENTS.framecore.md")));

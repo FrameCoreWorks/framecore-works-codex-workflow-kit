@@ -96,7 +96,7 @@ Project-local install writes only exact FrameCore-managed files:
 - `AGENTS.framecore.md` when the project already has its own `AGENTS.md`
 - `.framecore/manifest.json`
 
-The repo also includes validation and privacy audit scripts for checking this kit before installation or contribution. The audit rejects private names, excluded provider remnants, local machine paths, emails, secret files, secret-like values, private cloud links/IDs, and AppleDouble metadata files.
+The repo also includes validation and privacy audit scripts for checking this kit before installation or contribution. The audit rejects private names, excluded provider remnants, local machine paths, emails, secret files, secret-like values, private cloud links/IDs, symlinks, and AppleDouble metadata files.
 
 ## Privacy And Scope
 

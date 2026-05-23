@@ -14,7 +14,8 @@ Options:
   repo-root  Optional repository root to scan. Defaults to this repo.
 
 Checks:
-  Sensitive filenames, credential-shaped values, private key blocks, common platform tokens, JWT-like values, and private cloud references.
+  Sensitive filenames, credential-shaped values, private key blocks, common platform tokens,
+  JWT-like values, private cloud references, and symlinks.
 `);
 }
 
@@ -56,7 +57,11 @@ function hasPrivateCloudReference(text) {
   ].some((pattern) => pattern.test(text));
 }
 
-const files = walkFiles(targetRoot, { excludes });
+const symlinkHits = [];
+const files = walkFiles(targetRoot, {
+  excludes,
+  onSymlink: (file) => symlinkHits.push(file),
+});
 const textFiles = files.filter((file) => {
   const name = basename(file);
   return /\.(md|json|yaml|yml|toml|js|mjs|ts|tsx|txt|template)$/i.test(name) || name === "LICENSE" || name === ".gitignore";
@@ -92,6 +97,9 @@ for (const file of textFiles) {
 
 if (sensitiveFileHits.length > 0) {
   addFinding("SAFETY_SCAN_FILE_NAME", "Sensitive file names are not allowed in public repo source.", [...new Set(sensitiveFileHits)]);
+}
+if (symlinkHits.length > 0) {
+  addFinding("SAFETY_SCAN_SYMLINK", "Symlinks are not allowed in public repo source scans.", [...new Set(symlinkHits)]);
 }
 if (credentialValueHits.length > 0) {
   addFinding("SAFETY_SCAN_VALUE", "Credential-shaped values were found.", [...new Set(credentialValueHits)]);

@@ -14,7 +14,8 @@ Options:
   repo-root  Optional repository root to audit. Defaults to this repo.
 
 Checks:
-  Private names, excluded provider remnants, local paths, emails, secret-like values, secret-bearing filenames, private cloud references, and AppleDouble files.
+  Private names, excluded provider remnants, local paths, emails, secret-like values,
+  secret-bearing filenames, private cloud references, symlinks, and AppleDouble files.
 `);
 }
 
@@ -35,7 +36,15 @@ function addFinding(code, message, files) {
   });
 }
 
-const files = walkFiles(targetRoot, { excludes });
+const symlinkHits = [];
+const files = walkFiles(targetRoot, {
+  excludes,
+  onSymlink: (file) => symlinkHits.push(file),
+});
+if (symlinkHits.length > 0) {
+  addFinding("SYMLINK_FILE", "Symlinks are not allowed in public repo source scans.", [...new Set(symlinkHits)]);
+}
+
 const appleDouble = files.filter(isAppleDouble);
 if (appleDouble.length > 0) {
   addFinding("APPLEDOUBLE_FILE", "AppleDouble metadata files are not allowed.", appleDouble);
