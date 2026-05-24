@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { isAbsolute, join, relative, resolve } from "node:path";
 import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
-import { hasHelpFlag, npmCommand, printHelpAndExit, repoRoot } from "./common.mjs";
+import { hasHelpFlag, npmArgs, npmCommand, printHelpAndExit, repoRoot } from "./common.mjs";
 
 function argValue(name, fallback) {
   const index = process.argv.indexOf(name);
@@ -59,7 +59,7 @@ function runNodeStep(label, args, { target, interactive = false } = {}) {
 
 function runNpmCheck({ target }) {
   console.log("\n== Repository checks ==");
-  const result = spawnSync(npmCommand(), ["run", "check"], {
+  const result = spawnSync(npmCommand(), npmArgs(["run", "check"]), {
     cwd: repoRoot,
     encoding: "utf8",
     stdio: "pipe",

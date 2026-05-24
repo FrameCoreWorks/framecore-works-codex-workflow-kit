@@ -22,7 +22,11 @@ export function printHelpAndExit(text) {
 }
 
 export function npmCommand() {
-  return process.platform === "win32" ? "npm.cmd" : "npm";
+  return process.platform === "win32" ? "cmd.exe" : "npm";
+}
+
+export function npmArgs(args) {
+  return process.platform === "win32" ? ["/d", "/s", "/c", "npm", ...args] : args;
 }
 
 export function decodeBase64List(values) {

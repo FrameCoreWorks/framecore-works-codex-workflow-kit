@@ -2,10 +2,10 @@
 import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { hasHelpFlag, npmCommand, printHelpAndExit } from "./common.mjs";
+import { hasHelpFlag, npmArgs, npmCommand, printHelpAndExit } from "./common.mjs";
 
 function listPackage() {
-  const result = spawnSync(npmCommand(), ["pack", "--dry-run"], {
+  const result = spawnSync(npmCommand(), npmArgs(["pack", "--dry-run"]), {
     encoding: "utf8",
     env: {
       ...process.env,
