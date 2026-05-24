@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 1.0.2 - 2026-05-24
+
 - Added optional Memory Cache initialization to the guided install flow.
 - Propagated onboarding workspace profile fields into every rendered agent template.
 - Centralized text-bearing image native route rendering through `config/text-image-policy.json`.
