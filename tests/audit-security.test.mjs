@@ -171,7 +171,8 @@ test("cli scripts expose non-mutating help output", () => {
 });
 
 test("release readiness validates package metadata, changelog, and tag alignment", () => {
-  assert.match(run(["scripts/release-readiness.mjs", "--tag", "v1.0.0"]), /release readiness passed/);
+  const currentVersion = JSON.parse(readFileSync(join(root, "package.json"), "utf8")).version;
+  assert.match(run(["scripts/release-readiness.mjs", "--tag", `v${currentVersion}`]), /release readiness passed/);
 
   const dir = copyRepoFixture("framecore-release-readiness-");
   const packageJson = join(dir, "package.json");

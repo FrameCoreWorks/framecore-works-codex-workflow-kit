@@ -66,8 +66,9 @@ test("doctor validates existing installs and operation-specific manifest require
   run(["scripts/onboard.mjs", "--defaults", "--target", dir]);
   run(["scripts/install.mjs", "--mode", "project-local", "--target", dir]);
   const manifest = JSON.parse(readFileSync(join(dir, ".framecore/manifest.json"), "utf8"));
+  const currentVersion = JSON.parse(readFileSync(join(root, "package.json"), "utf8")).version;
   assert.equal(manifest.kit.name, "framecore-works-codex-workflow-kit");
-  assert.equal(manifest.kit.version, "1.0.0");
+  assert.equal(manifest.kit.version, currentVersion);
   assert.equal(manifest.incomplete, false);
   assert.match(manifest.managed_hashes[".agents/skills/humanizer/SKILL.md"], /^[a-f0-9]{64}$/);
   assert.equal(
