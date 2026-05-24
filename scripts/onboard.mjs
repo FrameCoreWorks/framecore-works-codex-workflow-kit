@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "no
 import { dirname, join } from "node:path";
 import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
-import { assertNoSymlinkPath, hasHelpFlag, printHelpAndExit, repoRoot, readJson } from "./common.mjs";
+import { assertNoSymlinkPath, hasHelpFlag, isMainModule, printHelpAndExit, repoRoot, readJson } from "./common.mjs";
 import { assertValidFrameCoreConfig } from "./config-validation.mjs";
 
 function argValue(name, fallback) {
@@ -171,7 +171,7 @@ export async function runOnboarding({ target = process.cwd(), defaults = false, 
   return configPath;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (isMainModule(import.meta.url)) {
   if (hasHelpFlag()) {
     printHelpAndExit(`
 Usage:

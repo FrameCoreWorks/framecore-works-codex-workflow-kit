@@ -4,6 +4,10 @@ import { basename, dirname, join, relative, resolve, sep } from "node:path";
 
 export const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
+export function isMainModule(metaUrl) {
+  return process.argv[1] ? resolve(fileURLToPath(metaUrl)) === resolve(process.argv[1]) : false;
+}
+
 export function readJson(path) {
   return JSON.parse(readFileSync(path, "utf8"));
 }

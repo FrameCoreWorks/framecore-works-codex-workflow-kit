@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
-import { assertNoSymlinkPath, hasHelpFlag, printHelpAndExit, repoRoot } from "./common.mjs";
+import { assertNoSymlinkPath, hasHelpFlag, isMainModule, printHelpAndExit, repoRoot } from "./common.mjs";
 import { assertValidFrameCoreConfig, loadFrameCoreConfig } from "./config-validation.mjs";
 
 function toManifestPath(target, destination) {
@@ -83,7 +83,7 @@ export function renderAgents({ target, configPath, dryRun = false, previousManag
   return planned;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (isMainModule(import.meta.url)) {
   if (hasHelpFlag()) {
     printHelpAndExit(`
 Usage:
