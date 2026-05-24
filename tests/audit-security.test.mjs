@@ -174,6 +174,15 @@ test("release readiness validates package metadata, changelog, and tag alignment
   const currentVersion = JSON.parse(readFileSync(join(root, "package.json"), "utf8")).version;
   assert.match(run(["scripts/release-readiness.mjs", "--tag", `v${currentVersion}`]), /release readiness passed/);
 
+  const missingPublishGuardDir = copyRepoFixture("framecore-release-publish-guard-");
+  const missingPublishGuardPackage = join(missingPublishGuardDir, "package.json");
+  const missingPublishGuardPkg = JSON.parse(readFileSync(missingPublishGuardPackage, "utf8"));
+  delete missingPublishGuardPkg.scripts.prepublishOnly;
+  writeFileSync(missingPublishGuardPackage, `${JSON.stringify(missingPublishGuardPkg, null, 2)}\n`);
+  const missingPublishGuard = failRun(["scripts/release-readiness.mjs"], { cwd: missingPublishGuardDir });
+  assert.notEqual(missingPublishGuard.status, 0);
+  assert.match(combinedOutput(missingPublishGuard), /prepublishOnly must run npm run release:check/);
+
   const dir = copyRepoFixture("framecore-release-readiness-");
   const packageJson = join(dir, "package.json");
   const pkg = JSON.parse(readFileSync(packageJson, "utf8"));

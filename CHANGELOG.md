@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Added a publish guard so `npm publish` runs `npm run release:check` first.
+- Expanded the release-check workflow to validate Node.js 20 and 22.
+- Added a manual live Codex E2E checklist for real-workspace verification before broad promotion.
+
 ## 1.0.1 - 2026-05-24
 
 - Added a beginner-friendly no-terminal startup prompt to README, Quickstart, and Codex-assisted install docs.

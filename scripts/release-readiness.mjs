@@ -79,6 +79,9 @@ export function runReleaseReadiness() {
   if (pkg.homepage !== expected.homepage) add(findings, "package homepage does not match the public README URL.");
   if (!isSemver(pkg.version)) add(findings, `package version is not valid semver: ${pkg.version}`);
   if (!String(pkg.packageManager ?? "").startsWith("npm@")) add(findings, "packageManager must pin npm.");
+  if (pkg.scripts?.prepublishOnly !== "npm run release:check") {
+    add(findings, "package scripts.prepublishOnly must run npm run release:check.");
+  }
 
   const packageFiles = new Set(pkg.files ?? []);
   for (const file of requiredPackageFiles) {

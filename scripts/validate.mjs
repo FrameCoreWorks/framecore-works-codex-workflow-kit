@@ -479,6 +479,7 @@ const requiredDocs = [
   "docs/self-improvement.md",
   "docs/openai-api-policy.md",
   "docs/v1-readiness.md",
+  "docs/live-codex-e2e-check.md",
   "docs/roadmap.md",
   "docs/release.md",
   "docs/release-notes-template.md",
@@ -778,6 +779,18 @@ if (existsSync(roadmapDoc)) {
   }
   for (const phrase of ["provider-neutral", "project-local", "guided installer", "artifact schemas", "full Hipson", "v1.0", "no bundled external paid execution provider"]) {
     if (!text.includes(phrase)) addFinding("WEAK_ROADMAP_DOC", `Roadmap is missing required planning phrase: ${phrase}`, [roadmapDoc]);
+  }
+}
+
+const liveCodexE2EDoc = join(validationRoot, "docs/live-codex-e2e-check.md");
+if (existsSync(liveCodexE2EDoc)) {
+  const text = read(liveCodexE2EDoc);
+  const sections = markdownSections(text);
+  for (const section of ["Purpose", "Scope", "Prerequisites", "Safe Test Workspace", "Procedure", "Expected Signals", "Failure Signals", "Evidence To Record", "Acceptance", "Related Docs"]) {
+    if (!sections.has(section)) addFinding("WEAK_LIVE_CODEX_E2E_DOC", `Live Codex E2E checklist is missing required section: ${section}`, [liveCodexE2EDoc]);
+  }
+  for (const phrase of ["real Codex workspace", "project-local install", "Do not use external paid providers", "AGENTS.md", "AGENTS.framecore.md", ".agents/skills/pipeline-core/SKILL.md", "intent confirmation", "workflow-orchestrator", "Memory Cache/project-state.md", "custom-agent spawning", "AGENTS-only pass"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_LIVE_CODEX_E2E_DOC", `Live Codex E2E checklist is missing required phrase: ${phrase}`, [liveCodexE2EDoc]);
   }
 }
 
@@ -1120,6 +1133,9 @@ if (existsSync(packageJsonPath)) {
   if (!releaseCheck.includes("npm run release:readiness")) {
     addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json release:check must run npm run release:readiness.", [packageJsonPath]);
   }
+  if (scripts.prepublishOnly !== "npm run release:check") {
+    addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json prepublishOnly must run npm run release:check.", [packageJsonPath]);
+  }
   if (!String(scripts.check ?? "").includes("npm run secret:scan")) {
     addFinding("WEAK_RELEASE_CHECK_SCRIPT", "package.json check must run npm run secret:scan.", [packageJsonPath]);
   }
@@ -1174,8 +1190,8 @@ if (existsSync(validateWorkflow)) {
 const releaseWorkflow = join(validationRoot, ".github/workflows/release-check.yml");
 if (existsSync(releaseWorkflow)) {
   const text = read(releaseWorkflow);
-  if (!text.includes("workflow_dispatch") || !text.includes("tags:") || !text.includes("npm run release:check") || !/permissions:\s*\n\s*contents:\s*read/.test(text)) {
-    addFinding("WEAK_RELEASE_WORKFLOW", "release-check workflow must be manual/tag-triggered, read-only, and run npm run release:check.", [releaseWorkflow]);
+  if (!text.includes("workflow_dispatch") || !text.includes("tags:") || !text.includes("npm run release:check") || !text.includes("node-version: [20, 22]") || !/permissions:\s*\n\s*contents:\s*read/.test(text)) {
+    addFinding("WEAK_RELEASE_WORKFLOW", "release-check workflow must be manual/tag-triggered, read-only, test Node 20/22, and run npm run release:check.", [releaseWorkflow]);
   }
   if (unsafeWorkflowPatterns.some((pattern) => pattern.test(text))) {
     addFinding("UNSAFE_RELEASE_WORKFLOW", "release-check workflow must not publish, upload artifacts, use secrets, or request write permissions.", [releaseWorkflow]);

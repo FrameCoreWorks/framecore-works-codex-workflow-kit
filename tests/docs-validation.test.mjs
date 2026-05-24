@@ -344,6 +344,7 @@ test("validation rejects weak release readiness docs and workflow safety", () =>
   ].join("\n"));
   const pkg = JSON.parse(readFileSync(packageJson, "utf8"));
   pkg.scripts["release:check"] = "npm test";
+  delete pkg.scripts.prepublishOnly;
   delete pkg.scripts["package:audit"];
   writeFileSync(packageJson, JSON.stringify(pkg, null, 2));
 
@@ -353,6 +354,21 @@ test("validation rejects weak release readiness docs and workflow safety", () =>
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_RELEASE_CHECK_SCRIPT/);
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_RELEASE_WORKFLOW/);
   assert.match(`${result.stderr}${result.stdout}`, /UNSAFE_RELEASE_WORKFLOW/);
+});
+
+test("validation rejects weak live Codex E2E checklist", () => {
+  const dir = copyRepoFixture("framecore-validate-live-codex-e2e-");
+  const doc = join(dir, "docs/live-codex-e2e-check.md");
+  writeFileSync(
+    doc,
+    readFileSync(doc, "utf8")
+      .replace("## Evidence To Record", "## Evidence")
+      .replace("AGENTS-only pass", "generic pass")
+  );
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_LIVE_CODEX_E2E_DOC/);
 });
 
 test("validation rejects weak support and security docs", () => {

@@ -114,6 +114,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: w
 - Need the local OpenAI API boundary: read [OpenAI API Policy](docs/openai-api-policy.md).
 - Want to understand current limits and planned direction: read [Roadmap](docs/roadmap.md).
 - Preparing for a stable public release: read [v1.0 Readiness](docs/v1-readiness.md).
+- Verifying behavior in a real Codex workspace before broad promotion: read [Live Codex E2E Check](docs/live-codex-e2e-check.md).
 - Checking what provider-neutral allows and forbids: read [Provider-Neutral Boundary](docs/provider-neutral-boundary.md).
 - Want to compare workflow paths: open [Examples Index](examples/README.md).
 - Using the kit with a team: read [Team Configuration](docs/team-configuration.md).
