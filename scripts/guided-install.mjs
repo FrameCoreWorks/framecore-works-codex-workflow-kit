@@ -2,7 +2,7 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
-import { join, relative, resolve, sep } from "node:path";
+import { isAbsolute, join, relative, resolve } from "node:path";
 import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { hasHelpFlag, printHelpAndExit, repoRoot } from "./common.mjs";
@@ -18,7 +18,7 @@ function hasFlag(name) {
 
 function isInsideRepo(target) {
   const rel = relative(repoRoot, target);
-  return rel === "" || (!rel.startsWith("..") && rel !== "." && !rel.startsWith(`${sep}`));
+  return rel === "" || (!rel.startsWith("..") && rel !== "." && !isAbsolute(rel));
 }
 
 function requireExistingTarget(target) {
