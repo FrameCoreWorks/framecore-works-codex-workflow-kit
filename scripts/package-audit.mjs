@@ -2,7 +2,7 @@
 import { spawnSync } from "node:child_process";
 import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
-import { hasHelpFlag, printHelpAndExit } from "./common.mjs";
+import { hasHelpFlag, npmCommand, printHelpAndExit } from "./common.mjs";
 
 const allowedRoots = new Set([
   ".agents",
@@ -66,7 +66,7 @@ const forbiddenFilePatterns = [
 ];
 
 function packageFiles() {
-  const result = spawnSync("npm", ["pack", "--json", "--dry-run"], {
+  const result = spawnSync(npmCommand(), ["pack", "--json", "--dry-run"], {
     encoding: "utf8",
     env: {
       ...process.env,

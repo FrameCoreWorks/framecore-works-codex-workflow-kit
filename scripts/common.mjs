@@ -21,6 +21,10 @@ export function printHelpAndExit(text) {
   process.exit(0);
 }
 
+export function npmCommand() {
+  return process.platform === "win32" ? "npm.cmd" : "npm";
+}
+
 export function decodeBase64List(values) {
   return values.map((value) => Buffer.from(value, "base64").toString("utf8"));
 }

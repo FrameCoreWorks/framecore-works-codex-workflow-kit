@@ -3,7 +3,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { spawnSync } from "node:child_process";
 import { homedir } from "node:os";
 import { join, relative, sep } from "node:path";
-import { hasHelpFlag, printHelpAndExit, repoRoot, walkFiles } from "./common.mjs";
+import { hasHelpFlag, npmCommand, printHelpAndExit, repoRoot, walkFiles } from "./common.mjs";
 import { resolveManagedPath, sha256File, validateManifest } from "./manifest.mjs";
 import { assertValidFrameCoreConfig, loadFrameCoreConfig } from "./config-validation.mjs";
 
@@ -107,7 +107,7 @@ function printReport(items, failures, mode) {
 }
 
 function npmVersion() {
-  const result = spawnSync("npm", ["--version"], { encoding: "utf8" });
+  const result = spawnSync(npmCommand(), ["--version"], { encoding: "utf8" });
   return result.status === 0 ? result.stdout.trim() : null;
 }
 
