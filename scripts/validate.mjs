@@ -513,6 +513,9 @@ if (existsSync(onboardingDoc)) {
   for (const phrase of ["Allow automatic delivery uploads", "Require an explicit user request before delivery/export", "Require QA approval before generated asset delivery", "Delivery preferences only shape local behavior"]) {
     if (!text.includes(phrase)) addFinding("WEAK_ONBOARDING_DOC", `Onboarding guide is missing required delivery-preference phrase: ${phrase}`, [onboardingDoc]);
   }
+  for (const phrase of ["FrameCore Works was created for creative work", "adapted to other use cases", "What kind of work do you do?", "What should this pipeline help with most?", "How should the pipeline fit your work style?", "work_profile"]) {
+    if (!text.includes(phrase)) addFinding("WEAK_ONBOARDING_DOC", `Onboarding guide is missing required work-profile phrase: ${phrase}`, [onboardingDoc]);
+  }
   for (const phrase of ["safe relative path", "do not use absolute paths", "does not clone, install, or activate full Hipson"]) {
     if (!text.includes(phrase)) addFinding("WEAK_ONBOARDING_DOC", `Onboarding guide is missing required setup-boundary phrase: ${phrase}`, [onboardingDoc]);
   }
@@ -540,7 +543,7 @@ if (existsSync(customizationDoc)) {
   for (const section of ["Purpose", "Local Config File", "Safe Customizations", "Unsafe Customizations", "Output Directory", "Agent Display Names", "QA Strictness", "Delivery Preferences", "Hipson Settings", "Workflow Self-Improvement Settings", "Team Customization", "Update Repair And Uninstall", "Validation Checklist", "Related Docs"]) {
     if (!sections.has(section)) addFinding("WEAK_CUSTOMIZATION_DOC", `Customization guide is missing required section: ${section}`, [customizationDoc]);
   }
-  for (const phrase of ["framecore.config.json", "framecore.config.shared.json", "safe relative path", "agent_display_names", "qa_strictness", "auto_upload", "delivery_requires_current_user_request", "require_qa_allowlist_for_generated_assets", "Full Hipson remains separate and optional", "report-and-proposals-only", ".framecore/manifest.json", "npm run release:check"]) {
+  for (const phrase of ["framecore.config.json", "framecore.config.shared.json", "safe relative path", "work_profile", "primary_work", "agent_display_names", "qa_strictness", "auto_upload", "delivery_requires_current_user_request", "require_qa_allowlist_for_generated_assets", "Full Hipson remains separate and optional", "report-and-proposals-only", ".framecore/manifest.json", "npm run release:check"]) {
     if (!text.includes(phrase)) addFinding("WEAK_CUSTOMIZATION_DOC", `Customization guide is missing required customization phrase: ${phrase}`, [customizationDoc]);
   }
 }
@@ -578,7 +581,7 @@ if (existsSync(codexAssistedInstallDoc)) {
   for (const section of ["Purpose", "Paste-In Instruction", "What Codex Should Do", "Onboarding Questions", "Stop Conditions", "Expected Result"]) {
     if (!sections.has(section)) addFinding("WEAK_CODEX_ASSISTED_INSTALL_DOC", `Codex-assisted install guide is missing required section: ${section}`, [codexAssistedInstallDoc]);
   }
-  for (const phrase of ["temporary or tools folder outside the target workspace", "guided project-local installer", "manual fallback", "Run onboarding", "Run install dry-run", "Install project-local only", "Do not use global install", "delivery upload behavior", "safe relative path", "optional full Hipson expansion", "does not clone or install full Hipson", "stop and ask the user", "user-owned file conflicts", "external execution tools", "AGENTS.framecore.md"]) {
+  for (const phrase of ["temporary or tools folder outside the target workspace", "guided project-local installer", "manual fallback", "Run onboarding", "Run install dry-run", "Install project-local only", "Do not use global install", "creative work such as graphics", "what I do", "main use cases", "work style", "delivery upload behavior", "safe relative path", "optional full Hipson expansion", "does not clone or install full Hipson", "stop and ask the user", "user-owned file conflicts", "external execution tools", "AGENTS.framecore.md"]) {
     if (!text.includes(phrase)) addFinding("WEAK_CODEX_ASSISTED_INSTALL_DOC", `Codex-assisted install guide is missing required safety phrase: ${phrase}`, [codexAssistedInstallDoc]);
   }
 }

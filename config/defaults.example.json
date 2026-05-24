@@ -5,6 +5,12 @@
   "response_tone": "calm, direct, practical",
   "output_dir": "output/framecore",
   "qa_strictness": "standard",
+  "work_profile": {
+    "primary_work": "creative production: graphics, video, storyboards, campaign assets, and e-commerce assets",
+    "primary_use_cases": "briefs, references, visual direction, prompt packs, QA review, and delivery preparation",
+    "workflow_style": "structured checkpoints with concise practical outputs",
+    "adaptation_notes": "adapt the creative workflow to my projects without changing provider-neutral safety boundaries"
+  },
   "delivery": {
     "auto_upload": false,
     "delivery_requires_current_user_request": true,

@@ -24,6 +24,13 @@ function requireString(value, path, errors) {
   if (typeof value !== "string" || value.trim().length === 0) errors.push(`${path} must be a non-empty string`);
 }
 
+function requireProfileString(value, path, errors) {
+  requireString(value, path, errors);
+  if (typeof value === "string" && value.length > 400) {
+    errors.push(`${path} must be 400 characters or fewer`);
+  }
+}
+
 function mergeObjects(base, override) {
   const result = { ...base };
   for (const [key, value] of Object.entries(override ?? {})) {
@@ -80,6 +87,15 @@ export function validateFrameCoreConfig(config, { schema, roles } = {}) {
   requireString(config.response_tone, "response_tone", errors);
   if (!isSafeRelativePath(config.output_dir)) {
     errors.push("output_dir must be a safe relative path");
+  }
+
+  if (!isPlainObject(config.work_profile)) {
+    errors.push("work_profile must be an object");
+  } else {
+    requireProfileString(config.work_profile.primary_work, "work_profile.primary_work", errors);
+    requireProfileString(config.work_profile.primary_use_cases, "work_profile.primary_use_cases", errors);
+    requireProfileString(config.work_profile.workflow_style, "work_profile.workflow_style", errors);
+    requireProfileString(config.work_profile.adaptation_notes, "work_profile.adaptation_notes", errors);
   }
 
   if (!isPlainObject(config.delivery)) {

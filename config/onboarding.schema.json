@@ -5,6 +5,7 @@
     "response_tone",
     "output_dir",
     "qa_strictness",
+    "work_profile",
     "delivery",
     "agent_display_names",
     "hipson",

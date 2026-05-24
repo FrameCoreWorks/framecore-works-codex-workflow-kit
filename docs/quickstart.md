@@ -15,7 +15,9 @@ I am a beginner. Please guide me step by step.
 
 First check whether this Codex environment can clone repositories and run local shell commands. If it can, clone the repo into a temporary or tools folder outside my project, read README.md, docs/quickstart.md, and docs/codex-assisted-install.md, then explain what will be installed.
 
-Run repository checks, doctor/preflight, onboarding, install dry-run, then project-local install only. Explain each onboarding question before I answer. Show planned writes before installing.
+Start by telling me that FrameCore Works was created for creative work such as graphics, video, storyboards, campaign assets, e-commerce assets, prompt workflows, QA, and delivery preparation, but can be adapted to other use cases.
+
+Run repository checks, doctor/preflight, onboarding, install dry-run, then project-local install only. Explain each onboarding question before I answer, including questions about what I do, my main use cases, and how the pipeline should fit my work style. Show planned writes before installing.
 
 Do not use global install. Do not enable paid external execution tools. Do not upload anything. Do not use API keys. Stop before overwriting existing files.
 

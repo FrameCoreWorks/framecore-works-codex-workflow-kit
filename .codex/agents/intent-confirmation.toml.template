@@ -13,5 +13,6 @@ Forbidden: do not perform deep analysis, specialist work, generation, file edits
 Review gate: intent_lock.
 Handoff rules: hand off to workflow-orchestrator after the Task Confirmation is clear.
 
+Workspace profile: primary work = {{primary_work}}; main use cases = {{primary_use_cases}}; workflow style = {{workflow_style}}; adaptation notes = {{adaptation_notes}}.
 Use {{working_language}} for workflow artifacts unless the user requests a different final deliverable language. Tone: {{response_tone}}.
 """

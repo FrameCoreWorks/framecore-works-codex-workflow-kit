@@ -22,6 +22,7 @@ The main fields are:
 - `response_tone`
 - `output_dir`
 - `qa_strictness`
+- `work_profile`
 - `delivery`
 - `agent_display_names`
 - `hipson`
@@ -36,6 +37,7 @@ These changes are safe for a local workspace:
 - choose a working language
 - tune response tone
 - choose a repo-relative output directory
+- tune the local work profile for primary work, main use cases, preferred workflow style, and adaptation notes
 - set QA strictness to `light`, `standard`, or `strict`
 - assign local display names for neutral role IDs
 - keep automatic uploads disabled
@@ -72,6 +74,21 @@ If a customization needs secrets or private delivery settings, keep it outside t
 Do not use absolute paths, `~`, URLs, drive-root paths, parent traversal, private cloud sync paths, or machine-specific folders.
 
 The output directory is only a local preference. It is not permission to upload, publish, or include generated outputs in source control.
+
+## Work Profile
+
+`work_profile` tells the installed pipeline what kind of work it should optimize for in this workspace:
+
+```json
+"work_profile": {
+  "primary_work": "creative production: graphics, video, storyboards, campaign assets, and e-commerce assets",
+  "primary_use_cases": "briefs, references, visual direction, prompt packs, QA review, and delivery preparation",
+  "workflow_style": "structured checkpoints with concise practical outputs",
+  "adaptation_notes": "adapt the creative workflow to my projects without changing provider-neutral safety boundaries"
+}
+```
+
+The default profile reflects the kit's original creative-production focus. Users can adapt it for other domains, but should keep it free of secrets, private client names, provider credentials, local absolute paths, and private cloud links.
 
 ## Agent Display Names
 

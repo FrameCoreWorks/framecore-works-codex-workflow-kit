@@ -48,7 +48,7 @@ export function runInteractiveOnboarding(dir) {
     });
     let stdout = "";
     let stderr = "";
-    const answers = ["", "", "", "", "", "", "", "", "", "", "", "yes"];
+    const answers = ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "yes"];
     let answerIndex = 0;
 
     child.stdout.on("data", (chunk) => {

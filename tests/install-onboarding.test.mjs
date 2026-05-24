@@ -16,10 +16,14 @@ test("onboarding renders project-local config and agent templates", () => {
   assert.ok(existsSync(join(dir, "framecore.config.json")));
   const config = JSON.parse(readFileSync(join(dir, "framecore.config.json"), "utf8"));
   assert.equal("install_scope" in config, false);
+  assert.equal(config.work_profile.primary_work, "creative production: graphics, video, storyboards, campaign assets, and e-commerce assets");
   const rendered = readdirSync(join(dir, ".codex/agents")).filter((file) => file.endsWith(".toml"));
   assert.equal(rendered.length, 20);
   const sample = readFileSync(join(dir, ".codex/agents/intent-confirmation.toml"), "utf8");
   assert.match(sample, /intent-confirmation/);
+  assert.match(sample, /Workspace profile: primary work = creative production/);
+  const orchestrator = readFileSync(join(dir, ".codex/agents/workflow-orchestrator.toml"), "utf8");
+  assert.match(orchestrator, /Use this profile when choosing route depth/);
 });
 
 test("onboarding rejects missing targets unless explicitly created", () => {
@@ -55,6 +59,8 @@ test("config validation rejects invalid local config before rendering", () => {
   config.qa_strictness = "maximum";
   config.agent_display_names = { "unknown-role": "Unknown" };
   config.output_dir = "../outside";
+  config.work_profile.primary_work = "";
+  config.work_profile.workflow_style = "x".repeat(401);
   writeFileSync(join(dir, "framecore.config.json"), JSON.stringify(config, null, 2));
 
   const result = failRun(["scripts/render-agents.mjs", "--target", dir]);
@@ -63,6 +69,8 @@ test("config validation rejects invalid local config before rendering", () => {
   assert.match(`${result.stderr}${result.stdout}`, /qa_strictness/);
   assert.match(`${result.stderr}${result.stdout}`, /unknown-role/);
   assert.match(`${result.stderr}${result.stdout}`, /output_dir/);
+  assert.match(`${result.stderr}${result.stdout}`, /work_profile\.primary_work/);
+  assert.match(`${result.stderr}${result.stdout}`, /work_profile\.workflow_style/);
 });
 
 test("shared config merges with local overrides before agent rendering", () => {
@@ -88,6 +96,7 @@ test("shared config merges with local overrides before agent rendering", () => {
   assert.match(intent, /Local Confirm/);
   assert.match(intent, /Use pl for workflow artifacts/);
   assert.match(intent, /Tone: local concise tone/);
+  assert.match(intent, /Workspace profile: primary work = creative production/);
   assert.match(execution, /output\/team/);
 });
 
@@ -173,6 +182,13 @@ test("interactive onboarding explains the workflow and can keep default role nam
   const result = await runInteractiveOnboarding(dir);
   assert.equal(result.status, 0);
   assert.match(result.stdout, /This installer adds a structured creative workflow/);
+  assert.match(result.stdout, /FrameCore Works was created for creative production/);
+  assert.match(result.stdout, /These answers stay local in framecore\.config\.json/);
+  assert.match(result.stdout, /adapted to other use cases/);
+  assert.match(result.stdout, /What kind of work do you do/);
+  assert.match(result.stdout, /What should this pipeline help with most/);
+  assert.match(result.stdout, /How should the pipeline fit your work style/);
+  assert.match(result.stdout, /Any adaptation notes for non-creative or specialized use cases/);
   assert.match(result.stdout, /How this improves your work/);
   assert.match(result.stdout, /Hipson in this setup/);
   assert.match(result.stdout, /What will not be configured/);
@@ -187,6 +203,7 @@ test("interactive onboarding explains the workflow and can keep default role nam
   assert.equal(config.delivery.auto_upload, false);
   assert.equal(config.delivery.delivery_requires_current_user_request, true);
   assert.equal(config.delivery.require_qa_allowlist_for_generated_assets, true);
+  assert.equal(config.work_profile.primary_use_cases, "briefs, references, visual direction, prompt packs, QA review, and delivery preparation");
 });
 
 test("installer dry run reports writes without mutating target", () => {
@@ -376,11 +393,14 @@ test("agent rendering escapes local display names and config values", () => {
   };
   config.response_tone = "calm \"quoted\" tone";
   config.output_dir = "output/\"quoted\"";
+  config.work_profile.primary_work = "Creative \"quoted\"\nname = \"evil2\"";
   writeFileSync(join(dir, "framecore.config.json"), JSON.stringify(config));
 
   run(["scripts/render-agents.mjs", "--target", dir]);
   const rendered = readFileSync(join(dir, ".codex/agents/intent-confirmation.toml"), "utf8");
   assert.equal(rendered.match(/^name = /gm).length, 1);
   assert.doesNotMatch(rendered, /\nname = "evil"/);
+  assert.doesNotMatch(rendered, /\nname = "evil2"/);
   assert.match(rendered, /Agent \\"Quoted\\" name = \\"evil\\"/);
+  assert.match(rendered, /Creative \\"quoted\\" name = \\"evil2\\"/);
 });

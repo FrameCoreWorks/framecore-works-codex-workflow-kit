@@ -58,12 +58,18 @@ export function renderAgents({ target, configPath, dryRun = false, previousManag
   const { config } = loadFrameCoreConfig({ target, configPath });
   assertValidFrameCoreConfig(config);
   const names = config.agent_display_names ?? {};
+  const profile = config.work_profile ?? {};
   const language = safeTemplateValue(config.working_language ?? "en");
   const tone = safeTemplateValue(config.response_tone ?? "calm, direct, practical");
   const outputDir = safeTemplateValue(config.output_dir ?? "output/framecore");
+  const primaryWork = safeTemplateValue(profile.primary_work ?? "creative production");
+  const primaryUseCases = safeTemplateValue(profile.primary_use_cases ?? "briefs, references, prompts, QA, and delivery");
+  const workflowStyle = safeTemplateValue(profile.workflow_style ?? "structured checkpoints with concise practical outputs");
+  const adaptationNotes = safeTemplateValue(profile.adaptation_notes ?? "adapt this workflow to the current project without changing safety boundaries");
   const planned = [];
 
   for (const entry of readdirSync(sourceDir)) {
+    if (entry.startsWith("._")) continue;
     if (!entry.endsWith(".toml.template")) continue;
     const roleId = entry.replace(/\.toml\.template$/, "");
     const displayName = safeTemplateValue(names[roleId] ?? roleId);
@@ -72,7 +78,11 @@ export function renderAgents({ target, configPath, dryRun = false, previousManag
       .replaceAll("{{display_name}}", displayName)
       .replaceAll("{{working_language}}", language)
       .replaceAll("{{response_tone}}", tone)
-      .replaceAll("{{output_dir}}", outputDir);
+      .replaceAll("{{output_dir}}", outputDir)
+      .replaceAll("{{primary_work}}", primaryWork)
+      .replaceAll("{{primary_use_cases}}", primaryUseCases)
+      .replaceAll("{{workflow_style}}", workflowStyle)
+      .replaceAll("{{adaptation_notes}}", adaptationNotes);
     const destination = join(targetDir, `${roleId}.toml`);
     const managedPath = toManifestPath(target, destination);
     if (!includeManagedPath(managedPath)) continue;

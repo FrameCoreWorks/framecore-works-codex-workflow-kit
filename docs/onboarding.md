@@ -4,7 +4,9 @@
 
 Onboarding creates local configuration for one workspace. It should run before installation unless the user explicitly provides a complete `framecore.config.json`.
 
-The goal is not to change the public workflow logic. The goal is to tune how the installed workflow behaves in this one workspace: language, tone, output location, QA strictness, local agent display names, delivery preferences, and optional expansion choices.
+FrameCore Works was created for creative work such as graphics, video, storyboards, campaign assets, e-commerce assets, prompt workflows, QA, and delivery preparation. It can be adapted to other use cases by profiling the workspace during onboarding.
+
+The goal is not to change the public workflow logic. The goal is to tune how the installed workflow behaves in this one workspace: work profile, language, tone, output location, QA strictness, local agent display names, delivery preferences, and optional expansion choices.
 
 The guided installer invokes onboarding before dry-run and project-local install. That order matters because rendered agent files should use the final local config, not generic defaults.
 
@@ -17,6 +19,7 @@ Default choices are conservative:
 - project-local installation
 - no automatic upload
 - standard QA strictness
+- creative work profile for graphics, video, storyboards, campaign assets, and e-commerce assets
 - lightweight Hipson Adapter only
 - recurring self-improvement review disabled
 - neutral role IDs kept as display names unless the user chooses local names
@@ -33,6 +36,10 @@ npm run install:guided -- --target /path/to/your/project --defaults --yes
 
 Interactive onboarding asks:
 
+- `What kind of work do you do?`, the user's primary work context. The default is creative production: graphics, video, storyboards, campaign assets, and e-commerce assets.
+- `What should this pipeline help with most?`, the user's main use cases, such as briefs, references, visual direction, prompt packs, QA review, and delivery preparation.
+- `How should the pipeline fit your work style?`, the preferred operating style for route depth, checkpointing, and output shape.
+- `Any adaptation notes for non-creative or specialized use cases?`, local guidance for adapting the creative workflow to another domain without changing provider-neutral safety boundaries.
 - `Working language`, the default language Codex should use in this workspace.
 - `Response tone`, the preferred communication style.
 - `Output directory`, the local folder for workflow outputs and delivery material. Use a safe relative path such as `output/framecore`; do not use absolute paths, `~`, URLs, cloud sync paths, or machine-specific folders.
@@ -45,6 +52,8 @@ Interactive onboarding asks:
 - `Use default role names?`, enabled by default.
 
 If the user chooses not to keep default role names, onboarding asks for a local display name for every neutral role ID. These display names are local preferences, not source repo names.
+
+The work profile is saved to `framecore.config.json` as `work_profile`. Installed instructions and rendered core agent files use it to adapt routing, artifact depth, QA strictness, and the first recommended workflow path for the user's real work.
 
 ## Installed Files
 

@@ -19,11 +19,12 @@ I am a beginner. Please guide me step by step.
 
 First check whether this Codex environment can clone repositories and run local shell commands.
 If it can, clone the repo into a temporary or tools folder outside my project, read README.md, docs/quickstart.md, and docs/codex-assisted-install.md, then explain in plain language what will be installed and how it will improve my workflow.
+Start by telling me that FrameCore Works was created for creative work such as graphics, video, storyboards, campaign assets, e-commerce assets, prompt workflows, QA, and delivery preparation, but can be adapted to other use cases.
 
 Then follow the safe install path:
 1. Run the repository checks.
 2. Run doctor/preflight against my current workspace.
-3. Run onboarding for my current workspace and explain each question before I answer.
+3. Run onboarding for my current workspace and explain each question before I answer, including questions about what I do, my main use cases, and how the pipeline should fit my work style.
 4. Run install dry-run after onboarding.
 5. Install project-local only after showing me the planned writes.
 6. Show me the changed files, final installed tree, and first prompt I should use after installation.
@@ -77,6 +78,10 @@ Codex should:
 
 During interactive onboarding, Codex should explain the setup and ask for:
 
+- what kind of work the user does
+- the user's main use cases for the pipeline
+- how the pipeline should fit the user's work style
+- any adaptation notes for non-creative or specialized use cases
 - working language
 - response tone
 - output directory, using a safe relative path such as `output/framecore`, not an absolute path, `~`, URL, cloud sync path, or machine-specific folder

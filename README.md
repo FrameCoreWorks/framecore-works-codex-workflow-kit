@@ -22,11 +22,12 @@ I am a beginner. Please guide me step by step.
 
 First check whether this Codex environment can clone repositories and run local shell commands.
 If it can, clone the repo into a temporary or tools folder outside my project, read README.md, docs/quickstart.md, and docs/codex-assisted-install.md, then explain in plain language what will be installed and how it will improve my workflow.
+Start by telling me that FrameCore Works was created for creative work such as graphics, video, storyboards, campaign assets, e-commerce assets, prompt workflows, QA, and delivery preparation, but can be adapted to other use cases.
 
 Then follow the safe install path:
 1. Run the repository checks.
 2. Run doctor/preflight against my current workspace.
-3. Run onboarding for my current workspace and explain each question before I answer.
+3. Run onboarding for my current workspace and explain each question before I answer, including questions about what I do, my main use cases, and how the pipeline should fit my work style.
 4. Run install dry-run after onboarding.
 5. Install project-local only after showing me the planned writes.
 6. Show me the changed files, final installed tree, and first prompt I should use after installation.
@@ -63,7 +64,7 @@ Follow this order:
 Do not use global install and do not enable external execution tools unless I explicitly ask for them.
 ```
 
-FrameCore Works Skill Kit is a provider-neutral workflow system for Codex. It installs role-based agents, skills, templates, handoff rules, QA gates, Humanizer, HyperFrames workflow knowledge, a lightweight Hipson Adapter, and an explicit workflow self-improvement loop.
+FrameCore Works Skill Kit is a provider-neutral workflow system for Codex. It was created for creative work such as graphics, video, storyboards, campaign assets, e-commerce assets, prompt workflows, QA, and delivery preparation, and it can be adapted to other use cases during onboarding. It installs role-based agents, skills, templates, handoff rules, QA gates, Humanizer, HyperFrames workflow knowledge, a lightweight Hipson Adapter, and an explicit workflow self-improvement loop.
 
 Provider-neutral means this kit does not ship external paid media-provider clients, endpoint catalogs, provider CLIs, API-key workflows, or paid execution routes. The text-bearing image rule may still route to the native Codex/ChatGPT image generator when that built-in capability is available. See [Provider-Neutral Boundary](docs/provider-neutral-boundary.md).
 
@@ -91,7 +92,7 @@ This kit ships the routing and contract layer for creative work. It gives Codex 
 
 Skills are workflow contracts, not personality presets. A skill defines when a workflow role should act, what input it needs, what artifact it must produce, which QA gate applies, and where the handoff goes next.
 
-Onboarding does not rewrite that workflow logic. It tunes the local workspace: language, tone, output paths, QA strictness, and local display names for neutral role IDs.
+Onboarding does not rewrite that workflow logic. It tunes the local workspace: work profile, language, tone, output paths, QA strictness, and local display names for neutral role IDs.
 
 ## Start Here
 

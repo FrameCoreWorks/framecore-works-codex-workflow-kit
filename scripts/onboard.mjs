@@ -59,8 +59,9 @@ function printIntro() {
 FrameCore Works Skill Kit setup
 
 This installer adds a structured creative workflow to your current Codex workspace.
-It is meant for work such as graphics, video, storyboards, campaign assets,
-e-commerce assets, prompt workflows, QA, and delivery preparation.
+FrameCore Works was created for creative production: graphics, video,
+storyboard, campaign, e-commerce, prompt, QA, and delivery work. It can also be
+adapted to other use cases when the user profiles the setup for their own work.
 
 What will be installed project-locally:
 - role-based Codex agents for planning, references, direction, prompts, QA, and delivery
@@ -123,6 +124,12 @@ export async function runOnboarding({ target = process.cwd(), defaults = false, 
     const rl = readline.createInterface({ input, output });
     printIntro();
     await rl.question("Press Enter to continue setup. ");
+    console.log("\nFirst, profile this workspace so the pipeline fits your work instead of staying generic.");
+    console.log("These answers stay local in framecore.config.json and help the orchestrator choose route depth, artifacts, QA strictness, and first workflow paths.");
+    config.work_profile.primary_work = await ask(rl, "What kind of work do you do?", defaultsConfig.work_profile.primary_work);
+    config.work_profile.primary_use_cases = await ask(rl, "What should this pipeline help with most?", defaultsConfig.work_profile.primary_use_cases);
+    config.work_profile.workflow_style = await ask(rl, "How should the pipeline fit your work style?", defaultsConfig.work_profile.workflow_style);
+    config.work_profile.adaptation_notes = await ask(rl, "Any adaptation notes for non-creative or specialized use cases?", defaultsConfig.work_profile.adaptation_notes);
     config.working_language = await ask(rl, "Working language", defaultsConfig.working_language);
     config.response_tone = await ask(rl, "Response tone", defaultsConfig.response_tone);
     config.output_dir = await ask(rl, "Output directory (safe relative path, for example output/framecore)", defaultsConfig.output_dir);
