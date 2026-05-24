@@ -10,6 +10,12 @@ This FAQ answers the questions a new user is most likely to ask before installin
 
 Both paths are supported. Beginners can paste the README instruction into Codex and ask it to clone the repo into a temporary or tools folder outside the target workspace. Advanced users can clone the repo manually and run the guided installer.
 
+### Should beginners install GitHub Desktop?
+
+Yes, it is recommended when Terminal or Git commands feel unfamiliar. GitHub Desktop gives a visual way to clone this repository, choose where it lives locally, inspect changed files, commit, and push. It is optional and does not run the FrameCore installer by itself, so installation still needs a shell-capable Codex workspace or terminal with Node.js and npm.
+
+When cloning with GitHub Desktop, clone this repo into a temporary, tools, or GitHub folder outside the project where you want to install the kit.
+
 ### What is the safest install command?
 
 Use the guided installer:

@@ -21,10 +21,22 @@ Run repository checks, doctor/preflight, onboarding, install dry-run, then proje
 
 Do not use global install. Do not enable paid external execution tools. Do not upload anything. Do not use API keys. Stop before overwriting existing files.
 
-If this Codex environment cannot run shell commands, tell me I need a shell-capable Codex workspace or help from a technical user.
+If this Codex environment cannot run shell commands, tell me I need a shell-capable Codex workspace or help from a technical user. If I do not know how to clone this repository, recommend GitHub Desktop as the easiest visual cloning tool and remind me to clone into a temporary or tools folder outside my project.
 ```
 
 If Codex cannot run local commands, this kit still remains documented, but installation needs a terminal-capable environment or a technical helper.
+
+## Optional GitHub Desktop Setup
+
+GitHub Desktop is recommended for beginners who do not want to memorize Git commands. It helps with cloning this repository, choosing a local folder, seeing changed files, committing, and pushing. It is optional and does not replace Codex, Node.js, npm, or the FrameCore installer.
+
+Safe beginner pattern:
+
+1. Install [GitHub Desktop](https://desktop.github.com/).
+2. Choose `File > Clone Repository`.
+3. Use the URL `https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit`.
+4. Clone it into a temporary, tools, or GitHub folder outside the project where you want to install the kit.
+5. Open the cloned repo in a shell-capable Codex workspace or terminal and continue with the guided installer.
 
 ## Prerequisites
 
@@ -32,6 +44,7 @@ If Codex cannot run local commands, this kit still remains documented, but insta
 - npm.
 - A target project folder where you want Codex to use the workflow.
 - A local clone or downloaded copy of this repository.
+- Optional for beginners: GitHub Desktop for visual cloning, committing, and pushing.
 
 The commands below are run from the root of this repository unless noted otherwise.
 

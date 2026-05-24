@@ -9,6 +9,8 @@ Licensed under Apache-2.0. See [NOTICE](NOTICE) for redistribution notice detail
 
 If someone sent you this repo and you do not know Terminal, start here.
 
+Recommended helper: install [GitHub Desktop](https://desktop.github.com/) if cloning a repository feels unfamiliar. It gives you a visual way to clone this repo, choose where it lives on your computer, see changed files, commit changes, and push to GitHub without memorizing Git commands. GitHub Desktop is optional; it does not run the installer by itself, and the kit can still be installed from a shell-capable Codex workspace or terminal.
+
 1. Open Codex.
 2. Open the project folder where you want to use this workflow.
 3. Paste this into Codex:
@@ -40,6 +42,7 @@ Do not run provider tools.
 Stop and ask me before overwriting any existing file.
 
 If this Codex environment cannot run shell commands, tell me that I need a shell-capable Codex workspace or help from a technical user, then show me the manual Quickstart link.
+If I do not know how to clone the repository, recommend GitHub Desktop as the easiest visual cloning tool and remind me to clone this repo into a temporary or tools folder outside my project.
 ```
 
 If Codex says it cannot run commands, ask a technical user to follow [Quickstart](docs/quickstart.md) for you.

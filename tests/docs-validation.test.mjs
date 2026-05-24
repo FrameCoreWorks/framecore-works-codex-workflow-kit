@@ -161,6 +161,7 @@ test("validation rejects weak FAQ documentation", () => {
     faqDoc,
     readFileSync(faqDoc, "utf8")
       .replace("## Provider And Safety Questions", "## Provider Questions")
+      .replaceAll("GitHub Desktop", "desktop client")
       .replace("does not clone, install, or activate full Hipson", "can install full Hipson")
   );
 

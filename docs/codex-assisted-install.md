@@ -37,6 +37,7 @@ Do not run provider tools.
 Stop and ask me before overwriting any existing file.
 
 If this Codex environment cannot run shell commands, tell me that I need a shell-capable Codex workspace or help from a technical user, then show me the manual Quickstart link.
+If I do not know how to clone the repository, recommend GitHub Desktop as the easiest visual cloning tool and remind me to clone this repo into a temporary or tools folder outside my project.
 ```
 
 ## Paste-In Instruction
@@ -63,6 +64,7 @@ Do not use global install and do not enable external execution tools unless I ex
 Codex should:
 
 - clone or download the kit outside the target workspace
+- recommend GitHub Desktop as an optional visual cloning tool when the user is not comfortable with Terminal or Git commands
 - read `README.md`, `docs/quickstart.md`, and this guide before installing
 - run repository checks before writing target workspace files
 - run doctor/preflight against the target workspace

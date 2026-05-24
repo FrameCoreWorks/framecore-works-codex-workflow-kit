@@ -4,6 +4,7 @@
 
 - Added a beginner-friendly no-terminal startup prompt to README, Quickstart, and Codex-assisted install docs.
 - Added onboarding work-profile questions so the installed pipeline can be tuned to the user's work, use cases, workflow style, and non-creative adaptation needs.
+- Added GitHub Desktop guidance for beginner-friendly repository cloning, changed-file review, commits, and pushes.
 
 ## 1.0.0 - 2026-05-24
 

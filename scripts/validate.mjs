@@ -563,7 +563,7 @@ if (existsSync(migrationDoc)) {
 const quickstartDoc = join(validationRoot, "docs/quickstart.md");
 if (existsSync(quickstartDoc)) {
   const text = read(quickstartDoc);
-  for (const phrase of ["## Beginner-Friendly Guided Quickstart", "npm run install:guided", "## Codex-Assisted Quickstart", "temporary or tools folder outside the target workspace", "safe relative output path", "PowerShell commands", "$env:FRAMECORE_TARGET", "If guided install completes successfully", "manual fallback", "npm run check", "doctor/preflight", "onboarding", "install dry-run", "after onboarding", "project-local only", "Do not use global install", "Show me the changed files", "PowerShell"]) {
+  for (const phrase of ["## Beginner-Friendly Guided Quickstart", "npm run install:guided", "## Codex-Assisted Quickstart", "## Optional GitHub Desktop Setup", "GitHub Desktop", "visual cloning", "temporary or tools folder outside the target workspace", "safe relative output path", "PowerShell commands", "$env:FRAMECORE_TARGET", "If guided install completes successfully", "manual fallback", "npm run check", "doctor/preflight", "onboarding", "install dry-run", "after onboarding", "project-local only", "Do not use global install", "Show me the changed files", "PowerShell"]) {
     if (!text.includes(phrase)) addFinding("WEAK_INSTALL_PROMPT", `Codex-assisted quickstart is missing required safety phrase: ${phrase}`, [quickstartDoc]);
   }
   for (const phrase of ["## Advanced Global Install", "writes to the current user's home workspace", "npm run doctor -- --mode global", "node scripts/install.mjs --mode dry-run --target \"$HOME\"", "node scripts/install.mjs --mode global --confirm-global"]) {
@@ -581,7 +581,7 @@ if (existsSync(codexAssistedInstallDoc)) {
   for (const section of ["Purpose", "Paste-In Instruction", "What Codex Should Do", "Onboarding Questions", "Stop Conditions", "Expected Result"]) {
     if (!sections.has(section)) addFinding("WEAK_CODEX_ASSISTED_INSTALL_DOC", `Codex-assisted install guide is missing required section: ${section}`, [codexAssistedInstallDoc]);
   }
-  for (const phrase of ["temporary or tools folder outside the target workspace", "guided project-local installer", "manual fallback", "Run onboarding", "Run install dry-run", "Install project-local only", "Do not use global install", "creative work such as graphics", "what I do", "main use cases", "work style", "delivery upload behavior", "safe relative path", "optional full Hipson expansion", "does not clone or install full Hipson", "stop and ask the user", "user-owned file conflicts", "external execution tools", "AGENTS.framecore.md"]) {
+  for (const phrase of ["temporary or tools folder outside the target workspace", "guided project-local installer", "manual fallback", "Run onboarding", "Run install dry-run", "Install project-local only", "Do not use global install", "creative work such as graphics", "what I do", "main use cases", "work style", "GitHub Desktop", "visual cloning tool", "delivery upload behavior", "safe relative path", "optional full Hipson expansion", "does not clone or install full Hipson", "stop and ask the user", "user-owned file conflicts", "external execution tools", "AGENTS.framecore.md"]) {
     if (!text.includes(phrase)) addFinding("WEAK_CODEX_ASSISTED_INSTALL_DOC", `Codex-assisted install guide is missing required safety phrase: ${phrase}`, [codexAssistedInstallDoc]);
   }
 }
@@ -644,7 +644,7 @@ if (existsSync(faqDoc)) {
   for (const section of ["Purpose", "Install Questions", "Configuration Questions", "Workflow Questions", "Provider And Safety Questions", "Hipson And HyperFrames", "Updates And Uninstall", "Troubleshooting", "Related Docs"]) {
     if (!sections.has(section)) addFinding("WEAK_FAQ_DOC", `FAQ is missing required section: ${section}`, [faqDoc]);
   }
-  for (const phrase of ["guided installer", "project-local install", "global install", "--confirm-global", "framecore.config.json", "local display names", "AGENTS.framecore.md", "provider-neutral", "GPT Image 2", "Full Hipson remains separate and optional", "does not clone, install, or activate full Hipson", "HyperFrames", "uninstall", "--yes", "npm run release:check"]) {
+  for (const phrase of ["guided installer", "project-local install", "global install", "--confirm-global", "GitHub Desktop", "visual way to clone", "framecore.config.json", "local display names", "AGENTS.framecore.md", "provider-neutral", "GPT Image 2", "Full Hipson remains separate and optional", "does not clone, install, or activate full Hipson", "HyperFrames", "uninstall", "--yes", "npm run release:check"]) {
     if (!text.includes(phrase)) addFinding("WEAK_FAQ_DOC", `FAQ is missing required user-answer phrase: ${phrase}`, [faqDoc]);
   }
 }
@@ -799,7 +799,7 @@ if (existsSync(readmePath)) {
   for (const phrase of ["docs/quickstart.md", "docs/codex-assisted-install.md", "If guided install completes successfully", "manual fallback", "Show me the changed files"]) {
     if (!text.includes(phrase)) addFinding("WEAK_README_INSTALL_PROMPT", `README install prompt is missing required safety phrase: ${phrase}`, [readmePath]);
   }
-  for (const phrase of ["## Supported Agent Surfaces", "OpenAI Codex CLI with custom-agent support", "Chat-only environments without shell access", "This kit ships the routing and contract layer", "symlinks"]) {
+  for (const phrase of ["## Supported Agent Surfaces", "OpenAI Codex CLI with custom-agent support", "Chat-only environments without shell access", "GitHub Desktop", "This kit ships the routing and contract layer", "symlinks"]) {
     if (!text.includes(phrase)) addFinding("WEAK_README_POSITIONING", `README is missing required positioning phrase: ${phrase}`, [readmePath]);
   }
   for (const phrase of ["Global install is available only for advanced users", "writes to the current user's home workspace", "npm run doctor -- --mode global", "node scripts/install.mjs --mode dry-run --target \"$HOME\"", "node scripts/install.mjs --mode global --confirm-global"]) {
