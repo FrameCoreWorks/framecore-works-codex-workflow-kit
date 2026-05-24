@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- No unreleased changes.
+
+## 1.0.0 - 2026-05-24
+
 - Added Memory Cache and Context folder docs, templates, tools, and tests for long-session recovery without mixing user input with durable state.
 - Added local semantic-memory commands with Context exclusion, AppleDouble exclusion, and explicit OpenAI API activation gating.
 - Added report-only self-improvement tooling that writes proposal queues to Memory Cache without editing source files.
@@ -27,9 +31,6 @@
 - Added a validated storyboard board workflow example and handoff coverage for storyboard-board to image-prompting routes.
 - Expanded the public agent roster guide with role selection, inputs, artifacts, review gates, common handoffs, local display-name rules, and provider-neutral boundaries.
 - Added onboarding completion guidance for dry-run, project-local install, Codex instruction loading, and post-install starter prompts.
-
-## 1.0.0 - 2026-05-22
-
 - Added a post-install usage guide with starter prompts, route selection guidance, execution boundaries, Hipson Adapter usage, and safety reminders.
 - Added a beginner-safe guided project-local installer with checks, doctor/preflight, onboarding, post-onboarding dry-run, and final install confirmation.
 - Required explicit `--confirm-global` for global installs and documented the advanced global install path separately from project-local setup.
