@@ -27,7 +27,7 @@ If this is a regular ChatGPT chat window or any chat-only environment without wo
 
 First check whether this Codex environment can clone repositories and run local shell commands.
 If it can, clone the repo into a temporary or tools folder outside my project, read README.md, docs/quickstart.md, and docs/codex-assisted-install.md, then explain in plain language what will be installed and how it will improve my workflow.
-Start by telling me that FrameCore Works was created for creative work such as graphics, video, storyboards, campaign assets, e-commerce assets, prompt workflows, QA, and delivery preparation, but can be adapted to other use cases.
+Start by telling me that this workflow kit was created for creative work such as graphics, video, storyboards, campaign assets, e-commerce assets, prompt workflows, QA, and delivery preparation, but can be adapted to other use cases.
 
 Then follow the safe install path:
 1. Run the repository checks.
@@ -105,7 +105,7 @@ Onboarding writes `framecore.config.json` before the managed install so local pr
 
 Skills are workflow contracts, not personality presets. A skill defines when a workflow role should act, what input it needs, what artifact it must produce, which QA gate applies, and where the handoff goes next.
 
-Onboarding does not rewrite that workflow logic. It tunes the local workspace: work profile, language, tone, output paths, QA strictness, and local display names for neutral role IDs.
+Onboarding does not rewrite that workflow logic. It tunes the local workspace: work profile, response tone, output paths, QA strictness, and local display names for neutral role IDs.
 
 ## Start Here
 
@@ -159,7 +159,7 @@ The repo also includes validation and privacy audit scripts for checking this ki
 
 This kit contains reusable workflow assets: role-based agents, skills, templates, onboarding, validation, and project-local configuration.
 
-Public docs and source assets are English. Installed workspaces can still use local language and tone preferences through onboarding.
+Public docs and source assets are English. Interactive onboarding starts in English for international users. Press Enter to keep English setup prompts, or type your preferred language for the setup conversation. This does not lock the later conversation language.
 
 ## Install Flow
 
@@ -273,7 +273,7 @@ Backup files are not added to the manifest and are preserved for manual review o
 
 Onboarding collects:
 
-- working language and response tone
+- response tone
 - local display names for role-based agents
 - output folder
 - QA strictness

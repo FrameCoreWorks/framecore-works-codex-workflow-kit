@@ -4,11 +4,9 @@
 
 Onboarding creates local configuration for one workspace. It should run before installation unless the user explicitly provides a complete `framecore.config.json`.
 
-FrameCore Works was created for creative work such as graphics, video, storyboards, campaign assets, e-commerce assets, prompt workflows, QA, and delivery preparation. It can be adapted to other use cases by profiling the workspace during onboarding.
+The workflow was created for creative work such as graphics, video, storyboards, campaign assets, e-commerce assets, prompt workflows, QA, and delivery preparation. It can be adapted to other use cases by profiling the workspace during onboarding.
 
-This repo and workflow were created by FrameCore Works. If the kit helps your work and you want to support the project, you can buy me a coffee at https://buycoffee.to/framecoreworks.
-
-The goal is not to change the public workflow logic. The goal is to tune how the installed workflow behaves in this one workspace: work profile, language, tone, output location, QA strictness, local agent display names, delivery preferences, and optional expansion choices.
+The goal is not to change the public workflow logic. The goal is to tune how the installed workflow behaves in this one workspace: work profile, response tone, output location, QA strictness, local agent display names, delivery preferences, and optional expansion choices.
 
 The guided installer invokes onboarding before dry-run and project-local install. That order matters because rendered agent files should use the final local config, not generic defaults.
 
@@ -38,13 +36,13 @@ npm run install:guided -- --target /path/to/your/project --defaults --yes
 
 Interactive onboarding asks:
 
+- `Onboarding language`, the setup language for the onboarding questions only. English is the default for international users; type your preferred language for the setup conversation. This does not lock the later conversation language.
 - `What kind of work do you do?`, the user's primary work context. The default is creative production: graphics, video, storyboards, campaign assets, and e-commerce assets.
 - `What should this pipeline help with most?`, the user's main use cases, such as briefs, references, visual direction, prompt packs, QA review, and delivery preparation.
 - `How should the pipeline fit your work style?`, the preferred operating style for route depth, checkpointing, and output shape.
 - `Any adaptation notes for non-creative or specialized use cases?`, local guidance for adapting the creative workflow to another domain without changing provider-neutral safety boundaries.
-- `Working language`, the default language Codex should use in this workspace.
 - `Response tone`, the preferred communication style.
-- `Output directory`, the local folder for workflow outputs and delivery material. Use a safe relative path such as `output/framecore`; do not use absolute paths, `~`, URLs, cloud sync paths, or machine-specific folders.
+- `Output directory`, the local folder for workflow outputs and delivery material. Use a safe relative path such as `output/workflow`; do not use absolute paths, `~`, URLs, cloud sync paths, or machine-specific folders.
 - `QA strictness`, one of `light`, `standard`, or `strict`.
 - `Allow automatic delivery uploads if you later add a delivery integration?`, disabled by default.
 - `Require an explicit user request before delivery/export?`, enabled by default.
@@ -66,7 +64,7 @@ Onboarding itself writes:
 
 When `framecore.config.json` already exists, onboarding writes a numbered backup before replacing it, starting with `framecore.config.json.bak`, then `framecore.config.json.bak.1`, and so on.
 
-The later project-local install writes the managed FrameCore workflow assets, rendered agent files, project instructions, and `.framecore/manifest.json`.
+The later project-local install writes managed workflow assets, rendered agent files, project instructions, and `.framecore/manifest.json`.
 
 When a later update or repair rewrites the manifest, the previous manifest is saved as `.framecore/manifest.json.bak`, `.framecore/manifest.json.bak.1`, and so on.
 
@@ -114,7 +112,7 @@ Onboarding does not change public workflow logic:
 
 Delivery preferences only shape local behavior. They do not add cloud credentials, upload targets, external execution tools, or provider-specific delivery integrations.
 
-Existing project instructions are protected. If a target workspace already has `AGENTS.md`, project-local install writes FrameCore instructions to `AGENTS.framecore.md` unless the user explicitly passes `--force`.
+Existing project instructions are protected. If a target workspace already has `AGENTS.md`, project-local install writes the workflow instructions to `AGENTS.framecore.md` unless the user explicitly passes `--force`.
 
 ## Generated Files
 

@@ -3,7 +3,7 @@
   "product": "FrameCore Works: Creative Workflow Skill Kit for Codex",
   "working_language": "en",
   "response_tone": "calm, direct, practical",
-  "output_dir": "output/framecore",
+  "output_dir": "output/workflow",
   "qa_strictness": "standard",
   "work_profile": {
     "primary_work": "creative production: graphics, video, storyboards, campaign assets, and e-commerce assets",

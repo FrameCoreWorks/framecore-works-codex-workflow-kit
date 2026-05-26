@@ -17,7 +17,7 @@ Before doing anything else, confirm that I am using a shell-capable Codex worksp
 
 First check whether this Codex environment can clone repositories and run local shell commands. If it can, clone the repo into a temporary or tools folder outside my project, read README.md, docs/quickstart.md, and docs/codex-assisted-install.md, then explain what will be installed.
 
-Start by telling me that FrameCore Works was created for creative work such as graphics, video, storyboards, campaign assets, e-commerce assets, prompt workflows, QA, and delivery preparation, but can be adapted to other use cases.
+Start by telling me that this workflow kit was created for creative work such as graphics, video, storyboards, campaign assets, e-commerce assets, prompt workflows, QA, and delivery preparation, but can be adapted to other use cases.
 
 Run repository checks, doctor/preflight, onboarding, install dry-run, then project-local install only. Explain each onboarding question before I answer, including questions about what I do, my main use cases, and how the pipeline should fit my work style. Show planned writes before installing.
 
@@ -142,7 +142,7 @@ For a full command map, including which commands write files and which are read-
    node scripts/onboard.mjs --target "$FRAMECORE_TARGET"
    ```
 
-   Onboarding creates `framecore.config.json` in the target workspace. It asks for working language, tone, output folder, QA strictness, local agent display names, and optional workflow self-improvement settings. Use a safe relative output path such as `output/framecore`; do not use absolute paths, `~`, URLs, cloud sync paths, or machine-specific folders.
+   Onboarding creates `framecore.config.json` in the target workspace. It asks for onboarding prompt language, response tone, output folder, QA strictness, local agent display names, and optional workflow self-improvement settings. The onboarding prompt language affects setup text only and does not lock the later conversation language. Use a safe relative output path such as `output/workflow`; do not use absolute paths, `~`, URLs, cloud sync paths, or machine-specific folders. Do not describe this as a folder for this kit's files; describe it as a folder for the user's generated files and workflow reports.
 
    At the end, onboarding prints the next safe steps: dry-run, review planned writes, install project-local, open the target project in Codex, and use [Using The Kit](using-the-kit.md) for starter prompts.
 

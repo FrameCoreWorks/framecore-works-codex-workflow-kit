@@ -16,6 +16,7 @@ test("onboarding renders project-local config and agent templates", () => {
   assert.ok(existsSync(join(dir, "framecore.config.json")));
   const config = JSON.parse(readFileSync(join(dir, "framecore.config.json"), "utf8"));
   assert.equal("install_scope" in config, false);
+  assert.equal(config.output_dir, "output/workflow");
   assert.equal(config.work_profile.primary_work, "creative production: graphics, video, storyboards, campaign assets, and e-commerce assets");
   const rendered = readdirSync(join(dir, ".codex/agents")).filter((file) => file.endsWith(".toml"));
   assert.equal(rendered.length, 20);
@@ -185,12 +186,13 @@ test("interactive onboarding explains the workflow and can keep default role nam
   const dir = mkdtempSync(join(tmpdir(), "framecore-interactive-"));
   const result = await runInteractiveOnboarding(dir);
   assert.equal(result.status, 0);
+  assert.match(result.stdout, /Onboarding language\. Press Enter for English/);
   assert.match(result.stdout, /This installer adds a structured creative workflow/);
-  assert.match(result.stdout, /FrameCore Works was created for creative production/);
-  assert.match(result.stdout, /created by FrameCore Works/);
-  assert.match(result.stdout, /https:\/\/buycoffee\.to\/framecoreworks/);
-  assert.match(result.stdout, /These answers stay local in framecore\.config\.json/);
-  assert.match(result.stdout, /adapted to other use cases/);
+  assert.doesNotMatch(result.stdout, /FrameCore Works/);
+  assert.doesNotMatch(result.stdout, /FrameCore files/);
+  assert.match(result.stdout, /output\/workflow/);
+  assert.match(result.stdout, /These answers stay local in the generated config file/);
+  assert.match(result.stdout, /adapted to other use\s+cases/);
   assert.match(result.stdout, /What kind of work do you do/);
   assert.match(result.stdout, /What should this pipeline help with most/);
   assert.match(result.stdout, /How should the pipeline fit your work style/);
@@ -210,6 +212,25 @@ test("interactive onboarding explains the workflow and can keep default role nam
   assert.equal(config.delivery.delivery_requires_current_user_request, true);
   assert.equal(config.delivery.require_qa_allowlist_for_generated_assets, true);
   assert.equal(config.work_profile.primary_use_cases, "briefs, references, visual direction, prompt packs, QA review, and delivery preparation");
+});
+
+test("interactive onboarding can run in Polish", async () => {
+  const dir = mkdtempSync(join(tmpdir(), "framecore-interactive-pl-"));
+  const answers = ["Polish", "", "", "", "", "", "", "", "", "", "", "", "", "", "tak"];
+  const result = await runInteractiveOnboarding(dir, answers);
+  assert.equal(result.status, 0);
+  assert.match(result.stdout, /Konfiguracja kreatywnego workflow/);
+  assert.doesNotMatch(result.stdout, /FrameCore Works/);
+  assert.match(result.stdout, /output\/workflow/);
+  assert.match(result.stdout, /Czym się zajmujesz/);
+  assert.match(result.stdout, /W czym ten pipeline ma pomagać najbardziej/);
+  assert.match(result.stdout, /Czy użyć domyślnych nazw ról/);
+  assert.match(result.stdout, /Następne kroki:/);
+  const config = JSON.parse(readFileSync(join(dir, "framecore.config.json"), "utf8"));
+  assert.equal(config.working_language, "en");
+  assert.equal(config.response_tone, "calm, direct, practical");
+  assert.equal(config.work_profile.primary_use_cases, "briefs, references, visual direction, prompt packs, QA review, and delivery preparation");
+  assert.deepEqual(config.agent_display_names, {});
 });
 
 test("interactive onboarding re-prompts unsafe output directories", async () => {

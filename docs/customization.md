@@ -68,7 +68,7 @@ If a customization needs secrets or private delivery settings, keep it outside t
 `output_dir` must be a safe relative path, for example:
 
 ```json
-"output_dir": "output/framecore"
+"output_dir": "output/workflow"
 ```
 
 Do not use absolute paths, `~`, URLs, drive-root paths, parent traversal, private cloud sync paths, or machine-specific folders.
@@ -170,7 +170,7 @@ The recurring review is disabled by default and should be enabled only by explic
 
 ## Team Customization
 
-The safe default is personal install. Keep `framecore.config.json` and `.framecore/manifest.json` local unless a team intentionally decides to manage FrameCore files together.
+The safe default is personal install. Keep `framecore.config.json` and `.framecore/manifest.json` local unless a team intentionally decides to manage workflow files together.
 
 If a team wants shared settings, prefer `framecore.config.shared.json` over committing a live user config. Shared config is optional and may contain reviewed team defaults such as `qa_strictness`, `response_tone`, neutral `agent_display_names`, or a portable `output_dir`.
 

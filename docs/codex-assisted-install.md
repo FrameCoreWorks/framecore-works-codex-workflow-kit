@@ -22,7 +22,7 @@ If this is a regular ChatGPT chat window or any chat-only environment without wo
 
 First check whether this Codex environment can clone repositories and run local shell commands.
 If it can, clone the repo into a temporary or tools folder outside my project, read README.md, docs/quickstart.md, and docs/codex-assisted-install.md, then explain in plain language what will be installed and how it will improve my workflow.
-Start by telling me that FrameCore Works was created for creative work such as graphics, video, storyboards, campaign assets, e-commerce assets, prompt workflows, QA, and delivery preparation, but can be adapted to other use cases.
+Start by telling me that this workflow kit was created for creative work such as graphics, video, storyboards, campaign assets, e-commerce assets, prompt workflows, QA, and delivery preparation, but can be adapted to other use cases.
 
 Then follow the safe install path:
 1. Run the repository checks.
@@ -87,13 +87,13 @@ Codex should:
 
 During interactive onboarding, Codex should explain the setup and ask for:
 
+- onboarding prompt language only, defaulting to English for international users and allowing the user to type their preferred setup language
 - what kind of work the user does
 - the user's main use cases for the pipeline
 - how the pipeline should fit the user's work style
 - any adaptation notes for non-creative or specialized use cases
-- working language
 - response tone
-- output directory, using a safe relative path such as `output/framecore`, not an absolute path, `~`, URL, cloud sync path, or machine-specific folder
+- output directory for the user's generated files and workflow reports, using a safe relative path such as `output/workflow`, not an absolute path, `~`, URL, cloud sync path, or machine-specific folder; do not describe this as a folder for this kit's files
 - QA strictness
 - delivery upload behavior
 - explicit user-request requirement before delivery or export
