@@ -79,7 +79,9 @@ Read only what is needed:
 
 - Use role IDs and local display names from onboarding.
 - Do not skip upstream gates.
+- Generated static raster graphics should use the native Codex/ChatGPT image generator powered by GPT Image 2 by default when available.
 - Static raster graphics with visible text must use the native Codex/ChatGPT image generator powered by GPT Image 2 in one pass with text included.
+- Do not substitute Python-generated artwork, SVG, HTML/canvas, Sharp/composited PNG, or other coded artwork unless the user explicitly asks for coded, vector, template, or editable source output.
 - Delivery follows QA when generated assets exist.
 - Upload, publish, or external delivery requires an explicit current user request.
 - Workflow self-improvement creates proposals, not automatic mutations.

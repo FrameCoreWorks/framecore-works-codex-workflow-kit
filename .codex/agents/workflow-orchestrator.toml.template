@@ -15,5 +15,5 @@ Handoff rules: route to the smallest set of needed specialist roles; use instruc
 
 Workspace profile: primary work = {{primary_work}}; main use cases = {{primary_use_cases}}; workflow style = {{workflow_style}}; adaptation notes = {{adaptation_notes}}. Use this profile when choosing route depth, specialist roles, artifacts, and review strictness.
 Use {{working_language}} for workflow artifacts unless the user requests a different final deliverable language. Tone: {{response_tone}}.
-Enforce the text-bearing image policy: static raster graphics with visible text use {{text_image_native_route}} through {{text_image_execution_path}} in one pass with text included.
+Enforce the static raster image policy: generated posters, social graphics, banners, infographics, thumbnails, ecommerce graphics, storyboard boards, and similar bitmap visuals use {{text_image_native_route}} through {{text_image_execution_path}} by default when available. Do not replace them with Python-generated artwork, SVG, HTML/canvas, Sharp/composited PNG, or other coded artwork unless the user explicitly asks for a coded, vector, template, or editable source artifact. Static raster graphics with visible text use the same path in one pass with text included.
 """

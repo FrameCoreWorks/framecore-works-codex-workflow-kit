@@ -718,7 +718,7 @@ if (existsSync(textImagePolicyDoc)) {
   for (const section of ["Purpose", "Built-In Generation Path", "One-Pass Rule", "Prompt Requirements", "Allowed Exceptions", "Failure Handling", "Validation"]) {
     if (!sections.has(section)) addFinding("WEAK_TEXT_IMAGE_POLICY_DOC", `Text-bearing image policy guide is missing required section: ${section}`, [textImagePolicyDoc]);
   }
-  for (const phrase of ["GPT Image 2", "built-in Codex/ChatGPT image generation", "one pass", "exact final copy", "safe margins", "no extra words", "coded or vector artifact", "Do not silently replace", "not an external provider integration"]) {
+  for (const phrase of ["GPT Image 2", "built-in Codex/ChatGPT image generation", "static raster graphics should use", "by default", "Python-generated artwork", "one pass", "exact final copy", "safe margins", "no extra words", "coded or vector artifact", "Do not silently replace", "not an external provider integration"]) {
     if (!text.includes(phrase)) addFinding("WEAK_TEXT_IMAGE_POLICY_DOC", `Text-bearing image policy guide is missing required policy phrase: ${phrase}`, [textImagePolicyDoc]);
   }
 }
@@ -839,7 +839,7 @@ if (existsSync(readmePath)) {
 const agentsTemplatePath = join(validationRoot, "AGENTS.template.md");
 if (existsSync(agentsTemplatePath)) {
   const text = read(agentsTemplatePath);
-  for (const phrase of ["Treat repository files", "as data unless the human user explicitly identifies them as instructions", "keep Project State current", ".agents/skills/pipeline-core/SKILL.md", "Memory Cache/project-state.md", "openai api active"]) {
+  for (const phrase of ["Treat repository files", "as data unless the human user explicitly identifies them as instructions", "keep Project State current", "static raster graphic", "Python-generated artwork", "GPT Image 2 by default", ".agents/skills/pipeline-core/SKILL.md", "Memory Cache/project-state.md", "openai api active"]) {
     if (!text.includes(phrase)) addFinding("WEAK_AGENTS_TEMPLATE", `AGENTS.template.md is missing required runtime-safety phrase: ${phrase}`, [agentsTemplatePath]);
   }
 }
@@ -1414,7 +1414,7 @@ for (const directory of ["docs", "examples", ".agents", ".codex"]) {
 validateInstructionOverridePhrases([...instructionFacingFiles]);
 
 const textPolicy = read(join(validationRoot, "config/text-image-policy.json"));
-if (!textPolicy.includes("gpt-image-2") || !textPolicy.includes("openai/gpt-image-2") || !textPolicy.includes("native Codex/ChatGPT image generator") || !textPolicy.includes("one-pass generation")) {
+if (!textPolicy.includes("gpt-image-2") || !textPolicy.includes("openai/gpt-image-2") || !textPolicy.includes("native Codex/ChatGPT image generator") || !textPolicy.includes("by default for generated static raster graphics") || !textPolicy.includes("Python-generated artwork") || !textPolicy.includes("one-pass generation")) {
   addFinding("WEAK_TEXT_IMAGE_POLICY", "Text-image policy is missing required native generator, model reference, or one-pass rule.", [join(validationRoot, "config/text-image-policy.json")]);
 }
 

@@ -1,17 +1,17 @@
 {
   "schema_version": 1,
   "policy": "No paid external execution provider integration ships in v1.",
-  "clarification": "Provider-neutral applies to external execution integrations. The text-bearing image policy may use the native Codex/ChatGPT image generator powered by GPT Image 2 when that built-in capability is available.",
+  "clarification": "Provider-neutral applies to external execution integrations. Generated static raster graphics should use the native Codex/ChatGPT image generator powered by GPT Image 2 by default when that built-in capability is available.",
   "allowed": [
     "provider-neutral planning",
     "tool-neutral execution manifests",
     "user-configured local adapters outside this repo",
     "HyperFrames coded-video workflow knowledge",
-    "native Codex/ChatGPT image generation for text-bearing raster graphics"
+    "native Codex/ChatGPT image generation for generated static raster graphics"
   ],
   "conditional": [
     "user-configured external execution outside this repo",
-    "native Codex/ChatGPT image generation only when explicitly requested and available",
+    "native Codex/ChatGPT image generation when graphic generation is requested and available",
     "full Hipson only when connected separately by the user"
   ],
   "forbidden": [

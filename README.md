@@ -97,7 +97,7 @@ Onboarding writes `framecore.config.json` before the managed install so local pr
 | Path | Included in this repo | What it does |
 | --- | --- | --- |
 | Prompt-only workflow | Yes | Produces briefs, reference packs, direction, prompt packs, QA criteria, and delivery notes. |
-| Built-in Codex/ChatGPT image generation for text-bearing raster graphics | Policy only | Allowed when available and explicitly requested; visible text is generated in one pass. |
+| Built-in Codex/ChatGPT image generation for generated static raster graphics | Policy only | Default route when available and explicitly requested by the user; visible text is generated in one pass. |
 | External paid media-provider execution | No | Users may add their own tools outside this public kit. |
 | Full Hipson | No | The included Hipson Adapter is lightweight; full Hipson remains separate and optional. |
 
@@ -284,11 +284,13 @@ Agent source files in this repo use neutral role IDs only. User-specific display
 
 `framecore.config.json` is validated before rendering or installation. Invalid config values stop installation before managed files are written. Teams can add an optional `framecore.config.shared.json` for reviewed shared defaults; local `framecore.config.json` still takes precedence.
 
-## Text-Bearing Image Policy
+## Static Raster And Text-Bearing Image Policy
 
-Static raster graphics with visible text must use the built-in Codex/ChatGPT image generation capability powered by GPT Image 2 in one pass, with all visible text included directly in the generated image.
+Generated static raster graphics should use the built-in Codex/ChatGPT image generation capability powered by GPT Image 2 by default when available. This includes posters, social graphics, banners, infographics, thumbnails, ecommerce graphics, storyboard boards, and similar bitmap visuals.
 
-This is a native chat-window generation path, not an external provider integration, API key requirement, CLI, or paid media-provider workflow. The workflow must not generate a text-free background first and add typography later with overlays, compositing, design tools, or manual editing unless the user explicitly asks for a coded or vector artifact.
+Static raster graphics with visible text must use the same built-in path in one pass, with all visible text included directly in the generated image.
+
+This is a native chat-window generation path, not an external provider integration, API key requirement, CLI, or paid media-provider workflow. The workflow must not replace requested graphic generation with Python-generated artwork, SVG, HTML/canvas, Sharp/composited PNG, or other coded artwork unless the user explicitly asks for a coded, vector, template, or editable source artifact. It also must not generate a text-free background first and add typography later with overlays, compositing, design tools, or manual editing unless the user explicitly asks for a coded or vector artifact.
 
 ## Hipson Adapter
 

@@ -54,12 +54,14 @@ Produce an Image Prompt Pack with:
 
 - If direction is missing, route to `static-direction`.
 - If copy is required but not locked, route to `copy-voice` or label the prompt as provisional.
+- For generated static raster graphics, require the native Codex/ChatGPT GPT Image 2 path by default when available.
 - For raster graphics with visible text, require the native Codex/ChatGPT GPT Image 2 path in one pass when available.
 - If copy is too long for clean generated text, recommend shortening before generation rather than later overlays.
 
 ## Guardrails
 
 - Do not execute generation, choose paid external tools, or publish outputs.
+- Do not substitute Python-generated artwork, SVG, HTML/canvas, Sharp/composited PNG, or coded artwork unless the user explicitly asked for coded or vector artwork.
 - Do not add text later with overlays for static raster graphics unless the user explicitly asked for coded or vector artwork.
 - Do not invent claims, logos, product facts, or private references.
 - Do not remove suppression rules from the reference pack.

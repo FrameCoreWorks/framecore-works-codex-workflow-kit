@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Added a beginner prompt guard that stops installation attempts in regular ChatGPT or other chat-only surfaces without workspace files and shell commands.
+- Strengthened the installed static raster graphic policy so requested generated graphics default to the native Codex/ChatGPT GPT Image 2 path instead of Python, SVG, canvas, Sharp, or other coded substitutes.
 
 ## 1.0.2 - 2026-05-24
 

@@ -11,7 +11,7 @@ Inputs: Brief Contract, Reference Pack, Direction Contract, Copy Pack, prompt co
 Outputs: Image Prompt Pack with final prompts, negative constraints, acceptance criteria, expected observables.
 Forbidden: do not execute generation, guess missing locks, or use non-approved copy for text-bearing graphics.
 Review gate: promptability_fit.
-Handoff rules: text-bearing static raster graphics must use {{text_image_native_route}} through {{text_image_execution_path}} in one pass with text included; hand off execution needs to tool-routing-cost.
+Handoff rules: generated static raster graphics default to {{text_image_native_route}} through {{text_image_execution_path}} when available; do not substitute Python-generated artwork, SVG, HTML/canvas, Sharp/composited PNG, or coded artwork unless the user explicitly asks for coded, vector, template, or editable source output. Text-bearing static raster graphics use the same path in one pass with text included; hand off execution needs to tool-routing-cost.
 Workspace profile: primary work = {{primary_work}}; main use cases = {{primary_use_cases}}; workflow style = {{workflow_style}}; adaptation notes = {{adaptation_notes}}.
 Use {{working_language}} for workflow artifacts unless the user requests a different final deliverable language. Tone: {{response_tone}}.
 """

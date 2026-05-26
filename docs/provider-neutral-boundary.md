@@ -35,7 +35,7 @@ The kit must not ship:
 | Briefs, references, direction, prompts, QA, and delivery notes | Allowed | Source workflow artifacts are provider-neutral and safe for the public kit. |
 | Tool-neutral execution manifests | Allowed | Manifests can describe approved inputs, risks, and handoff needs without bundling a provider client. |
 | HyperFrames coded-video workflow knowledge | Allowed | HyperFrames guidance is treated as coded-video planning, scene structure, animation, caption, render QA, and delivery guidance. |
-| Native Codex/ChatGPT image generation powered by GPT Image 2 | Conditional | Allowed only when static raster graphics with visible text are explicitly requested and the built-in capability is available. |
+| Native Codex/ChatGPT image generation powered by GPT Image 2 | Conditional | Allowed when the user requests generated static raster graphics and the built-in capability is available. It is the default route for generated posters, social graphics, banners, infographics, thumbnails, ecommerce graphics, storyboard boards, and other bitmap visuals. |
 | Full Hipson | Conditional | Full Hipson remains separate and optional; this kit ships only the lightweight adapter and does not clone or activate full Hipson. |
 | User-configured external execution tools | Conditional | Users may configure local tools in their own workspace, outside this repo and outside the default install path. |
 | Bundled paid media-provider clients, provider CLIs, endpoint catalogs, provider credentials, and API-key setup flows | Forbidden | These do not ship in the public kit and should stop a release if introduced. |
@@ -43,9 +43,11 @@ The kit must not ship:
 
 ## Built-In Chat Image Exception
 
-The text-bearing image policy is an intentional built-in capability boundary, not an external paid provider integration.
+The static raster and text-bearing image policy is an intentional built-in capability boundary, not an external paid provider integration.
 
-When a static raster graphic needs visible text, the workflow should use native Codex or ChatGPT image generation powered by GPT Image 2 in one pass when that capability is available. The final visible text belongs in the generation prompt and should not be added later with overlays unless the user explicitly asks for a coded or vector artifact.
+When the user asks for a generated static raster graphic, the workflow should use native Codex or ChatGPT image generation powered by GPT Image 2 by default when that capability is available. Do not silently replace this with Python-generated artwork, SVG, HTML/canvas, Sharp/composited PNG, or other coded artwork unless the user explicitly asks for a coded, vector, template, or editable source artifact.
+
+When a static raster graphic needs visible text, the final visible text belongs in the generation prompt and should not be added later with overlays unless the user explicitly asks for a coded or vector artifact.
 
 ## Coded Video Boundary
 
