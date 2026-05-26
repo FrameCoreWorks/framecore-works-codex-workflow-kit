@@ -95,7 +95,8 @@ extension later; it does not clone, install, or activate full Hipson.
     deliveryRequiresRequest: "Require an explicit user request before delivery/export? yes/no",
     requireQaAllowlist: "Require QA approval before generated asset delivery? yes/no",
     recurringReview: "Enable 24-hour workflow self-improvement review? yes/no",
-    fullHipson: "Record intent to connect full Hipson later as an external extension? yes/no",
+    fullHipsonHelp: "\nFull Hipson is a separate optional repository, not part of this install. It can later add broader repository scanning, change and delta reviews, sidecar review agents, cross-repo orchestration, CLI commands, and a larger Hipson knowledge base. In this workflow it acts as an optional expansion layer for deeper analysis and structured instruction packets. Choosing yes now only records future intent in the local config; it does not clone, install, activate, upload, or run anything.",
+    fullHipson: "Do you want to record intent to connect the separate full Hipson system later? yes/no",
     roleNamesIntro: "\nAgents use neutral role IDs by default. You can keep them or rename them locally for your own workspace.",
     defaultRoleNames: "Use default role names? yes/no",
     roleNamesHelp: "Enter local display names. Press Enter to keep a role ID.",
@@ -175,7 +176,8 @@ nie klonuje, nie instaluje i nie aktywuje pełnego Hipsona.
     deliveryRequiresRequest: "Czy wymagać wyraźnej prośby usera przed delivery/export? tak/nie",
     requireQaAllowlist: "Czy wymagać akceptacji QA przed oddaniem wygenerowanych assetów? tak/nie",
     recurringReview: "Czy włączyć 24-godzinny report workflow self-improvement? tak/nie",
-    fullHipson: "Czy zapisać zamiar podłączenia pełnego Hipsona później jako zewnętrznego rozszerzenia? tak/nie",
+    fullHipsonHelp: "\nPełny Hipson to osobne, opcjonalne repozytorium, nie część tej instalacji. Może później dodać szersze skanowanie repozytoriów, recenzje zmian i delta reviews, sidecar review agents, cross-repo orchestration, komendy CLI i większą bazę wiedzy Hipsona. W tym workflow pełni rolę opcjonalnej warstwy rozszerzenia do głębszej analizy i uporządkowanych pakietów instrukcji. Wybór tak teraz tylko zapisuje przyszłą intencję w lokalnej konfiguracji; niczego nie klonuje, nie instaluje, nie aktywuje, nie uploaduje i nie uruchamia.",
+    fullHipson: "Czy chcesz zapisać intencję podłączenia osobnego pełnego systemu Hipson później? tak/nie",
     roleNamesIntro: "\nAgenci domyślnie używają neutralnych role ID. Możesz je zostawić albo lokalnie nazwać po swojemu.",
     defaultRoleNames: "Czy użyć domyślnych nazw ról? tak/nie",
     roleNamesHelp: "Wpisz lokalne nazwy wyświetlane. Naciśnij Enter, żeby zostawić role ID.",
@@ -270,6 +272,7 @@ export async function runOnboarding({ target = process.cwd(), defaults = false, 
     config.delivery.delivery_requires_current_user_request = await askYesNo(rl, copy.deliveryRequiresRequest, config.delivery.delivery_requires_current_user_request, copy);
     config.delivery.require_qa_allowlist_for_generated_assets = await askYesNo(rl, copy.requireQaAllowlist, config.delivery.require_qa_allowlist_for_generated_assets, copy);
     config.workflow_self_improvement.recurring_review_enabled = await askYesNo(rl, copy.recurringReview, config.workflow_self_improvement.recurring_review_enabled, copy);
+    console.log(copy.fullHipsonHelp);
     config.hipson.connect_full_repo = await askYesNo(rl, copy.fullHipson, config.hipson.connect_full_repo, copy);
 
     console.log(copy.roleNamesIntro);

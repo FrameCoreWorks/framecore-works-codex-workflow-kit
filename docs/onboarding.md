@@ -48,7 +48,7 @@ Interactive onboarding asks:
 - `Require an explicit user request before delivery/export?`, enabled by default.
 - `Require QA approval before generated asset delivery?`, enabled by default.
 - `Enable 24-hour workflow self-improvement review?`, disabled by default.
-- `Connect full Hipson later as an external extension?`, disabled by default. Onboarding records this preference only; it does not clone, install, or activate full Hipson.
+- `Connect the separate full Hipson system later?`, disabled by default. Full Hipson is a separate optional repository, not part of this install. It can later add broader repository scanning, change and delta reviews, sidecar review agents, cross-repo orchestration, CLI commands, and a larger Hipson knowledge base. In this workflow it acts as an optional expansion layer for deeper analysis and structured instruction packets. Onboarding records this preference only; it does not clone, install, or activate full Hipson.
 - `Use default role names?`, enabled by default.
 
 If the user chooses not to keep default role names, onboarding asks for a local display name for every neutral role ID. These display names are local preferences, not source repo names.

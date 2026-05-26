@@ -99,7 +99,7 @@ During interactive onboarding, Codex should explain the setup and ask for:
 - explicit user-request requirement before delivery or export
 - QA requirement before generated asset delivery
 - optional 24-hour workflow self-improvement review
-- optional full Hipson expansion configured outside this kit; onboarding records intent but does not clone or install full Hipson
+- optional full Hipson expansion configured outside this kit; explain that full Hipson is a separate optional repository that can later add broader repository scanning, change and delta reviews, sidecar review agents, cross-repo orchestration, CLI commands, and a larger Hipson knowledge base; in this workflow it acts as an optional expansion layer for deeper analysis and structured instruction packets; onboarding records intent only and does not clone or install full Hipson
 - whether to keep default neutral role display names
 - local display names for role IDs if the user does not keep defaults
 

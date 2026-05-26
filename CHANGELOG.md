@@ -6,6 +6,7 @@
 - Strengthened the installed static raster graphic policy so requested generated graphics default to the native Codex/ChatGPT GPT Image 2 path instead of Python, SVG, canvas, Sharp, or other coded substitutes.
 - Added an English-first onboarding language choice for setup text only, so international users keep English prompts by default while users can type their preferred setup language.
 - Replaced user-facing onboarding output-folder naming with neutral workflow wording and changed the default output path from `output/framecore` to `output/workflow`.
+- Expanded full Hipson onboarding copy so users understand the separate optional repository, its workflow role, and that choosing yes records intent only without cloning, installing, activating, uploading, or running anything.
 
 ## 1.0.2 - 2026-05-24
 

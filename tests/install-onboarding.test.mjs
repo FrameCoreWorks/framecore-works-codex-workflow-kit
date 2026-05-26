@@ -199,6 +199,9 @@ test("interactive onboarding explains the workflow and can keep default role nam
   assert.match(result.stdout, /Any adaptation notes for non-creative or specialized use cases/);
   assert.match(result.stdout, /How this improves your work/);
   assert.match(result.stdout, /Hipson in this setup/);
+  assert.match(result.stdout, /Full Hipson is a separate optional repository/);
+  assert.match(result.stdout, /optional expansion layer for deeper analysis/);
+  assert.match(result.stdout, /does not clone, install, activate, upload, or run anything/);
   assert.match(result.stdout, /What will not be configured/);
   assert.match(result.stdout, /Require QA approval before generated asset delivery/);
   assert.match(result.stdout, /local manifest/);
@@ -224,6 +227,9 @@ test("interactive onboarding can run in Polish", async () => {
   assert.match(result.stdout, /output\/workflow/);
   assert.match(result.stdout, /Czym się zajmujesz/);
   assert.match(result.stdout, /W czym ten pipeline ma pomagać najbardziej/);
+  assert.match(result.stdout, /Pełny Hipson to osobne, opcjonalne repozytorium/);
+  assert.match(result.stdout, /opcjonalnej warstwy rozszerzenia do głębszej analizy/);
+  assert.match(result.stdout, /nie klonuje, nie instaluje, nie aktywuje, nie uploaduje i nie uruchamia/);
   assert.match(result.stdout, /Czy użyć domyślnych nazw ról/);
   assert.match(result.stdout, /Następne kroki:/);
   const config = JSON.parse(readFileSync(join(dir, "framecore.config.json"), "utf8"));
