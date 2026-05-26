@@ -80,7 +80,7 @@ The privacy audit is intentionally strict for public-source safety. Common categ
 - `LOCAL_ABSOLUTE_PATH`: replace machine-specific macOS, Linux, Windows, WSL, UNC, or `file://` paths with portable examples.
 - `EMAIL_ADDRESS`: remove personal or private emails from source examples and docs.
 - `SECRET_FILE_NAME`: remove files such as `.env`, `.npmrc`, private keys, or certificate/key material.
-- `SECRET_LIKE_VALUE`: remove API keys, bearer tokens, private key blocks, GitHub/OpenAI/AWS/Google-style tokens, JWT-like values, and similar credentials.
+- `SECRET_LIKE_VALUE`: remove API keys, bearer tokens, private key blocks, #GitHub/OpenAI/AWS/Google-style tokens, JWT-like values, and similar credentials.
 - `PRIVATE_CLOUD_REFERENCE`: remove private Drive/Docs, Notion, Dropbox, SharePoint, Azure blob, S3, or GCS links and IDs.
 - `BANNED_TERM`: remove private project names, private agent names, or excluded provider/tool remnants.
 
