@@ -960,6 +960,7 @@ const requiredTestFiles = [
   "tests/memory-cache.test.mjs",
   "tests/validation-contracts.test.mjs",
   "tests/validation-core.test.mjs",
+  "tests/workflow-smoke.test.mjs",
   "tests/helpers.mjs"
 ];
 for (const file of requiredTestFiles) {
