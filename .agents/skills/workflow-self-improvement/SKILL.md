@@ -57,6 +57,26 @@ Every proposal needs evidence labels, affected surface, proposed change, benefit
 - If a change would affect public repo behavior, require explicit maintainer approval.
 - If QA validation is needed, route through `qa-iteration` only when orchestrated.
 - Keep recurring review report-only unless the user explicitly asks for a patch.
+- When implementation is explicitly requested, use a self-improvement sufficiency gate before another patch batch and again after validation.
+- Choose `stop_sufficient` when the objective is met, `patch_one_gap` for one concrete bounded gap, or `ask_user` only for protected boundaries or ambiguous scope.
+
+## Self-Improvement Sufficiency Gate
+
+Use this compact contract when a requested improvement could continue into
+another patch:
+
+- `objective`
+- `current_evidence`
+- `remaining_gap`
+- `next_patch_scope`
+- `expected_benefit`
+- `diminishing_returns_check`
+- `no_action_option`
+- `decision`: `stop_sufficient`, `patch_one_gap`, or `ask_user`
+- `approval_reason`
+- `stop_reason`
+
+Do not continue improving only because more polishing is imaginable.
 
 ## Guardrails
 
@@ -68,6 +88,7 @@ Every proposal needs evidence labels, affected surface, proposed change, benefit
 - no edits to instructions, skills, agents, gates, or handoffs without explicit approval
 - workflow-orchestrator decides adoption
 - qa-iteration validates only when routed
+- no open-ended self-improvement loops after the stop condition is met
 
 ## Handoff
 

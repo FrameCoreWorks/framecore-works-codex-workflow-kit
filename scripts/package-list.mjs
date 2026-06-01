@@ -1,17 +1,9 @@
 #!/usr/bin/env node
-import { spawnSync } from "node:child_process";
-import { tmpdir } from "node:os";
-import { join } from "node:path";
-import { hasHelpFlag, npmArgs, npmCommand, printHelpAndExit } from "./common.mjs";
+import { hasHelpFlag, printHelpAndExit } from "./common.mjs";
+import { runNpmPackDryRun } from "./package-common.mjs";
 
 function listPackage() {
-  const result = spawnSync(npmCommand(), npmArgs(["pack", "--dry-run"]), {
-    encoding: "utf8",
-    env: {
-      ...process.env,
-      NPM_CONFIG_CACHE: process.env.NPM_CONFIG_CACHE ?? join(tmpdir(), "framecore-npm-cache"),
-    },
-  });
+  const result = runNpmPackDryRun([]);
 
   if (result.error) throw result.error;
   if (result.stdout) process.stdout.write(result.stdout);

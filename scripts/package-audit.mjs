@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-import { spawnSync } from "node:child_process";
-import { tmpdir } from "node:os";
-import { basename, join } from "node:path";
-import { hasHelpFlag, npmArgs, npmCommand, printHelpAndExit, toPosixPath } from "./common.mjs";
+import { basename } from "node:path";
+import { hasHelpFlag, printHelpAndExit, toPosixPath } from "./common.mjs";
+import { runNpmPackDryRun } from "./package-common.mjs";
 
 const allowedRoots = new Set([
   ".agents",
@@ -67,13 +66,7 @@ const forbiddenFilePatterns = [
 ];
 
 function packageFiles() {
-  const result = spawnSync(npmCommand(), npmArgs(["pack", "--json", "--dry-run"]), {
-    encoding: "utf8",
-    env: {
-      ...process.env,
-      NPM_CONFIG_CACHE: process.env.NPM_CONFIG_CACHE ?? join(tmpdir(), "framecore-npm-cache"),
-    },
-  });
+  const result = runNpmPackDryRun(["--json"]);
   if (result.error) throw result.error;
   if (result.status !== 0) {
     process.stderr.write(result.stderr);

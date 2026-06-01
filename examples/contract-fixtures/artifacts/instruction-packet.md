@@ -20,12 +20,17 @@
   - preserve locked constraints
   - state expected observables
   - include negative constraints
+- reasoning_strategy: verify
+- selected_methods:
+  - CoVe
+  - CQoT
 - evidence_rules:
   - do not add factual claims not present in upstream artifacts
   - mark unknowns instead of inventing details
 - acceptance_criteria:
   - prompt is usable without private context
   - visible text policy is explicit when text is present
+- stop_condition: Stop when the Prompt Pack can be handed to `qa-iteration` without private context or missing locks.
 - output_schema:
   - Prompt Pack
 - handoff_to: `qa-iteration`

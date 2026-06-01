@@ -82,6 +82,39 @@ Adoption requires:
 
 Use `qa-iteration` only when the workflow-orchestrator routes a proposal for QA review.
 
+## Sufficiency Gate
+
+When the user explicitly asks to implement workflow improvements, use a
+self-improvement sufficiency gate before starting another patch batch and again
+after validation. This prevents open-ended polishing.
+
+```yaml
+self_improvement_sufficiency_gate:
+  objective:
+  current_evidence:
+  remaining_gap:
+  next_patch_scope:
+  expected_benefit:
+  diminishing_returns_check:
+  no_action_option:
+  decision: stop_sufficient | patch_one_gap | ask_user
+  approval_reason:
+  stop_reason:
+```
+
+Decision rules:
+
+- `stop_sufficient`: the objective is met, validation passes, or the next work
+  is optional polish.
+- `patch_one_gap`: one concrete observed gap remains and the patch is bounded.
+- `ask_user`: the next step needs protected approval, such as destructive work,
+  provider/API execution, upload, push, global install, high-authority policy
+  change, or genuinely ambiguous scope.
+
+QA should reject continuation when evidence is missing, the next benefit is
+speculative, diminishing returns are ignored, or the no-action option was not
+considered.
+
 ## Forbidden Actions
 
 The skill must not:

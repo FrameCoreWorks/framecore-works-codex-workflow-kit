@@ -282,9 +282,10 @@ for (const file of skillFiles) {
 const gateRegistry = join(validationRoot, ".agents/skills/pipeline-core/references/gate-registry.md");
 const handoffMatrix = join(validationRoot, ".agents/skills/pipeline-core/references/handoff-matrix.md");
 const workflowBlueprints = join(validationRoot, ".agents/skills/pipeline-core/references/workflow-blueprints.md");
+const inferenceReasoningMethods = join(validationRoot, ".agents/skills/pipeline-core/references/inference-reasoning-methods.md");
 const artifactTemplates = join(validationRoot, ".agents/skills/pipeline-core/templates/artifact-templates.md");
 const artifactSchemasPath = join(validationRoot, "config/artifact-schemas.json");
-for (const file of [gateRegistry, handoffMatrix, workflowBlueprints, artifactTemplates]) {
+for (const file of [gateRegistry, handoffMatrix, workflowBlueprints, inferenceReasoningMethods, artifactTemplates]) {
   if (!existsSync(file)) addFinding("MISSING_PIPELINE_FILE", "Required pipeline core file is missing.", [file]);
 }
 
@@ -311,6 +312,25 @@ if (artifactSchemas) {
     addFinding("INVALID_ARTIFACT_SCHEMA_REGISTRY", "Artifact schema registry must define an artifacts object.", [artifactSchemasPath]);
   } else {
     artifactSchemaNames = new Set(Object.keys(artifactSchemas.artifacts));
+  }
+}
+
+if (existsSync(inferenceReasoningMethods)) {
+  const text = read(inferenceReasoningMethods);
+  for (const phrase of [
+    "reasoning_route",
+    "runtime_route",
+    "raw_trace_storage: forbidden",
+    "direct | decompose | verify | compare | tool_loop | branch | search",
+    "Do not store raw chain-of-thought",
+    "A runtime recommendation is not permission",
+    "provider_execution_allowed: false",
+    "openai_api_allowed: false",
+    "external_router_adopted_raw: false"
+  ]) {
+    if (!text.includes(phrase)) {
+      addFinding("WEAK_INFERENCE_REASONING_POLICY", `Inference reasoning policy is missing required phrase: ${phrase}`, [inferenceReasoningMethods]);
+    }
   }
 }
 
@@ -413,7 +433,7 @@ if (existsSync(workflowBlueprints)) {
 if (existsSync(artifactTemplates)) {
   const text = read(artifactTemplates);
   const sections = markdownSections(text);
-  for (const section of ["Task Confirmation", "Brief Contract", "Reference Pack", "Instruction Packet", "Storyboard Contract", "Board Artifact Prompt", "Prompt Pack", "Execution Manifest", "HyperFrames Production Brief", "QA / Iteration Report", "Delivery Manifest"]) {
+  for (const section of ["Task Confirmation", "Workflow Request Diagnostic", "Brief Contract", "Reference Pack", "Instruction Packet", "Storyboard Contract", "Board Artifact Prompt", "Prompt Pack", "Execution Manifest", "HyperFrames Production Brief", "QA / Iteration Report", "Delivery Manifest", "Self-Improvement Sufficiency Gate"]) {
     if (!sections.has(section)) addFinding("MISSING_TEMPLATE_SECTION", `Artifact template section is missing: ${section}`, [artifactTemplates]);
   }
   if (artifactSchemas?.artifacts) {

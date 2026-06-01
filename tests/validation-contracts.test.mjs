@@ -52,6 +52,17 @@ test("validation rejects weak workflow blueprints", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_WORKFLOW_BLUEPRINTS/);
 });
 
+test("validation rejects weak inference reasoning policy", () => {
+  const dir = copyRepoFixture("framecore-validate-inference-policy-");
+  const file = join(dir, ".agents/skills/pipeline-core/references/inference-reasoning-methods.md");
+  const text = readFileSync(file, "utf8");
+  writeFileSync(file, text.replace("raw_trace_storage: forbidden", "raw_trace_storage: optional"));
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_INFERENCE_REASONING_POLICY/);
+});
+
 test("validation rejects missing artifact schemas for gate-required artifacts", () => {
   const dir = copyRepoFixture("framecore-validate-artifact-schema-missing-");
   const schemaFile = join(dir, "config/artifact-schemas.json");

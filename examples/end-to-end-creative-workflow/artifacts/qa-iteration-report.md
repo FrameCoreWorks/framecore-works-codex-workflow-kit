@@ -11,6 +11,12 @@
   - exact aspect ratios are still unknown
   - exact product dimensions are still unknown
   - visible copy is intentionally absent
+- critical_questions:
+  - Are any generated assets being approved without inspection?
+  - Are any visible-text graphics planned with a later text overlay?
+- verification_results:
+  - No generated media is included in this fixture.
+  - Planning artifacts are accepted only as review drafts.
 - corrected_instruction_packets:
   - If visible text becomes required, lock exact copy before any raster graphic generation.
   - If channel formats are supplied, update prompts with aspect ratio and safe-margin requirements.
@@ -21,3 +27,4 @@
 - allowlist:
   - planning artifacts are approved for review
   - no generated asset is approved because no generation occurred
+- stop_condition: Stop after draft planning artifacts are accepted for review and before any provider execution.

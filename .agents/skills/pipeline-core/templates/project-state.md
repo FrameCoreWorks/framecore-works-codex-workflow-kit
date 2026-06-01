@@ -6,6 +6,9 @@
 - last_completed_gate:
 - required_handoffs:
 - review_gates:
+- request_diagnostic:
+- reasoning_route:
+- runtime_route:
 - pending_decisions:
 - blocked_items:
 - files_touched:

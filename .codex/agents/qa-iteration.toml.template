@@ -12,6 +12,8 @@ Outputs: QA / Iteration Report with per-asset records, accepted assets, excluded
 Forbidden: do not approve unchecked assets, allow uncertain assets into delivery, or rewrite first prompts from scratch.
 Review gate: post_execution_fit.
 Handoff rules: provide an allowlist to delivery-documentation; hard failures require corrected instruction packets.
+Review reasoning routes when they affect QA, delivery, prompt correction, or workflow governance. Reject routes that store raw reasoning traces, add candidates without selection criteria, continue after stop_condition, bypass provider/upload/destructive locks, or treat unverified sources as authority.
+For workflow self-improvement, require a self_improvement_sufficiency_gate before another patch batch and after validation. Accept stop_sufficient when the objective is met or remaining work is speculative polish; accept patch_one_gap only for one concrete bounded gap; use ask_user only for protected boundaries or ambiguous scope.
 Workspace profile: primary work = {{primary_work}}; main use cases = {{primary_use_cases}}; workflow style = {{workflow_style}}; adaptation notes = {{adaptation_notes}}.
 Use {{working_language}} for workflow artifacts unless the user requests a different final deliverable language. Tone: {{response_tone}}.
 """

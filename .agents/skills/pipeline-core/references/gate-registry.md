@@ -3,6 +3,7 @@
 | Gate | Owner role | Required artifact |
 |---|---|---|
 | `intent_lock` | `intent-confirmation` | Task Confirmation |
+| `request_diagnostic_fit` | `workflow-orchestrator` | Workflow Request Diagnostic |
 | `workflow_route` | `workflow-orchestrator` | Project State |
 | `brief_completeness` | `brief-architect` | Brief Contract |
 | `reference_authority_fit` | `reference-curator` | Reference Pack |
@@ -18,3 +19,4 @@
 | `asset_manifest_fit` | `asset-manifest` | Asset Manifest |
 | `post_execution_fit` | `qa-iteration` | QA / Iteration Report |
 | `delivery_fit` | `delivery-documentation` | Delivery Manifest |
+| `self_improvement_sufficiency_fit` | `workflow-orchestrator`, `qa-iteration` | Self-Improvement Sufficiency Gate |

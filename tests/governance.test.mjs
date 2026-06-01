@@ -11,6 +11,10 @@ test("workflow self-improvement is explicit and proposal-only", () => {
   assert.match(text, /no uploads/);
   assert.match(text, /no external execution/);
   assert.match(text, /no edits/);
+  assert.match(text, /self-improvement sufficiency gate/);
+  assert.match(text, /stop_sufficient/);
+  assert.match(text, /patch_one_gap/);
+  assert.match(text, /ask_user/);
 });
 
 test("Hipson Adapter documents full repo expansion and defaults to lightweight scope", () => {

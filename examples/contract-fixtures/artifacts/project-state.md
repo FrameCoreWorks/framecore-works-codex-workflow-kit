@@ -15,6 +15,24 @@
   - `intent_lock`
   - `workflow_route`
   - `brief_completeness`
+- request_diagnostic:
+  - request_classification: creative_workflow
+  - first_safe_output: Project State and Brief Contract route.
+  - blocked_actions: no provider execution, upload, or global install.
+- reasoning_route:
+  - task_class: creative_workflow
+  - complexity: low
+  - risk: low
+  - reasoning_strategy: decompose
+  - selected_methods: Plan-and-Solve / Least-to-Most
+  - raw_trace_storage: forbidden
+  - stop_condition: Stop after the next required gate is known.
+- runtime_route:
+  - recommended_runtime_tier: current_runtime
+  - reasoning_effort: low
+  - provider_execution_allowed: false
+  - openai_api_allowed: false
+  - external_router_adopted_raw: false
 - pending_decisions:
   - Confirm whether references are required before direction.
 - blocked_items:
