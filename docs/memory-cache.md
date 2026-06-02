@@ -65,7 +65,7 @@ It should include `checkpoint_id`, `checkpoint_status`, `last_completed_gate`, `
 `recovery-prompt.md` must be short and paste-ready. The standard recovery prompt is:
 
 ```text
-Read AGENTS.md and the pipeline-agents skill. Then read <Memory Cache>/project-state.md. Continue from checkpoint <checkpoint_id>. Use decision-log.md, source-map.md, open-questions.md, and artifacts-index.md only as supporting context. Do not infer missing instructions from old chat history. Do not skip unresolved gates. Do not push, upload, run providers, run global install, or perform destructive actions unless the current user message explicitly asks for it.
+Read AGENTS.md and .agents/skills/pipeline-core/SKILL.md. Then read <Memory Cache>/project-state.md. Continue from checkpoint <checkpoint_id>. Use decision-log.md, source-map.md, open-questions.md, and artifacts-index.md only as supporting context. Do not infer missing instructions from old chat history. Do not skip unresolved gates. Do not push, upload, run providers, run global install, or perform destructive actions unless the current user message explicitly asks for it.
 ```
 
 ## Session Heartbeat

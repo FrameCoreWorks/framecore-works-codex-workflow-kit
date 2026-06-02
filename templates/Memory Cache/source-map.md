@@ -7,7 +7,7 @@ Map the safe sources used for recovery and continuation.
 ## Primary Sources
 
 - AGENTS.md
-- pipeline-agents skill
+- .agents/skills/pipeline-core/SKILL.md
 - Memory Cache/project-state.md
 
 ## Supporting Sources

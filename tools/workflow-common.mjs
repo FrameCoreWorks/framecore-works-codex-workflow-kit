@@ -205,7 +205,7 @@ export function validateMemoryCache(target, options = {}) {
   if (existsSync(recoveryPrompt)) {
     const text = safeReadText(recoveryPrompt);
     for (const phrase of [
-      "Read AGENTS.md and the pipeline-agents skill",
+      "Read AGENTS.md and .agents/skills/pipeline-core/SKILL.md",
       "<Memory Cache>/project-state.md",
       "Continue from checkpoint <checkpoint_id>",
       "Do not push, upload, run providers, run global install, or perform destructive actions unless the current user message explicitly asks for it"
