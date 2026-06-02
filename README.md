@@ -127,6 +127,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: w
 - Using local semantic lookup: read [Semantic Memory](docs/semantic-memory.md).
 - Need the local OpenAI API boundary: read [OpenAI API Policy](docs/openai-api-policy.md).
 - Want to understand current limits and planned direction: read [Roadmap](docs/roadmap.md).
+- Want the future plugin or bundle direction: read [Bundle Readiness](docs/bundle-readiness.md).
 - Preparing for a stable public release: read [v1.0 Readiness](docs/v1-readiness.md).
 - Verifying behavior in a real Codex workspace before broad promotion: read [Live Codex E2E Check](docs/live-codex-e2e-check.md).
 - Checking what provider-neutral allows and forbids: read [Provider-Neutral Boundary](docs/provider-neutral-boundary.md).

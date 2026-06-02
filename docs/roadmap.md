@@ -44,6 +44,7 @@ Potential future work:
 - optional team-sharing guidance for local configuration
 - deeper HyperFrames planning examples
 - clearer adapter boundaries for optional full Hipson usage
+- bundle-readiness mapping for future Codex plugin or package shapes, without changing the current project-local install flow
 
 ## v1.0 Readiness
 
