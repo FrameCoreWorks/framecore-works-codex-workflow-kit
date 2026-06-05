@@ -227,6 +227,44 @@
         "provider responses"
       ]
     },
+    "chatgpt-skills-onboarding": {
+      "status": "planned-boundary",
+      "summary": "ChatGPT Skills onboarding path that maps FrameCore role agents to temporary workflow roles instead of persistent ChatGPT agent files.",
+      "public_installable": true,
+      "dependencies": [
+        "pipeline-core",
+        "creative-workflow",
+        "provider-governance"
+      ],
+      "source_paths": [
+        "docs/chatgpt-skills-onboarding.md",
+        "docs/bundle-readiness.md",
+        ".agents/skills/",
+        "config/provider-neutral-policy.json",
+        "config/text-image-policy.json"
+      ],
+      "skills": [
+        "pipeline-core",
+        "workflow-orchestrator",
+        "instruction-packet-factory",
+        "brief-architect",
+        "image-prompt-architect",
+        "output-critic-iteration",
+        "delivery-documentation"
+      ],
+      "roles": [],
+      "examples": [],
+      "private_exclusions": [
+        ".codex/agents/*.toml as permanent ChatGPT agents",
+        ".framecore/",
+        "framecore.config.json",
+        "Context/",
+        "Memory Cache/",
+        "local manifests",
+        "private chat transcripts",
+        "provider credentials"
+      ]
+    },
     "install-lifecycle": {
       "status": "current-public",
       "summary": "Project-local install, onboarding, doctor, render, update, repair, uninstall, package audit, and release readiness tools.",

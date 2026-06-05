@@ -43,6 +43,7 @@ Some areas are usable today but need clearer package boundaries before they beco
 - HyperFrames guidance is safe as coded-video workflow knowledge, but rendering runtimes stay user-selected and local.
 - Hipson Adapter is safe as lightweight packet guidance. Full Hipson remains separate and optional.
 - Built-in Codex or ChatGPT image generation is a policy route, not an external paid provider bundle.
+- ChatGPT Skills can reuse the workflow skill layer, but they should map role agents to temporary task roles instead of packaging `.codex/agents/*.toml` as persistent ChatGPT agents.
 - Team configuration is documented, but default installs should remain personal and project-local.
 
 ## Packaging Blockers
@@ -79,6 +80,7 @@ Prefer several focused bundles over one oversized package:
 | `framecore-creative-workflow` | brief, reference, direction, copy, prompt, storyboard, QA, delivery-doc skills | generated outputs, private references, client context |
 | `framecore-ecommerce-workflow` | ecommerce examples and future ecommerce-specific contracts | private product data, claims, storefront credentials |
 | `framecore-provider-governance` | provider-neutral policy, text-image policy, execution boundaries | provider clients, credentials, endpoint catalogs, provider CLIs |
+| `framecore-chatgpt-skills-onboarding` | ChatGPT skill onboarding, temporary role mapping, skill packaging guidance | `.codex/agents/*.toml` as permanent ChatGPT agents, local manifests, workspace files |
 | `framecore-hyperframes-guidance` | coded-video planning guidance and QA contracts | render runtimes, deployment targets, paid execution routes |
 | `framecore-hipson-adapter` | lightweight packet templates and boundary docs | full Hipson clone, cross-repo scanning tools, private sidecars |
 
@@ -91,6 +93,7 @@ Treat these as public, installable, or packageable source:
 - `AGENTS.template.md`
 - `.agents/skills/`
 - `.codex/agents/*.toml.template`
+- `docs/chatgpt-skills-onboarding.md`
 - `config/*.json` and `config/*.example.json`
 - `examples/`
 - `templates/Memory Cache/`
@@ -110,6 +113,7 @@ Keep these out of future public bundles by default:
 - private Google Drive or cloud delivery destinations
 - provider credentials, endpoint catalogs, API-key setup flows, or activation scripts
 - full Hipson checkout or private companion repositories
+- permanent ChatGPT agent files derived from `.codex/agents/*.toml`
 
 ## Staged Readiness Plan
 
@@ -118,7 +122,8 @@ Keep these out of future public bundles by default:
 3. Keep extending the source-level bundle map as modules become clearer.
 4. Extend validation when new bundle-map fields become required.
 5. Classify examples by the future bundle module they exercise.
-6. Keep plugin-specific files out of source until the target plugin format is concrete.
+6. Keep ChatGPT Skills support as onboarding and temporary-role guidance until a stable package target requires exported skill bundles.
+7. Keep plugin-specific files out of source until the target plugin format is concrete.
 
 ## Governance Rules
 

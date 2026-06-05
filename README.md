@@ -57,6 +57,8 @@ If I do not know how to clone the repository, recommend GitHub Desktop as the ea
 
 If you pasted the prompt into a normal ChatGPT chat and only received an explanation, nothing was installed. Open a shell-capable Codex workspace, then paste the prompt there.
 
+If you intentionally want to use this in ChatGPT Skills instead of Codex, use [ChatGPT Skills Onboarding](docs/chatgpt-skills-onboarding.md). In that path, the workflow uses temporary task roles inside the chat. It does not create permanent `.codex/agents` files or install a fixed agent roster.
+
 If Codex says it cannot run commands, ask a technical user to follow [Quickstart](docs/quickstart.md) for you.
 
 If your Codex environment can clone repositories and run local shell commands, for example OpenAI Codex CLI with workspace write access, give Codex this instruction from the workspace where you want to install the kit.
@@ -95,6 +97,7 @@ Onboarding writes `framecore.config.json` before the managed install so local pr
 | --- | --- | --- |
 | OpenAI Codex CLI with custom-agent support | Full project-local install, `AGENTS.md`, skills, rendered `.codex/agents/*.toml`, guided install, doctor, update, repair, uninstall | Recommended full experience. |
 | OpenAI Codex or ChatGPT environments that read project instructions but do not expose custom-agent spawning | `AGENTS.md`, installed skills, workflow docs, examples, artifact contracts | `.codex/agents/*.toml` may be inert, but the workflow contracts remain useful. |
+| ChatGPT Skills beta | Skill-based onboarding, reusable workflow instructions, temporary task roles, provider-neutral safety policy | Does not install repo files, does not create permanent agents, and does not use `.codex/agents/*.toml` as ChatGPT agents. |
 | Other AGENTS-aware coding agents or editors | `AGENTS.md`, docs, examples, and reusable skill files when read manually | Custom-agent `.toml` files are Codex-specific and may not be consumed. |
 | Chat-only environments without shell access | Documentation and manual guidance only | Clone and run the install commands from a local terminal or shell-capable Codex workspace. |
 
@@ -117,6 +120,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: w
 
 - New to the kit: read [Quickstart](docs/quickstart.md).
 - Installing by pasting a GitHub link into Codex: read [Codex-Assisted Install](docs/codex-assisted-install.md).
+- Using the workflow through ChatGPT Skills instead of Codex: read [ChatGPT Skills Onboarding](docs/chatgpt-skills-onboarding.md).
 - Already installed and ready to work: read [Using The Kit](docs/using-the-kit.md).
 - Installation failed or produced an unexpected result: read [Troubleshooting](docs/troubleshooting.md).
 - Need quick answers first: read [FAQ](docs/faq.md).
