@@ -99,22 +99,22 @@ Important role model:
 - Each temporary role must have a clear scope, required inputs, expected output artifact, review gate, handoff target, and stop condition.
 - Temporary roles must inherit provider-neutral safety, no uploads without explicit request, no API keys, no external paid execution tools, and no hidden background work.
 
-Start with onboarding before checking, invoking, or relying on any existing workflow skills. Ask me these questions one at a time, in plain language:
+Start with onboarding before checking, invoking, or relying on any existing workflow skills. I pasted this prompt in English, but the onboarding setup should start by choosing the setup language. Ask me these questions one at a time, in plain language:
 
-1. What kind of work do I want this workflow to help with?
-2. What are my main use cases?
-3. What outputs do I usually need?
-4. Should the workflow be lightweight, standard, or strict?
-5. How much QA do I want before final output?
-6. Should the workflow prioritize speed, structure, creativity, evidence, or delivery readiness?
-7. Do I want the conversation to continue in English, or should I type another language now?
+1. What language should I use for this onboarding setup? I can answer in any language. If I say "default", continue in English.
+2. What kind of work do I want this workflow to help with?
+3. What are my main use cases?
+4. What outputs do I usually need?
+5. Should the workflow be lightweight, standard, or strict?
+6. How much QA do I want before final output?
+7. Should the workflow prioritize speed, structure, creativity, evidence, or delivery readiness?
 8. Do I work mostly alone, with a team, or for clients?
 9. Are there any things the workflow must never do, such as uploads, provider execution, API keys, private links, or changing files?
 10. After setup, give me a reusable starter prompt for my next task.
 
 After onboarding, summarize my workflow profile and create a compact skill-style operating guide for ChatGPT. Then show how the workflow will use temporary roles such as task confirmation, workflow orchestration, specialist production, QA, and delivery notes without storing them as permanent agents.
 
-Your first response should ask onboarding question 1. Do not summarize setup as complete until all onboarding questions have been answered.
+Your first response should ask onboarding question 1 about setup language. Do not summarize setup as complete until all onboarding questions have been answered.
 ```
 
 Expected first response shape:
@@ -122,7 +122,7 @@ Expected first response shape:
 ```text
 I will set this up as a ChatGPT Skills workflow for your own work. This is not a local Codex install, and existing installed skills do not mean onboarding is complete.
 
-Question 1: What kind of work do you want this workflow to help with?
+Question 1: What language should I use for this onboarding setup? You can answer in any language. If you say "default", I will continue in English.
 ```
 
 Failure pattern to avoid:
@@ -136,6 +136,7 @@ Done. Your workspace already has the current source workflow skill kit. Validati
 The ChatGPT onboarding should produce:
 
 - a short user workflow profile;
+- the selected onboarding setup language;
 - a list of common task routes;
 - the temporary roles allowed for those routes;
 - the artifacts each temporary role may produce;
