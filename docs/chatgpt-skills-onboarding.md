@@ -112,6 +112,15 @@ Start with onboarding before checking, invoking, or relying on any existing work
 9. Are there any things the workflow must never do, such as uploads, provider execution, API keys, private links, or changing files?
 10. After setup, give me a reusable starter prompt for my next task.
 
+After I answer question 1, switch to the selected setup language. Before asking question 2, give me a short beginner-friendly preflight explanation in that language. Explain:
+- what this source workflow is: a reusable workflow and skill setup for organizing work with ChatGPT Skills;
+- what will happen next: you will ask onboarding questions one at a time, then create a neutral workflow profile, compact operating guide, and reusable starter prompt for my work;
+- how it will work in ChatGPT: it will use temporary task roles inside the conversation, not permanent custom agents or local `.codex/agents` files;
+- what will not happen in ChatGPT: no repo cloning, no shell commands, no local files, no local Memory Cache folders, no uploads, no API keys, and no external provider tools;
+- when the Codex path is needed: if I want a real project-local install with files, manifests, rendered agents, update, repair, uninstall, or Memory Cache.
+
+Keep the preflight concise and beginner-safe. Then ask question 2.
+
 After onboarding, summarize my workflow profile and create a compact skill-style operating guide for ChatGPT. Then show how the workflow will use temporary roles such as task confirmation, workflow orchestration, specialist production, QA, and delivery notes without storing them as permanent agents.
 
 Your first response should ask onboarding question 1 about setup language. Do not summarize setup as complete until all onboarding questions have been answered.
@@ -123,6 +132,20 @@ Expected first response shape:
 I will set this up as a ChatGPT Skills workflow for your own work. This is not a local Codex install, and existing installed skills do not mean onboarding is complete.
 
 Question 1: What language should I use for this onboarding setup? You can answer in any language. If you say "default", I will continue in English.
+```
+
+Expected second response shape after the user chooses a language:
+
+```text
+Before we start, here is what we are setting up:
+
+- This is a ChatGPT Skills workflow setup for your own work.
+- I will ask a few onboarding questions, then create your workflow profile, operating guide, and starter prompt.
+- In ChatGPT, this does not install local repo files or create permanent agents. It uses temporary task roles inside the conversation.
+- I will not clone repos, run shell commands, upload files, use API keys, or enable external provider tools.
+- If you want a real local workspace install later, use the Codex install path.
+
+Question 2: What kind of work do you want this workflow to help with?
 ```
 
 Failure pattern to avoid:
@@ -137,6 +160,7 @@ The ChatGPT onboarding should produce:
 
 - a short user workflow profile;
 - the selected onboarding setup language;
+- a beginner preflight summary shown before workflow-profile questions;
 - a list of common task routes;
 - the temporary roles allowed for those routes;
 - the artifacts each temporary role may produce;

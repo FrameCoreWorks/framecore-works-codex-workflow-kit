@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Added a beginner-friendly ChatGPT Skills preflight explanation after language selection and before workflow-profile questions.
 - Made ChatGPT Skills onboarding ask for the setup language as the first question before workflow-profile questions.
 - Strengthened ChatGPT Skills onboarding so existing local or older workflow skills cannot skip the user onboarding step.
 - Added ChatGPT Skills onboarding guidance that maps Codex role agents to temporary workflow roles instead of persistent ChatGPT agent files.
