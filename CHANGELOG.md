@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- Strengthened ChatGPT Skills onboarding so existing local or older FrameCore skills cannot skip the user onboarding step.
+- Strengthened ChatGPT Skills onboarding so existing local or older workflow skills cannot skip the user onboarding step.
 - Added ChatGPT Skills onboarding guidance that maps Codex role agents to temporary workflow roles instead of persistent ChatGPT agent files.
 - Added a top-level README beginner note that separates full Codex install from ChatGPT Skills onboarding.
 - Added a beginner prompt guard that stops installation attempts in regular ChatGPT or other chat-only surfaces without workspace files and shell commands.

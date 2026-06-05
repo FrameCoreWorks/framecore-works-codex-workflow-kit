@@ -32,7 +32,7 @@ The ChatGPT path is different:
 
 ## Existing Skill Guard
 
-Some ChatGPT accounts may already contain older, private, local, or previously installed skills with names such as `workflow-orchestrator`, `FrameCore`, or other workflow-specific labels. Those existing skills are not proof that this onboarding is complete.
+Some ChatGPT accounts may already contain older, private, local, or previously installed skills with names such as `workflow-orchestrator` or other workflow-specific labels. Those existing skills are not proof that this onboarding is complete.
 
 When using this ChatGPT path:
 
@@ -40,15 +40,15 @@ When using this ChatGPT path:
 - do not run or claim repository validation, package checks, doctor checks, hash checks, or Memory Cache repair, because ChatGPT Skills onboarding is not a local workspace install;
 - do not call `skill-installer` unless the user explicitly asks to install a generated ChatGPT skill after onboarding;
 - do not use private or local canonical skill names as the public workflow contract;
-- do not rename the user's personal workflow to FrameCore Works unless the user asks for that name;
-- mention FrameCore Works only as the source repo or source workflow kit;
+- do not rename the user's personal workflow after this source repo unless the user asks for that name;
+- refer to the source repo only when needed for attribution or source lookup;
 - start with onboarding questions before recommending any `$skill` invocation.
 
 If existing local skills are detected, treat them only as optional reference material after the user approves. The first task is still to learn the user's work style and produce a neutral user workflow profile.
 
 ## Temporary Agent Model
 
-For ChatGPT, FrameCore role agents become temporary workflow roles.
+For ChatGPT, the source repo's role-agent responsibilities become temporary workflow roles.
 
 A temporary workflow role:
 
@@ -75,25 +75,27 @@ Use this mapping:
 Use this prompt in ChatGPT when the user wants to adapt the workflow without a Codex install:
 
 ```text
-Use the workflow from the FrameCore Works GitHub repo as source material for a ChatGPT Skills workflow, not as a Codex project-local install.
+Use the workflow from this source GitHub repo as source material for a ChatGPT Skills workflow, not as a Codex project-local install.
+
+Source repo URL: https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit
 
 I am using ChatGPT. Do not clone the repository, run shell commands, create AGENTS.md, create .codex/agents files, initialize Memory Cache folders, upload files, use API keys, or enable external provider tools.
 
 If ChatGPT Skills are available in this chat, help me create or adapt a neutral skill-based workflow for my own work. Use skill-creator only if needed.
 
 Important existing-skill guard:
-- If this ChatGPT account already has FrameCore, workflow-orchestrator, local, private, or older workflow skills installed, do not treat that as completed setup.
+- If this ChatGPT account already has workflow-orchestrator, local, private, or older workflow skills installed, do not treat that as completed setup.
 - Do not say the workspace is already installed, current, validated, repaired, or ready because existing skills are present.
 - Do not run or claim doctor checks, package checks, hash checks, repository validation, or Memory Cache repair in ChatGPT.
 - Do not call skill-installer unless I explicitly ask to install a generated skill after onboarding.
 - Do not recommend any $skill invocation before onboarding is complete.
-- Do not name my personal workflow FrameCore Works unless I ask for that name. Use neutral wording such as "your workflow", "this workflow", or the name I provide.
-- Mention FrameCore Works only as the source repo or source workflow kit.
+- Do not name my personal workflow after the source repo unless I ask for that name. Use neutral wording such as "your workflow", "this workflow", or the name I provide.
+- Refer to the source repo only when needed for attribution or source lookup.
 
 Important role model:
 - Do not create permanent custom agents.
 - Do not create a fixed agent roster as files.
-- Treat FrameCore agents as temporary workflow roles created only inside the current task.
+- Treat source repo role-agent concepts as temporary workflow roles created only inside the current task.
 - Each temporary role must have a clear scope, required inputs, expected output artifact, review gate, handoff target, and stop condition.
 - Temporary roles must inherit provider-neutral safety, no uploads without explicit request, no API keys, no external paid execution tools, and no hidden background work.
 
@@ -126,7 +128,7 @@ Question 1: What kind of work do you want this workflow to help with?
 Failure pattern to avoid:
 
 ```text
-Done. Your workspace already has the current FrameCore Works Skill Kit. Validation passed. You can now use $workflow-orchestrator.
+Done. Your workspace already has the current source workflow skill kit. Validation passed. You can now use $workflow-orchestrator.
 ```
 
 ## Onboarding Outputs
