@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { hasHelpFlag, isAppleDouble, printHelpAndExit, relativePosix, repoRoot, reportFindings, walkFiles } from "./common.mjs";
 import {
@@ -17,8 +17,13 @@ import {
   parseMarkdownTable,
   read
 } from "./validate/context.mjs";
+import { run as validateAgents } from "./validate/agents.mjs";
+import { run as validateBundles } from "./validate/bundles.mjs";
+import { run as validateContracts } from "./validate/contracts.mjs";
 import { run as validateInstructionOverridePhrases } from "./validate/injection.mjs";
 import { run as validateMarkdownLinks } from "./validate/links.mjs";
+import { run as validateSchemas } from "./validate/schemas.mjs";
+import { run as validateSkills } from "./validate/skills.mjs";
 
 if (hasHelpFlag()) {
   printHelpAndExit(`
@@ -40,141 +45,26 @@ const validationRoot = resolve(process.argv[2] ?? repoRoot);
 const { findings, addFinding } = createFindings(validationRoot);
 const helpers = {
   anchorsFor,
+  artifactAlternatives,
+  artifactFieldSet,
+  backtickTokens,
+  cleanCell,
   createFindings,
+  isPlainObject,
+  markdownSectionBody,
+  markdownSections,
+  markdownSlug,
+  parseMarkdownTable,
   read
 };
 
-function isConditionalBlueprintLine(line) {
-  return /\bwhen\b|\bif\b|\boptional\b|\bas needed\b|\bor\b/i.test(line);
-}
+const agentState = validateAgents({ root: validationRoot, helpers });
+findings.push(...agentState.findings);
+const { requiredRoles, requiredRoleSet, agentDir, agentTemplateGates } = agentState;
 
-function parseWorkflowBlueprintContracts(text) {
-  const contracts = new Map();
-  for (const section of markdownSections(text)) {
-    const body = markdownSectionBody(text, section);
-    const contract = { requiredRoles: new Set(), requiredGates: new Set() };
-    let mode = null;
-    for (const rawLine of body.split(/\r?\n/)) {
-      const line = rawLine.trim();
-      if (line === "Route:") {
-        mode = "route";
-        continue;
-      }
-      if (line === "Required gates:") {
-        mode = "gates";
-        continue;
-      }
-      if (mode === "route" && /^\d+\.\s+/.test(line) && !isConditionalBlueprintLine(line)) {
-        for (const token of backtickTokens(line)) contract.requiredRoles.add(token);
-      }
-      if (mode === "gates" && /^-\s+/.test(line) && !isConditionalBlueprintLine(line)) {
-        for (const token of backtickTokens(line)) contract.requiredGates.add(token);
-      }
-    }
-    contracts.set(markdownSlug(section), contract);
-  }
-  return contracts;
-}
-
-function isPublicFixturePath(value) {
-  if (typeof value !== "string") return false;
-  if (!value.startsWith("examples/") || !value.endsWith(".md")) return false;
-  return !value.split(/[\\/]+/).some((segment) => segment.startsWith(".") || segment.startsWith("._") || segment.length === 0);
-}
-
-function isSafeBundlePath(value) {
-  if (typeof value !== "string" || value.trim() === "") return false;
-  if (value.startsWith("/") || value.includes("\\") || value.includes("\0")) return false;
-  const normalized = value.replace(/\/+$/, "");
-  if (normalized === "") return false;
-  return !normalized.split("/").some((segment) => segment === "" || segment === "." || segment === "..");
-}
-
-function isForbiddenBundleSourcePath(value) {
-  const normalized = value.replace(/\/+$/, "");
-  const segments = normalized.split("/");
-  const forbiddenTopLevel = new Set([
-    ".framecore",
-    "Context",
-    "Memory Cache",
-    "output",
-    "outputs",
-    "framecore.config.json",
-  ]);
-  if (forbiddenTopLevel.has(segments[0])) return true;
-  return segments.some((segment) => segment === ".git" || segment === "node_modules");
-}
-
-const requiredRoles = JSON.parse(readFileSync(join(validationRoot, "config/agent-naming.schema.json"), "utf8")).roles;
-const requiredRoleSet = new Set(requiredRoles);
-const agentDir = join(validationRoot, ".codex/agents");
-const missingAgents = requiredRoles
-  .map((role) => join(agentDir, `${role}.toml.template`))
-  .filter((path) => !existsSync(path));
-if (missingAgents.length > 0) {
-  addFinding("MISSING_AGENT_TEMPLATE", "Required role-based agent template is missing.", missingAgents);
-}
-
-const agentTemplateGates = new Map();
-for (const role of requiredRoles) {
-  const file = join(agentDir, `${role}.toml.template`);
-  if (!existsSync(file)) continue;
-  const text = read(file);
-  for (const marker of ["Role:", "Scope:", "Inputs:", "Outputs:", "Forbidden:", "Review gate:", "Handoff rules:"]) {
-    if (!text.includes(marker)) {
-      addFinding("WEAK_AGENT_TEMPLATE", `Agent template ${role} is missing marker ${marker}`, [file]);
-    }
-  }
-  for (const phrase of ["Workspace profile:", "{{working_language}}", "{{response_tone}}", "{{primary_work}}"]) {
-    if (!text.includes(phrase)) {
-      addFinding("WEAK_AGENT_TEMPLATE", `Agent template ${role} must consume onboarding workspace profile token: ${phrase}`, [file]);
-    }
-  }
-  const gateMatch = text.match(/Review gate:\s*`?([a-z0-9_]+)`?\./);
-  if (!gateMatch) {
-    addFinding("MISSING_AGENT_REVIEW_GATE", `Agent template ${role} must declare a review gate.`, [file]);
-  } else {
-    agentTemplateGates.set(role, gateMatch[1]);
-  }
-}
-
-const skillFiles = walkFiles(join(validationRoot, ".agents/skills")).filter((file) => file.endsWith("SKILL.md"));
-if (skillFiles.length < 25) {
-  addFinding("MISSING_SKILLS", "Expected full skill pack is incomplete.", [join(validationRoot, ".agents/skills")]);
-}
-const knownSkillNames = new Set(skillFiles.map((file) => basename(dirname(file))));
-const requiredSkillSections = [
-  "## When To Use",
-  "## Inputs",
-  "## Outputs",
-  "## Process",
-  "## Decision Rules",
-  "## Guardrails",
-  "## Handoff",
-  "## QA Checklist"
-];
-for (const file of skillFiles) {
-  const text = read(file);
-  const nameMatch = text.match(/^---\nname:\s*([-a-z0-9]+)/m);
-  if (!nameMatch || !/\ndescription:\s*/m.test(text)) {
-    addFinding("INVALID_SKILL_FRONTMATTER", "Skill frontmatter must include name and description.", [file]);
-    continue;
-  }
-  const expectedName = basename(dirname(file));
-  if (nameMatch[1] !== expectedName) {
-    addFinding("SKILL_NAME_MISMATCH", `Skill frontmatter name must match folder name: ${expectedName}`, [file]);
-  }
-  const body = text.replace(/^---[\s\S]*?---\n/, "");
-  const bodyWordCount = (body.match(/\b[\w'-]+\b/g) ?? []).length;
-  if (bodyWordCount < 120 || (body.match(/^##\s+/gm) ?? []).length < 6) {
-    addFinding("SKILL_STUB", "Skill body is too thin to function as an operational contract.", [file]);
-  }
-  for (const section of requiredSkillSections) {
-    if (!text.includes(section)) {
-      addFinding("MISSING_SKILL_SECTION", `Skill is missing required section: ${section}`, [file]);
-    }
-  }
-}
+const skillState = validateSkills({ root: validationRoot, helpers });
+findings.push(...skillState.findings);
+const { knownSkillNames } = skillState;
 
 const gateRegistry = join(validationRoot, ".agents/skills/pipeline-core/references/gate-registry.md");
 const handoffMatrix = join(validationRoot, ".agents/skills/pipeline-core/references/handoff-matrix.md");
@@ -183,310 +73,40 @@ const inferenceReasoningMethods = join(validationRoot, ".agents/skills/pipeline-
 const artifactTemplates = join(validationRoot, ".agents/skills/pipeline-core/templates/artifact-templates.md");
 const artifactSchemasPath = join(validationRoot, "config/artifact-schemas.json");
 const bundleMapPath = join(validationRoot, "config/bundle-map.json");
-for (const file of [gateRegistry, handoffMatrix, workflowBlueprints, inferenceReasoningMethods, artifactTemplates]) {
-  if (!existsSync(file)) addFinding("MISSING_PIPELINE_FILE", "Required pipeline core file is missing.", [file]);
-}
+const paths = {
+  gateRegistry,
+  handoffMatrix,
+  workflowBlueprints,
+  inferenceReasoningMethods,
+  artifactTemplates,
+  artifactSchemasPath,
+  bundleMapPath
+};
 
-let artifactSchemas = null;
-let artifactSchemaNames = new Set();
-let knownGates = new Map();
-let knownHandoffPairs = new Set();
-let knownWorkflowBlueprints = new Set();
-let workflowBlueprintContracts = new Map();
-if (existsSync(artifactSchemasPath)) {
-  try {
-    artifactSchemas = JSON.parse(read(artifactSchemasPath));
-  } catch (error) {
-    addFinding("INVALID_ARTIFACT_SCHEMA_REGISTRY", `Artifact schema registry must be valid JSON: ${error.message}`, [artifactSchemasPath]);
-  }
-} else {
-  addFinding("MISSING_REPO_FILE", "Required public repo file is missing: config/artifact-schemas.json", [artifactSchemasPath]);
-}
-if (artifactSchemas) {
-  if (artifactSchemas.schema_version !== 1) {
-    addFinding("INVALID_ARTIFACT_SCHEMA_REGISTRY", "Artifact schema registry schema_version must be 1.", [artifactSchemasPath]);
-  }
-  if (!isPlainObject(artifactSchemas.artifacts)) {
-    addFinding("INVALID_ARTIFACT_SCHEMA_REGISTRY", "Artifact schema registry must define an artifacts object.", [artifactSchemasPath]);
-  } else {
-    artifactSchemaNames = new Set(Object.keys(artifactSchemas.artifacts));
-  }
-}
+const schemaState = validateSchemas({ root: validationRoot, helpers, paths });
+findings.push(...schemaState.findings);
+const { artifactSchemaNames } = schemaState;
 
-let bundleMap = null;
-if (existsSync(bundleMapPath)) {
-  try {
-    bundleMap = JSON.parse(read(bundleMapPath));
-  } catch (error) {
-    addFinding("INVALID_BUNDLE_MAP", `Bundle map must be valid JSON: ${error.message}`, [bundleMapPath]);
-  }
-} else {
-  addFinding("MISSING_REPO_FILE", "Required public repo file is missing: config/bundle-map.json", [bundleMapPath]);
-}
-if (bundleMap) {
-  if (bundleMap.schema_version !== 1) {
-    addFinding("INVALID_BUNDLE_MAP", "Bundle map schema_version must be 1.", [bundleMapPath]);
-  }
-  if (!isPlainObject(bundleMap.bundles)) {
-    addFinding("INVALID_BUNDLE_MAP", "Bundle map must define a bundles object.", [bundleMapPath]);
-  } else {
-    const bundleIds = new Set(Object.keys(bundleMap.bundles));
-    for (const requiredBundle of ["pipeline-core", "creative-workflow", "provider-governance", "memory-cache", "install-lifecycle"]) {
-      if (!bundleIds.has(requiredBundle)) {
-        addFinding("INVALID_BUNDLE_MAP", `Bundle map is missing required bundle: ${requiredBundle}`, [bundleMapPath]);
-      }
-    }
-    for (const [bundleId, bundle] of Object.entries(bundleMap.bundles)) {
-      if (!/^[a-z0-9-]+$/.test(bundleId)) {
-        addFinding("INVALID_BUNDLE_MAP", `Bundle id must be lowercase kebab-case: ${bundleId}`, [bundleMapPath]);
-      }
-      if (!isPlainObject(bundle)) {
-        addFinding("INVALID_BUNDLE_MAP", `Bundle entry must be an object: ${bundleId}`, [bundleMapPath]);
-        continue;
-      }
-      if (typeof bundle.summary !== "string" || bundle.summary.trim() === "") {
-        addFinding("INVALID_BUNDLE_MAP", `Bundle ${bundleId} must include summary.`, [bundleMapPath]);
-      }
-      if (typeof bundle.public_installable !== "boolean") {
-        addFinding("INVALID_BUNDLE_MAP", `Bundle ${bundleId} must include boolean public_installable.`, [bundleMapPath]);
-      }
-      const sourcePaths = Array.isArray(bundle.source_paths) ? bundle.source_paths : null;
-      const dependencies = Array.isArray(bundle.dependencies) ? bundle.dependencies : null;
-      const skills = Array.isArray(bundle.skills) ? bundle.skills : null;
-      const roles = Array.isArray(bundle.roles) ? bundle.roles : null;
-      const examples = Array.isArray(bundle.examples) ? bundle.examples : null;
-      const privateExclusions = Array.isArray(bundle.private_exclusions) ? bundle.private_exclusions : null;
-      for (const [field, value] of Object.entries({ source_paths: sourcePaths, dependencies, skills, roles, examples, private_exclusions: privateExclusions })) {
-        if (!Array.isArray(value)) {
-          addFinding("INVALID_BUNDLE_MAP", `Bundle ${bundleId} field ${field} must be an array.`, [bundleMapPath]);
-        }
-      }
-      for (const sourcePath of sourcePaths ?? []) {
-        if (!isSafeBundlePath(sourcePath)) {
-          addFinding("INVALID_BUNDLE_MAP", `Bundle ${bundleId} has unsafe source path: ${sourcePath}`, [bundleMapPath]);
-          continue;
-        }
-        if (isForbiddenBundleSourcePath(sourcePath)) {
-          addFinding("INVALID_BUNDLE_MAP", `Bundle ${bundleId} source path must not include private runtime path: ${sourcePath}`, [bundleMapPath]);
-        }
-        if (!existsSync(join(validationRoot, sourcePath))) {
-          addFinding("BUNDLE_MAP_PATH_MISSING", `Bundle ${bundleId} source path does not exist: ${sourcePath}`, [bundleMapPath]);
-        }
-      }
-      for (const dependency of dependencies ?? []) {
-        if (!bundleIds.has(dependency)) {
-          addFinding("BUNDLE_MAP_UNKNOWN_DEPENDENCY", `Bundle ${bundleId} references unknown dependency: ${dependency}`, [bundleMapPath]);
-        }
-      }
-      for (const skill of skills ?? []) {
-        if (!knownSkillNames.has(skill)) {
-          addFinding("BUNDLE_MAP_UNKNOWN_SKILL", `Bundle ${bundleId} references unknown skill: ${skill}`, [bundleMapPath]);
-        }
-      }
-      for (const role of roles ?? []) {
-        if (!requiredRoleSet.has(role)) {
-          addFinding("BUNDLE_MAP_UNKNOWN_ROLE", `Bundle ${bundleId} references unknown role: ${role}`, [bundleMapPath]);
-        }
-      }
-      for (const example of examples ?? []) {
-        if (!/^[a-z0-9-]+$/.test(example) || !existsSync(join(validationRoot, "examples", example, "workflow.json"))) {
-          addFinding("BUNDLE_MAP_UNKNOWN_EXAMPLE", `Bundle ${bundleId} references unknown example workflow: ${example}`, [bundleMapPath]);
-        }
-      }
-      const sourcePathSet = new Set(sourcePaths ?? []);
-      for (const privatePath of privateExclusions ?? []) {
-        if (typeof privatePath !== "string" || privatePath.trim() === "") {
-          addFinding("INVALID_BUNDLE_MAP", `Bundle ${bundleId} contains an invalid private exclusion.`, [bundleMapPath]);
-        }
-        if (sourcePathSet.has(privatePath)) {
-          addFinding("INVALID_BUNDLE_MAP", `Bundle ${bundleId} includes a private exclusion as a source path: ${privatePath}`, [bundleMapPath]);
-        }
-      }
-    }
-  }
-}
+const bundleState = validateBundles({
+  root: validationRoot,
+  helpers,
+  paths,
+  knownSkillNames,
+  requiredRoleSet
+});
+findings.push(...bundleState.findings);
 
-if (existsSync(inferenceReasoningMethods)) {
-  const text = read(inferenceReasoningMethods);
-  for (const phrase of [
-    "reasoning_route",
-    "runtime_route",
-    "raw_trace_storage: forbidden",
-    "direct | decompose | verify | compare | tool_loop | branch | search",
-    "Do not store raw chain-of-thought",
-    "A runtime recommendation is not permission",
-    "provider_execution_allowed: false",
-    "openai_api_allowed: false",
-    "external_router_adopted_raw: false"
-  ]) {
-    if (!text.includes(phrase)) {
-      addFinding("WEAK_INFERENCE_REASONING_POLICY", `Inference reasoning policy is missing required phrase: ${phrase}`, [inferenceReasoningMethods]);
-    }
-  }
-}
-
-if (existsSync(gateRegistry)) {
-  const text = read(gateRegistry);
-  if (!text.includes("| Gate | Owner role | Required artifact |")) {
-    addFinding("WEAK_GATE_TABLE", "Gate registry must use columns: Gate, Owner role, Required artifact.", [gateRegistry]);
-  }
-  const gateRows = parseMarkdownTable(text, ["gate", "ownerRoles", "requiredArtifact"]);
-  const seenGates = new Set();
-  const gates = new Map(gateRows.map((row) => [row.gate, row]));
-  knownGates = gates;
-  for (const gate of ["intent_lock", "workflow_route", "brief_completeness", "reference_authority_fit", "evidence_fit", "instruction_packet_fit", "direction_fit", "structure_fit", "storyboard_board_fit", "copy_fit", "promptability_fit", "schema_pricing_fit", "execution_manifest_fit", "asset_manifest_fit", "post_execution_fit", "delivery_fit"]) {
-    if (!gates.has(gate)) addFinding("MISSING_GATE", `Gate is missing: ${gate}`, [gateRegistry]);
-  }
-  for (const row of gateRows) {
-    if (seenGates.has(row.gate)) {
-      addFinding("DUPLICATE_GATE", `Gate is duplicated: ${row.gate}`, [gateRegistry]);
-    }
-    seenGates.add(row.gate);
-    if (!row.gate || !row.ownerRoles || !row.requiredArtifact) {
-      addFinding("WEAK_GATE_ROW", "Gate registry rows must include gate, owner role, and required artifact.", [gateRegistry]);
-      continue;
-    }
-    const owners = row.ownerRoles.split(",").map((role) => cleanCell(role)).filter(Boolean);
-    for (const owner of owners) {
-      if (!requiredRoleSet.has(owner)) {
-        addFinding("UNKNOWN_GATE_OWNER_ROLE", `Gate ${row.gate} references unknown owner role: ${owner}`, [gateRegistry]);
-      }
-    }
-  }
-  if (existsSync(artifactTemplates)) {
-    const sections = markdownSections(read(artifactTemplates));
-    for (const row of gateRows) {
-      const hasTemplate = artifactAlternatives(row.requiredArtifact).some((artifact) => sections.has(artifact));
-      if (!hasTemplate) {
-        addFinding("MISSING_GATE_ARTIFACT_TEMPLATE", `Gate ${row.gate} requires artifact without a matching template: ${row.requiredArtifact}`, [gateRegistry, artifactTemplates]);
-      }
-      const hasSchema = artifactAlternatives(row.requiredArtifact).some((artifact) => artifactSchemaNames.has(artifact));
-      if (artifactSchemaNames.size > 0 && !hasSchema) {
-        addFinding("MISSING_ARTIFACT_SCHEMA", `Gate ${row.gate} requires artifact without a matching schema: ${row.requiredArtifact}`, [gateRegistry, artifactSchemasPath]);
-      }
-    }
-  }
-  for (const [role, gate] of agentTemplateGates) {
-    const row = gates.get(gate);
-    if (!row) {
-      addFinding("UNKNOWN_AGENT_REVIEW_GATE", `Agent ${role} references unknown review gate: ${gate}`, [join(agentDir, `${role}.toml.template`)]);
-      continue;
-    }
-    const owners = row.ownerRoles.split(",").map((owner) => cleanCell(owner)).filter(Boolean);
-    if (!owners.includes(role)) {
-      addFinding("AGENT_GATE_OWNER_MISMATCH", `Agent ${role} uses gate ${gate}, but gate owner list is: ${owners.join(", ")}`, [join(agentDir, `${role}.toml.template`), gateRegistry]);
-    }
-  }
-}
-
-if (existsSync(handoffMatrix)) {
-  const text = read(handoffMatrix);
-  if (!text.includes("| From | To | Required fields |")) {
-    addFinding("WEAK_HANDOFF_TABLE", "Handoff matrix must use columns: From, To, Required fields.", [handoffMatrix]);
-  }
-  const handoffRows = parseMarkdownTable(text, ["from", "to", "requiredFields"]);
-  const seenHandoffs = new Set();
-  for (const row of handoffRows) {
-    const pair = `${row.from}->${row.to}`;
-    if (seenHandoffs.has(pair)) {
-      addFinding("DUPLICATE_HANDOFF", `Handoff is duplicated: ${pair}`, [handoffMatrix]);
-    }
-    seenHandoffs.add(pair);
-    if (!requiredRoleSet.has(row.from)) {
-      addFinding("UNKNOWN_HANDOFF_ROLE", `Handoff references unknown From role: ${row.from}`, [handoffMatrix]);
-    }
-    if (!requiredRoleSet.has(row.to)) {
-      addFinding("UNKNOWN_HANDOFF_ROLE", `Handoff references unknown To role: ${row.to}`, [handoffMatrix]);
-    }
-    if (!row.requiredFields || row.requiredFields === "-") {
-      addFinding("HANDOFF_FIELD_EMPTY", `Handoff ${row.from} -> ${row.to} must list required fields.`, [handoffMatrix]);
-    }
-  }
-  const handoffPairs = new Set(handoffRows.map((row) => `${row.from}->${row.to}`));
-  knownHandoffPairs = handoffPairs;
-  for (const pair of ["intent-confirmation->workflow-orchestrator", "workflow-orchestrator->instruction-packet-factory", "image-prompting->tool-routing-cost", "video-prompting->tool-routing-cost", "qa-iteration->delivery-documentation"]) {
-    if (!handoffPairs.has(pair)) {
-      addFinding("MISSING_HANDOFF", `Required handoff is missing: ${pair}`, [handoffMatrix]);
-    }
-  }
-}
-
-if (existsSync(workflowBlueprints)) {
-  const blueprintText = read(workflowBlueprints);
-  const sections = markdownSections(blueprintText);
-  knownWorkflowBlueprints = new Set([...sections].map((section) => markdownSlug(section)));
-  workflowBlueprintContracts = parseWorkflowBlueprintContracts(blueprintText);
-  for (const section of ["Minimal Planning Route", "Static Campaign Or E-Commerce Graphic", "Video Campaign Or Storyboard", "Storyboard Board Artifact", "HyperFrames Coded Video", "Prompt Pack Without Execution", "Document Or Text Workflow", "QA And Delivery Only", "Workflow Self-Improvement Review"]) {
-    if (!sections.has(section)) addFinding("WEAK_WORKFLOW_BLUEPRINTS", `Workflow blueprints are missing required section: ${section}`, [workflowBlueprints]);
-  }
-}
-
-if (existsSync(artifactTemplates)) {
-  const text = read(artifactTemplates);
-  const sections = markdownSections(text);
-  for (const section of ["Task Confirmation", "Workflow Request Diagnostic", "Brief Contract", "Reference Pack", "Instruction Packet", "Storyboard Contract", "Board Artifact Prompt", "Prompt Pack", "Execution Manifest", "HyperFrames Production Brief", "QA / Iteration Report", "Delivery Manifest", "Self-Improvement Sufficiency Gate"]) {
-    if (!sections.has(section)) addFinding("MISSING_TEMPLATE_SECTION", `Artifact template section is missing: ${section}`, [artifactTemplates]);
-  }
-  if (artifactSchemas?.artifacts) {
-    for (const [artifactName, schema] of Object.entries(artifactSchemas.artifacts)) {
-      if (!sections.has(artifactName)) {
-        addFinding("ARTIFACT_SCHEMA_WITHOUT_TEMPLATE", `Artifact schema has no matching template section: ${artifactName}`, [artifactSchemasPath, artifactTemplates]);
-        continue;
-      }
-      if (!isPlainObject(schema) || !Array.isArray(schema.required_fields) || schema.required_fields.length === 0) {
-        addFinding("INVALID_ARTIFACT_SCHEMA", `Artifact schema must define required_fields: ${artifactName}`, [artifactSchemasPath]);
-        continue;
-      }
-      const templateFields = artifactFieldSet(markdownSectionBody(text, artifactName));
-      for (const field of schema.required_fields) {
-        if (typeof field !== "string" || field.trim().length === 0) {
-          addFinding("INVALID_ARTIFACT_SCHEMA", `Artifact schema required_fields must contain non-empty strings: ${artifactName}`, [artifactSchemasPath]);
-          continue;
-        }
-        if (!templateFields.has(field)) {
-          addFinding("ARTIFACT_SCHEMA_FIELD_MISSING_TEMPLATE", `Artifact ${artifactName} requires field missing from its template: ${field}`, [artifactSchemasPath, artifactTemplates]);
-        }
-      }
-      if (!Array.isArray(schema.example_paths) || schema.example_paths.length === 0) {
-        addFinding("MISSING_ARTIFACT_FIXTURE_COVERAGE", `Artifact schema must register at least one public fixture: ${artifactName}`, [artifactSchemasPath]);
-      }
-      for (const examplePath of schema.example_paths ?? []) {
-        if (typeof examplePath !== "string" || examplePath.startsWith("/") || examplePath.split(/[\\/]+/).includes("..")) {
-          addFinding("INVALID_ARTIFACT_SCHEMA", `Artifact schema example path must be repo-relative and safe: ${artifactName}`, [artifactSchemasPath]);
-          continue;
-        }
-        if (!isPublicFixturePath(examplePath)) {
-          addFinding("INVALID_ARTIFACT_FIXTURE_PATH", `Artifact schema example path must point to a public Markdown fixture under examples/: ${artifactName}`, [artifactSchemasPath]);
-          continue;
-        }
-        const exampleFile = join(validationRoot, examplePath);
-        if (!existsSync(exampleFile)) {
-          addFinding("MISSING_ARTIFACT_EXAMPLE", `Artifact example file is missing: ${examplePath}`, [artifactSchemasPath]);
-          continue;
-        }
-        const exampleFields = artifactFieldSet(read(exampleFile));
-        for (const field of schema.required_fields) {
-          if (!exampleFields.has(field)) {
-            addFinding("EXAMPLE_ARTIFACT_MISSING_FIELD", `Example artifact ${examplePath} is missing required field: ${field}`, [exampleFile, artifactSchemasPath]);
-          }
-        }
-        if (artifactName === "Image Prompt Contract") {
-          const fixtureText = read(exampleFile);
-          for (const phrase of ["native Codex/ChatGPT image generator", "one pass", "exact_visible_text", "QA_checks"]) {
-            if (!fixtureText.includes(phrase)) {
-              addFinding("WEAK_TEXT_IMAGE_ARTIFACT_FIXTURE", `Image Prompt Contract fixture must enforce text-bearing image policy phrase: ${phrase}`, [exampleFile, artifactSchemasPath]);
-            }
-          }
-        }
-      }
-    }
-    for (const section of sections) {
-      if (!artifactSchemaNames.has(section)) {
-        addFinding("TEMPLATE_SECTION_MISSING_SCHEMA", `Artifact template section has no matching schema: ${section}`, [artifactTemplates, artifactSchemasPath]);
-      }
-    }
-  }
-}
+const contractState = validateContracts({
+  root: validationRoot,
+  helpers,
+  paths,
+  requiredRoleSet,
+  agentTemplateGates,
+  agentDir,
+  artifactSchemaNames
+});
+findings.push(...contractState.findings);
+const { knownGates, knownHandoffPairs, knownWorkflowBlueprints, workflowBlueprintContracts } = contractState;
 
 const requiredDocs = [
   "docs/quickstart.md",
