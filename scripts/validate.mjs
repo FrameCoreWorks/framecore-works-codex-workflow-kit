@@ -2,6 +2,23 @@
 import { existsSync, readFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { hasHelpFlag, isAppleDouble, printHelpAndExit, relativePosix, repoRoot, reportFindings, walkFiles } from "./common.mjs";
+import {
+  anchorsFor,
+  artifactAlternatives,
+  artifactFieldSet,
+  appearsInOrder,
+  backtickTokens,
+  cleanCell,
+  createFindings,
+  isPlainObject,
+  markdownSectionBody,
+  markdownSections,
+  markdownSlug,
+  parseMarkdownTable,
+  read
+} from "./validate/context.mjs";
+import { run as validateInstructionOverridePhrases } from "./validate/injection.mjs";
+import { run as validateMarkdownLinks } from "./validate/links.mjs";
 
 if (hasHelpFlag()) {
   printHelpAndExit(`
@@ -20,159 +37,15 @@ Checks:
 }
 
 const validationRoot = resolve(process.argv[2] ?? repoRoot);
-const findings = [];
-
-function addFinding(code, message, files) {
-  findings.push({ code, message, files: files.map((file) => relativePosix(validationRoot, file)) });
-}
-
-function read(file) {
-  return readFileSync(file, "utf8");
-}
-
-function markdownSlug(value) {
-  return value
-    .trim()
-    .toLowerCase()
-    .replace(/`/g, "")
-    .replace(/<[^>]+>/g, "")
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-");
-}
-
-function isPlainObject(value) {
-  return value !== null && typeof value === "object" && !Array.isArray(value);
-}
-
-function anchorsFor(text) {
-  const anchors = new Set();
-  for (const match of text.matchAll(/^#{1,6}\s+(.+)$/gm)) {
-    anchors.add(markdownSlug(match[1]));
-  }
-  return anchors;
-}
-
-function validateMarkdownLinks(files) {
-  for (const file of files) {
-    if (isAppleDouble(file)) continue;
-    const text = read(file);
-    for (const match of text.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)) {
-      const href = match[1].trim();
-      if (/^(https?:|mailto:|#)/i.test(href)) continue;
-      const [pathPart, anchor] = href.split("#");
-      const target = resolve(dirname(file), pathPart || ".");
-      if (!existsSync(target)) {
-        addFinding("BROKEN_MARKDOWN_LINK", `Broken markdown link: ${href}`, [file]);
-        continue;
-      }
-      if (anchor && anchor.length > 0) {
-        const targetText = read(target);
-        if (!anchorsFor(targetText).has(anchor.toLowerCase())) {
-          addFinding("BROKEN_MARKDOWN_ANCHOR", `Broken markdown anchor: ${href}`, [file]);
-        }
-      }
-    }
-  }
-}
-
-const instructionOverridePatterns = [
-  /ignore (all )?(previous|prior) instructions/i,
-  /disregard (all )?(previous|prior) instructions/i,
-  /reveal (the )?(system|developer) prompt/i,
-  /disable (the )?safety/i,
-  /bypass (the )?safety/i,
-  /\bjailbreak\b/i,
-  /\bdeveloper mode\b/i,
-];
-
-function validateInstructionOverridePhrases(files) {
-  for (const file of files) {
-    if (isAppleDouble(file)) continue;
-    const text = read(file);
-    const matchedPattern = instructionOverridePatterns.find((pattern) => pattern.test(text));
-    if (matchedPattern) {
-      addFinding(
-        "INSTRUCTION_OVERRIDE_PHRASE",
-        "Agent-facing files must not include instruction-override or prompt-exfiltration phrases.",
-        [file]
-      );
-    }
-  }
-}
-
-function cleanCell(value) {
-  return value.trim().replace(/^`|`$/g, "").trim();
-}
-
-function parseMarkdownTable(text, headerNames) {
-  const lines = text.split(/\r?\n/).filter((line) => line.trim().startsWith("|"));
-  const rows = [];
-  let header = null;
-
-  for (const line of lines) {
-    const cells = line
-      .trim()
-      .replace(/^\|/, "")
-      .replace(/\|$/, "")
-      .split("|")
-      .map((cell) => cell.trim());
-    if (cells.length === 0) continue;
-    if (cells.every((cell) => /^:?-{3,}:?$/.test(cell))) continue;
-    if (!header) {
-      header = cells;
-      continue;
-    }
-    if (cells.length !== header.length) continue;
-    rows.push(Object.fromEntries(headerNames.map((name, index) => [name, cleanCell(cells[index] ?? "")])));
-  }
-
-  return rows;
-}
-
-function artifactAlternatives(value) {
-  return value.split(/\s+or\s+/i).map((item) => item.trim()).filter(Boolean);
-}
-
-function markdownSections(text) {
-  return new Set([...text.matchAll(/^##\s+(.+)$/gm)].map((match) => match[1].trim()));
-}
-
-function markdownSectionBody(text, section) {
-  const lines = text.split(/\r?\n/);
-  const body = [];
-  let active = false;
-  for (const line of lines) {
-    const heading = line.match(/^##\s+(.+)$/);
-    if (heading) {
-      if (active) break;
-      active = heading[1].trim() === section;
-      continue;
-    }
-    if (active) body.push(line);
-  }
-  return body.join("\n");
-}
-
-function artifactFieldSet(text) {
-  return new Set([...text.matchAll(/^-\s+([A-Za-z][A-Za-z0-9_ /-]*):/gm)].map((match) => match[1].trim()));
-}
-
-function appearsInOrder(text, phrases) {
-  let index = -1;
-  for (const phrase of phrases) {
-    const nextIndex = text.indexOf(phrase, index + 1);
-    if (nextIndex === -1) return false;
-    index = nextIndex;
-  }
-  return true;
-}
+const { findings, addFinding } = createFindings(validationRoot);
+const helpers = {
+  anchorsFor,
+  createFindings,
+  read
+};
 
 function isConditionalBlueprintLine(line) {
   return /\bwhen\b|\bif\b|\boptional\b|\bas needed\b|\bor\b/i.test(line);
-}
-
-function backtickTokens(line) {
-  return [...line.matchAll(/`([^`]+)`/g)].map((match) => match[1].trim()).filter(Boolean);
 }
 
 function parseWorkflowBlueprintContracts(text) {
@@ -1537,7 +1410,11 @@ for (const target of [...requiredDocs, ...exampleReadmes.map((file) => relativeP
   }
 }
 
-validateMarkdownLinks(walkFiles(validationRoot).filter((file) => !isAppleDouble(file) && file.endsWith(".md")));
+findings.push(...validateMarkdownLinks({
+  root: validationRoot,
+  helpers,
+  files: walkFiles(validationRoot).filter((file) => !isAppleDouble(file) && file.endsWith(".md"))
+}));
 
 const instructionFacingFiles = new Set();
 for (const file of ["README.md", "AGENTS.template.md", "CONTRIBUTING.md", "SECURITY.md", "SUPPORT.md"]) {
@@ -1550,7 +1427,11 @@ for (const directory of ["docs", "examples", ".agents", ".codex"]) {
     if (!isAppleDouble(file) && /\.(md|ya?ml|json|template)$/.test(file)) instructionFacingFiles.add(file);
   }
 }
-validateInstructionOverridePhrases([...instructionFacingFiles]);
+findings.push(...validateInstructionOverridePhrases({
+  root: validationRoot,
+  helpers,
+  files: [...instructionFacingFiles]
+}));
 
 const textPolicy = read(join(validationRoot, "config/text-image-policy.json"));
 if (!textPolicy.includes("gpt-image-2") || !textPolicy.includes("openai/gpt-image-2") || !textPolicy.includes("native Codex/ChatGPT image generator") || !textPolicy.includes("by default for generated static raster graphics") || !textPolicy.includes("Python-generated artwork") || !textPolicy.includes("one-pass generation")) {
