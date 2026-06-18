@@ -18,26 +18,92 @@ If Codex reports that `.codex/agents`, `.agents/skills`, or `.framecore/manifest
 
 ## Starter Prompts
 
-Use one of these as your first real task:
+Use one of these as your first real task. Replace bracketed text with your project details.
+
+### Route A Rough Idea
 
 ```text
-Use the FrameCore workflow to turn this rough idea into a clear brief and next-step plan. Stop before generation or external execution.
+Read AGENTS.md before continuing. If this project also has AGENTS.framecore.md, read both files.
+
+Use the FrameCore workflow to turn this rough idea into a clear brief and next-step plan:
+
+[paste rough idea]
+
+Start with intent confirmation, choose the smallest safe workflow route, create a Brief Contract, and stop before generation, provider execution, uploads, or file delivery.
 ```
 
-```text
-Use FrameCore for an ecommerce static campaign. Build the brief, reference needs, direction, copy, and image prompt pack. Do not use external execution tools.
-```
+### Build An Ecommerce Static Graphic Prompt Pack
 
 ```text
-Use FrameCore for a short video storyboard. Build direction, shot structure, copy needs, and video prompt pack. Stop before execution.
+Read AGENTS.md before continuing. If this project also has AGENTS.framecore.md, read both files.
+
+Use FrameCore for an ecommerce static campaign or product visual.
+
+Product:
+[product details]
+
+Channel and format:
+[marketplace, social, ad, banner, poster, or other]
+
+Goal:
+[what the asset should achieve]
+
+Build the brief, reference needs, visual direction, exact visible text if needed, copy, image prompt contract, and QA criteria. Do not use external execution tools. If visible text appears in a static raster graphic, keep the GPT Image 2 one-pass text policy.
 ```
 
-```text
-Use FrameCore QA and delivery review for these existing local artifacts. Create an asset manifest, QA report, and delivery manifest. Do not upload anything.
-```
+### Build A Video Storyboard Or Shot Plan
 
 ```text
-Use FrameCore workflow-self-improvement to review this completed task and propose workflow improvements. Produce proposals only, no automatic edits.
+Read AGENTS.md before continuing. If this project also has AGENTS.framecore.md, read both files.
+
+Use FrameCore for a short video storyboard.
+
+Product, service, or story:
+[details]
+
+Target audience:
+[audience]
+
+Duration or number of shots:
+[duration or shot count]
+
+Build direction, shot structure, scene beats, copy or caption needs, video prompt pack, QA criteria, and delivery notes. Stop before execution.
+```
+
+### Review Existing Assets Before Delivery
+
+```text
+Read AGENTS.md before continuing. If this project also has AGENTS.framecore.md, read both files.
+
+Use FrameCore QA and delivery review for these existing local artifacts:
+
+[list local files or describe attached artifacts]
+
+Create an asset manifest, QA report, pass/fail decision, known limitations, and delivery manifest. Do not upload anything. Do not change files unless I explicitly approve edits.
+```
+
+### Start A Long Session With Recovery
+
+```text
+Read AGENTS.md before continuing. If this project also has AGENTS.framecore.md, read both files.
+
+This will be a long multi-step task:
+
+[task details]
+
+Use FrameCore to choose the workflow route and offer to initialize Context/ and Memory Cache/ if they are missing or stale. Keep Project State current after major gates, blockers, file changes, and handoffs. Do not create recovery folders until I approve.
+```
+
+### Run A Report-Only Workflow Retrospective
+
+```text
+Read AGENTS.md before continuing. If this project also has AGENTS.framecore.md, read both files.
+
+Use FrameCore workflow-self-improvement to review this completed task:
+
+[summarize task or point to local artifacts]
+
+Create retrospective notes and improvement proposals only. Do not edit source files, install anything, upload anything, or apply changes without my approval.
 ```
 
 ## Choosing Workflow Depth

@@ -29,6 +29,17 @@ For the full inventory, see [Included Agents And Skills](docs/included-agents-an
 | Long-session support | `Context/`, `Memory Cache/`, Project State templates, semantic-memory helpers |
 | Specialized workflow knowledge | Humanizer, HyperFrames, lightweight Hipson Adapter, storyboard board planning |
 
+## Which Path Should I Choose?
+
+| If you are... | Use this path | What happens |
+| --- | --- | --- |
+| New to Codex and want the full workflow in one project | [Beginner Start](#beginner-start) | Codex guides cloning, checks, onboarding, dry-run, and project-local install. |
+| Comfortable with terminal commands | [Install Flow](#install-flow) | You run the guided installer or manual command sequence yourself. |
+| Already installed and want the newest repo changes | [Update An Existing Workspace](#update-an-existing-workspace) | Codex or terminal updates only FrameCore-managed files recorded in `.framecore/manifest.json`. |
+| Using ChatGPT instead of Codex | [ChatGPT Skills Onboarding](docs/chatgpt-skills-onboarding.md) | ChatGPT creates a skill-style workflow profile without installing repo files or permanent Codex agents. |
+| Only reviewing before install | [Included Agents And Skills](docs/included-agents-and-skills.md) and [Workflow Map](docs/workflow-map.md) | You can inspect the inventory, routes, gates, artifacts, examples, and safety boundaries first. |
+| Testing and sending feedback | [Tester Feedback Guide](docs/tester-feedback.md) | Use a short report format that tells maintainers what happened and where it stopped. |
+
 ## Beginner Start
 
 If someone sent you this repo and you do not know Terminal, start here.
@@ -137,6 +148,15 @@ Onboarding writes `framecore.config.json` before the managed install so local pr
 | External paid media-provider execution | No | Users may add their own tools outside this public kit. |
 | Full Hipson | No | The included Hipson Adapter is lightweight; full Hipson remains separate and optional. |
 
+## What This Repo Does Not Do
+
+- It does not install paid media providers, API keys, provider CLIs, or external execution tools.
+- It does not upload files, publish outputs, or send work to cloud folders by default.
+- It does not make a normal ChatGPT chat window behave like a shell-capable Codex workspace.
+- It does not automatically generate PDFs, videos, images, or final delivery packages without a clear user request and an available execution surface.
+- It does not install full Hipson; it includes only a lightweight adapter for bounded packets and handoffs.
+- It does not overwrite user-owned files unless the user intentionally approves a force path.
+
 ## Mental Model
 
 Skills are workflow contracts, not personality presets. A skill defines when a workflow role should act, what input it needs, what artifact it must produce, which QA gate applies, and where the handoff goes next.
@@ -154,6 +174,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: w
 - Need quick answers first: read [FAQ](docs/faq.md).
 - Want to see exactly what is included: read [Included Agents And Skills](docs/included-agents-and-skills.md).
 - Want to see how workflow pieces fit together: read [Workflow Map](docs/workflow-map.md).
+- Sending test results or a bug report: use [Tester Feedback Guide](docs/tester-feedback.md).
 - Checking supported environments and install modes: read [Compatibility](docs/compatibility.md).
 - Want command behavior and safety boundaries: read [CLI Reference](docs/cli-reference.md).
 - Want the mental model first: read [Architecture](docs/architecture.md).

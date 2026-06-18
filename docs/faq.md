@@ -129,6 +129,8 @@ npm run release:check
 
 If install failed in a target workspace, also run doctor/preflight for that target and include sanitized finding codes in the report.
 
+For non-technical tester reports, use [Tester Feedback Guide](tester-feedback.md). The most useful details are: whether this was Codex or ChatGPT, what exact prompt or command was used, where the flow stopped, whether shell commands worked, whether the Codex sandbox was configured, and a screenshot or exact error message if available.
+
 ### What should I not paste into an issue?
 
 Do not paste secrets, tokens, provider keys, personal emails, private cloud folder IDs, local absolute paths, private client context, or generated outputs that contain private material.
@@ -140,6 +142,7 @@ Do not paste secrets, tokens, provider keys, personal emails, private cloud fold
 - [CLI Reference](cli-reference.md)
 - [Using The Kit](using-the-kit.md)
 - [Troubleshooting](troubleshooting.md)
+- [Tester Feedback Guide](tester-feedback.md)
 - [Provider-Neutral Boundary](provider-neutral-boundary.md)
 - [Hipson Integration](hipson-integration.md)
 - [HyperFrames](hyperframes.md)

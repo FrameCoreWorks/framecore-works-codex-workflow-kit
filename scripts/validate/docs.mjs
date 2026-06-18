@@ -12,6 +12,7 @@ export function run(ctx) {
     "docs/codex-assisted-install.md",
     "docs/using-the-kit.md",
     "docs/troubleshooting.md",
+    "docs/tester-feedback.md",
     "docs/faq.md",
     "docs/compatibility.md",
     "docs/cli-reference.md",
