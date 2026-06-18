@@ -7,6 +7,28 @@
 
 Licensed under Apache-2.0. See [NOTICE](NOTICE) for redistribution notice details.
 
+## What This Repo Gives You
+
+FrameCore Works Skill Kit adds a project-local creative workflow layer to Codex. It does not install paid providers or API-key tooling. It gives Codex a structured way to move work from request intake to brief, references, direction, prompts, QA, delivery notes, and long-session recovery.
+
+At a glance, the repo includes:
+
+- **20 Codex role-agent templates** for routing, creative planning, prompting, QA, delivery, and execution documentation.
+- **27 workflow skills** for brief building, reference curation, campaign direction, image and video prompting, storyboard work, Humanizer, HyperFrames planning, Hipson-style packets, QA, delivery, onboarding, and workflow self-improvement.
+- **Project-local install and onboarding** with doctor/preflight, dry-run, manifest tracking, update, repair, and uninstall.
+- **Workflow contracts** for gates, handoffs, artifact schemas, examples, and provider-neutral safety boundaries.
+
+For the full inventory, see [Included Agents And Skills](docs/included-agents-and-skills.md).
+
+| Area | Included examples |
+| --- | --- |
+| Core routing | `intent-confirmation`, `workflow-orchestrator`, `instruction-packet-factory`, `pipeline-core` |
+| Creative planning | `brief-architect`, `reference-curator`, `static-direction`, `motion-direction`, campaign and storytelling skills |
+| Prompt production | `image-prompting`, `video-prompting`, `image-prompt-architect`, `video-prompt-architect` |
+| QA and delivery | `qa-iteration`, `asset-manifest`, `delivery-documentation`, output critique and delivery skills |
+| Long-session support | `Context/`, `Memory Cache/`, Project State templates, semantic-memory helpers |
+| Specialized workflow knowledge | Humanizer, HyperFrames, lightweight Hipson Adapter, storyboard board planning |
+
 ## Beginner Start
 
 If someone sent you this repo and you do not know Terminal, start here.
@@ -129,6 +151,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: w
 - Already installed and ready to work: read [Using The Kit](docs/using-the-kit.md).
 - Installation failed or produced an unexpected result: read [Troubleshooting](docs/troubleshooting.md).
 - Need quick answers first: read [FAQ](docs/faq.md).
+- Want to see exactly what is included: read [Included Agents And Skills](docs/included-agents-and-skills.md).
 - Checking supported environments and install modes: read [Compatibility](docs/compatibility.md).
 - Want command behavior and safety boundaries: read [CLI Reference](docs/cli-reference.md).
 - Want the mental model first: read [Architecture](docs/architecture.md).
