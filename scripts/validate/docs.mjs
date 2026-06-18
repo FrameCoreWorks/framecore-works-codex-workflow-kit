@@ -27,6 +27,8 @@ export function run(ctx) {
     "docs/release.md",
     "docs/release-notes-template.md",
     "docs/architecture.md",
+    "docs/included-agents-and-skills.md",
+    "docs/workflow-map.md",
     "docs/artifact-schemas.md",
     "docs/example-authoring.md",
     "docs/workflow-stages.md",

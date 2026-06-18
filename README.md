@@ -152,6 +152,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: w
 - Installation failed or produced an unexpected result: read [Troubleshooting](docs/troubleshooting.md).
 - Need quick answers first: read [FAQ](docs/faq.md).
 - Want to see exactly what is included: read [Included Agents And Skills](docs/included-agents-and-skills.md).
+- Want to see how workflow pieces fit together: read [Workflow Map](docs/workflow-map.md).
 - Checking supported environments and install modes: read [Compatibility](docs/compatibility.md).
 - Want command behavior and safety boundaries: read [CLI Reference](docs/cli-reference.md).
 - Want the mental model first: read [Architecture](docs/architecture.md).
@@ -407,6 +408,8 @@ See also:
 - [FAQ](docs/faq.md)
 - [Compatibility](docs/compatibility.md)
 - [CLI Reference](docs/cli-reference.md)
+- [Included Agents And Skills](docs/included-agents-and-skills.md)
+- [Workflow Map](docs/workflow-map.md)
 - [Provider-Neutral Boundary](docs/provider-neutral-boundary.md)
 - [Memory Cache](docs/memory-cache.md)
 - [Context Folder](docs/context-folder.md)
@@ -442,6 +445,7 @@ See also:
 - [HyperFrames Video Example](examples/hyperframes-video/README.md)
 - [Image Prompt Pack Example](examples/image-prompt-pack/README.md)
 - [Document Workflow Example](examples/document-workflow/README.md)
+- [Hipson Adapter Packets Example](examples/hipson-adapter-packets/README.md)
 - [QA And Delivery Review Example](examples/qa-delivery-review/README.md)
 - [No External Execution Mode Example](examples/no-provider-mode/README.md)
 - [Contributing](CONTRIBUTING.md)

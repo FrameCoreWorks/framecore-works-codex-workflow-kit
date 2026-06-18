@@ -109,6 +109,7 @@ Skills are workflow contracts. They define when a capability should be used, wha
 ## Related Docs
 
 - [Quickstart](quickstart.md)
+- [Workflow Map](workflow-map.md)
 - [Agent Roster](agent-roster.md)
 - [Workflow Stages](workflow-stages.md)
 - [Architecture](architecture.md)

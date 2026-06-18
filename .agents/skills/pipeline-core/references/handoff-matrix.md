@@ -10,6 +10,7 @@
 | instruction-packet-factory | reference-curator | packet_id, reference_goals, suppression_rules, output_schema, source_notes_need |
 | brief-architect | reference-curator | brief_contract, reference_needs, constraints |
 | brief-architect | research-evidence | brief_contract, research_questions, source_rules |
+| brief-architect | instruction-packet-factory | brief_contract, target_role, packet_type, constraints, exclusions, acceptance_criteria |
 | brief-architect | delivery-documentation | brief_contract, accepted_scope, delivery_notes |
 | reference-curator | static-direction | reference_pack, continuity_anchors, suppression_rules |
 | reference-curator | motion-direction | reference_pack, continuity_anchors, suppression_rules |

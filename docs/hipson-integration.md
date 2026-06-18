@@ -66,3 +66,9 @@ Packets should prefer neutral role IDs and repo-relative paths. If a packet need
 ## Validation
 
 The release gate checks that this document keeps the adapter boundary, full Hipson link, onboarding behavior, packet contract, and privacy rules visible. This prevents the public kit from silently turning the adapter into an installer for a separate system.
+
+## Related Docs
+
+- [Workflow Map](workflow-map.md)
+- [Hipson Adapter Packets Example](../examples/hipson-adapter-packets/README.md)
+- [Included Agents And Skills](included-agents-and-skills.md)

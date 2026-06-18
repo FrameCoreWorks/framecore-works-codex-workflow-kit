@@ -30,6 +30,7 @@ These assets are already reasonable public bundle candidates:
 - `.agents/skills/*/SKILL.md` as reusable workflow skills.
 - `.codex/agents/*.toml.template` as Codex role-agent templates.
 - `.agents/skills/pipeline-core/` as the routing, gate, handoff, artifact, and policy spine.
+- `docs/workflow-map.md` and `docs/included-agents-and-skills.md` as human-readable inventory and relationship maps.
 - `config/artifact-schemas.json`, `config/provider-neutral-policy.json`, and `config/text-image-policy.json` as public contract registries.
 - `examples/*/workflow.json` as machine-checked route examples.
 - `templates/Memory Cache/` and memory tools as local recovery scaffolding.
@@ -147,6 +148,7 @@ A future bundle-readiness patch is healthy when:
 ## Related Docs
 
 - [Architecture](architecture.md)
+- [Workflow Map](workflow-map.md)
 - [Provider-Neutral Boundary](provider-neutral-boundary.md)
 - [Memory Cache](memory-cache.md)
 - [Compatibility](compatibility.md)

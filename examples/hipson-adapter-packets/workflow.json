@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "example_id": "hipson-adapter-packets",
+  "blueprint": "document-or-text-workflow",
+  "route": [
+    "intent-confirmation",
+    "workflow-orchestrator",
+    "brief-architect",
+    "instruction-packet-factory",
+    "research-evidence",
+    "copy-voice",
+    "delivery-documentation"
+  ],
+  "gates": [
+    "intent_lock",
+    "workflow_route",
+    "brief_completeness",
+    "instruction_packet_fit",
+    "evidence_fit",
+    "copy_fit",
+    "delivery_fit"
+  ],
+  "artifacts": [
+    "Task Confirmation",
+    "Project State",
+    "Brief Contract",
+    "Instruction Packet",
+    "Evidence Note",
+    "Copy Pack",
+    "Delivery Manifest"
+  ],
+  "handoffs": [
+    "intent-confirmation->workflow-orchestrator",
+    "workflow-orchestrator->brief-architect",
+    "brief-architect->instruction-packet-factory",
+    "instruction-packet-factory->research-evidence",
+    "research-evidence->copy-voice",
+    "copy-voice->delivery-documentation"
+  ],
+  "execution_boundary": "Text packet artifacts only. The lightweight Hipson Adapter does not clone full Hipson, run sidecar agents, call external tools, upload files, or mutate workspace state by itself."
+}

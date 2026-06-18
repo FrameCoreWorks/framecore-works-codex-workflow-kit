@@ -14,6 +14,8 @@
         "config/artifact-schemas.json",
         "config/agent-naming.schema.json",
         "docs/architecture.md",
+        "docs/included-agents-and-skills.md",
+        "docs/workflow-map.md",
         "docs/workflow-stages.md",
         "docs/artifact-schemas.md"
       ],
@@ -349,7 +351,8 @@
       "source_paths": [
         ".agents/skills/hipson-adapter/",
         "config/hipson.example.json",
-        "docs/hipson-integration.md"
+        "docs/hipson-integration.md",
+        "examples/hipson-adapter-packets/"
       ],
       "skills": [
         "hipson-adapter"
@@ -359,7 +362,9 @@
         "research-evidence",
         "reference-curator"
       ],
-      "examples": [],
+      "examples": [
+        "hipson-adapter-packets"
+      ],
       "private_exclusions": [
         "full Hipson clone",
         "cross-repo scan sidecars",
