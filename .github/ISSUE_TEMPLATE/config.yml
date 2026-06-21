@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Tester feedback guide
+    url: https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/blob/main/docs/tester-feedback.md
+    about: Use this guide before opening public testing feedback. Do not include secrets or private project context.
   - name: Security-sensitive report
     url: https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/security
     about: Use the Security tab for private vulnerability reporting when available. Do not disclose sensitive details in public issues.

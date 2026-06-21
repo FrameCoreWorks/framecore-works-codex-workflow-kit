@@ -61,6 +61,14 @@ If a pull request changes a skill contract, role, gate, handoff, artifact templa
 - `examples/README.md`
 - the closest workflow example under `examples/`
 
+Inventory docs have separate ownership:
+
+- `docs/included-agents-and-skills.md` is the canonical public inventory for counts and installed/listed items.
+- `docs/workflow-map.md` is the canonical relationship map for routes, layers, gates, examples, and handoffs.
+- `docs/agent-roster.md` is the canonical role-responsibility guide for role IDs, artifacts, gates, and common handoffs.
+
+When a pull request adds, removes, renames, or reclassifies a role, skill, example workflow, workflow asset, gate, or public install surface, update the relevant inventory owner instead of duplicating the same list in another doc.
+
 Do not include generated outputs, local configs, private project context, credentials, user-specific agent names, or local machine paths.
 
 For versioned releases, follow [Release Guide](docs/release.md).

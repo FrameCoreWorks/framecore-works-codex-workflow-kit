@@ -83,6 +83,8 @@ Start by confirming the task and route through the required gates.
 - Pass or fail for each expected signal.
 - Local paths to safe test artifacts, excluding secrets, private context, raw transcripts, and provider outputs.
 
+Store reviewed evidence summaries under [E2E Results](e2e-results/README.md). Do not mark a result as passed unless the real Codex workspace run completed. Use [the result template](e2e-results/TEMPLATE.md) for new runs.
+
 ## Acceptance
 
 Mark the check as a full pass only when the install lifecycle and real Codex behavior both match the public docs.

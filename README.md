@@ -7,6 +7,8 @@
 
 Licensed under Apache-2.0. See [NOTICE](NOTICE) for redistribution notice details.
 
+Just want to install in Codex? Jump to the [copy-paste install prompt](#copy-paste-install-prompt).
+
 ## What This Repo Gives You
 
 FrameCore Works Skill Kit adds a project-local creative workflow layer to Codex. It does not install paid providers or API-key tooling. It gives Codex a structured way to move work from request intake to brief, references, direction, prompts, QA, delivery notes, and long-session recovery.
@@ -14,7 +16,7 @@ FrameCore Works Skill Kit adds a project-local creative workflow layer to Codex.
 At a glance, the repo includes:
 
 - **20 Codex role-agent templates** for routing, creative planning, prompting, QA, delivery, and execution documentation.
-- **27 workflow skills** for brief building, reference curation, campaign direction, image and video prompting, storyboard work, Humanizer, HyperFrames planning, Hipson-style packets, QA, delivery, onboarding, and workflow self-improvement.
+- **27 workflow skills** for brief building, reference curation, campaign direction, image and video prompting, storyboard work, Humanizer, HyperFrames planning, Hipson-style packets, QA, delivery, onboarding, and workflow self-improvement. These skills are workflow contracts and routing rules, not full generator-technique manuals.
 - **Project-local install and onboarding** with doctor/preflight, dry-run, manifest tracking, update, repair, and uninstall.
 - **Workflow contracts** for gates, handoffs, artifact schemas, examples, and provider-neutral safety boundaries.
 
@@ -29,11 +31,13 @@ For the full inventory, see [Included Agents And Skills](docs/included-agents-an
 | Long-session support | `Context/`, `Memory Cache/`, Project State templates, semantic-memory helpers |
 | Specialized workflow knowledge | Humanizer, HyperFrames, lightweight Hipson Adapter, storyboard board planning |
 
+The kit provides the workflow spine: roles, gates, handoffs, artifact expectations, examples, safety boundaries, onboarding, and update/repair lifecycle. Users can layer deeper domain-specific prompting or execution tools on top, but those provider/tool integrations are intentionally not bundled here.
+
 ## Which Path Should I Choose?
 
 | If you are... | Use this path | What happens |
 | --- | --- | --- |
-| New to Codex and want the full workflow in one project | [Beginner Start](#beginner-start) | Codex guides cloning, checks, onboarding, dry-run, and project-local install. |
+| New to Codex and want the full workflow in one project | [Copy-Paste Install Prompt](#copy-paste-install-prompt) | Codex guides cloning, checks, onboarding, dry-run, and project-local install. |
 | Comfortable with terminal commands | [Install Flow](#install-flow) | You run the guided installer or manual command sequence yourself. |
 | Already installed and want the newest repo changes | [Update An Existing Workspace](#update-an-existing-workspace) | Codex or terminal updates only FrameCore-managed files recorded in `.framecore/manifest.json`. |
 | Using ChatGPT instead of Codex | [ChatGPT Skills Onboarding](docs/chatgpt-skills-onboarding.md) | ChatGPT creates a skill-style workflow profile without installing repo files or permanent Codex agents. |
@@ -52,6 +56,8 @@ There are two beginner paths:
 Recommended helper: install [GitHub Desktop](https://desktop.github.com/) if cloning a repository feels unfamiliar. It gives you a visual way to clone this repo, choose where it lives on your computer, see changed files, commit changes, and push to GitHub without memorizing Git commands. GitHub Desktop is optional; it does not run the installer by itself, and the kit can still be installed from a shell-capable Codex workspace or terminal.
 
 Fresh Codex note: if Codex shows a button such as `Configure sandbox`, `Configure agent sandbox`, or `Skonfiguruj piaskownicę agenta`, click it first and choose the local project folder where you want to use this workflow. If Codex can run shell commands but says `git` or `gh` is not available, nothing has been installed yet. Clone this repo with GitHub Desktop into a temporary, tools, or GitHub folder outside your project, then return to Codex and continue from the cloned repo.
+
+## Copy-Paste Install Prompt
 
 1. Open Codex.
 2. Open the project folder where you want to use this workflow.
@@ -185,6 +191,7 @@ Onboarding does not rewrite that workflow logic. It tunes the local workspace: w
 - Want the future plugin or bundle direction: read [Bundle Readiness](docs/bundle-readiness.md).
 - Preparing for a stable public release: read [v1.0 Readiness](docs/v1-readiness.md).
 - Verifying behavior in a real Codex workspace before broad promotion: read [Live Codex E2E Check](docs/live-codex-e2e-check.md).
+- Recording reviewed live Codex evidence: use [E2E Results](docs/e2e-results/README.md) and [E2E Result Template](docs/e2e-results/TEMPLATE.md).
 - Checking what provider-neutral allows and forbids: read [Provider-Neutral Boundary](docs/provider-neutral-boundary.md).
 - Want to compare workflow paths: open [Examples Index](examples/README.md).
 - Using the kit with a team: read [Team Configuration](docs/team-configuration.md).

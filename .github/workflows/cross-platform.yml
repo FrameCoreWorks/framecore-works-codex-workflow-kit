@@ -4,23 +4,45 @@ on:
   workflow_dispatch:
   pull_request:
     paths:
+      - ".agents/**"
+      - ".codex/agents/**"
+      - ".github/ISSUE_TEMPLATE/**"
       - "scripts/**"
       - "tests/**"
       - "config/**"
+      - "docs/**"
+      - "examples/**"
+      - "templates/**"
       - ".github/workflows/cross-platform.yml"
       - ".github/workflows/validate.yml"
       - "package.json"
+      - "README.md"
       - "AGENTS.template.md"
+      - "CONTRIBUTING.md"
+      - "MAINTAINERS.md"
+      - "SECURITY.md"
+      - "SUPPORT.md"
   push:
     branches: [main]
     paths:
+      - ".agents/**"
+      - ".codex/agents/**"
+      - ".github/ISSUE_TEMPLATE/**"
       - "scripts/**"
       - "tests/**"
       - "config/**"
+      - "docs/**"
+      - "examples/**"
+      - "templates/**"
       - ".github/workflows/cross-platform.yml"
       - ".github/workflows/validate.yml"
       - "package.json"
+      - "README.md"
       - "AGENTS.template.md"
+      - "CONTRIBUTING.md"
+      - "MAINTAINERS.md"
+      - "SECURITY.md"
+      - "SUPPORT.md"
 
 permissions:
   contents: read

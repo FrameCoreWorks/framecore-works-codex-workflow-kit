@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This map shows how the public FrameCore Works workflow pieces fit together: blueprints, role agents, supporting skills, artifacts, gates, handoffs, examples, and optional adapter knowledge.
+This map is the canonical relationship view for how the public FrameCore Works workflow pieces fit together: blueprints, role agents, supporting skills, artifacts, gates, handoffs, examples, and optional adapter knowledge. It is not the source of truth for raw counts.
 
 Use this document when you need the full mental model before installing, customizing, reviewing, or extending the kit. For the raw inventory, see [Included Agents And Skills](included-agents-and-skills.md). For detailed role responsibilities, see [Agent Roster](agent-roster.md).
 

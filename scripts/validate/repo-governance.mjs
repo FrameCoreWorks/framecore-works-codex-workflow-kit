@@ -18,6 +18,7 @@ export function run(ctx) {
     ".github/ISSUE_TEMPLATE/documentation.yml",
     ".github/ISSUE_TEMPLATE/feature_request.yml",
     ".github/ISSUE_TEMPLATE/install_support.yml",
+    ".github/ISSUE_TEMPLATE/tester_feedback.yml",
     ".github/pull_request_template.md",
     "CONTRIBUTING.md",
     "SECURITY.md",
@@ -136,7 +137,8 @@ export function run(ctx) {
     ".github/ISSUE_TEMPLATE/bug_report.yml",
     ".github/ISSUE_TEMPLATE/documentation.yml",
     ".github/ISSUE_TEMPLATE/feature_request.yml",
-    ".github/ISSUE_TEMPLATE/install_support.yml"
+    ".github/ISSUE_TEMPLATE/install_support.yml",
+    ".github/ISSUE_TEMPLATE/tester_feedback.yml"
   ]) {
     const file = join(validationRoot, issueTemplate);
     if (existsSync(file)) {

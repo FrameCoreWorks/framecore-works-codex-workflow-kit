@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This inventory shows what the public FrameCore Works Skill Kit includes before installation.
+This inventory is the canonical public list of what the FrameCore Works Skill Kit includes before installation. Keep counts, installed/listed items, and public install-surface names here; use [Workflow Map](workflow-map.md) for relationships and [Agent Roster](agent-roster.md) for role responsibilities.
 
 The kit installs a project-local workflow layer for Codex: role-agent templates, workflow skills, onboarding, docs, examples, artifact contracts, gates, handoffs, validation scripts, and provider-neutral safety rules. It does not install paid external media providers, API keys, endpoint catalogs, provider CLIs, or background upload tooling.
 
@@ -14,7 +14,7 @@ The kit installs a project-local workflow layer for Codex: role-agent templates,
 | Workflow skills | 27 | `.agents/skills/*/SKILL.md` |
 | Core workflow references | 5 | `.agents/skills/pipeline-core/references/` |
 | Artifact schemas | 1 registry | `config/artifact-schemas.json` |
-| Example workflows | 11 | `examples/*/workflow.json` |
+| Example workflows | 12 | `examples/*/workflow.json` |
 | Installer and validation scripts | multiple | `scripts/*.mjs` and `tools/*.mjs` |
 
 ## Installed Agent Templates

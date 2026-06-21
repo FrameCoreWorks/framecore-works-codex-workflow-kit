@@ -1,0 +1,124 @@
+name: Tester feedback
+description: Share public testing feedback for beginner install, ChatGPT Skills onboarding, update flow, or first workflow use.
+title: "[Tester Feedback]: "
+labels: ["feedback", "public-testing"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for public testing feedback. Do not include secrets, API keys, private URLs, private links, client data, credentials, `.env` files, private cloud folders, personal emails, emails, local machine paths, generated confidential outputs, or full private project context.
+
+        If you want the longer copy/paste template, see `docs/tester-feedback.md`.
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface Tested
+      description: Where did you try to use the kit?
+      options:
+        - Codex
+        - ChatGPT Skills
+        - Terminal/manual install
+        - Other AGENTS-aware tool
+        - Not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: flow
+    attributes:
+      label: Flow Tested
+      description: Which path did you try?
+      options:
+        - Beginner Start prompt
+        - Guided installer
+        - Manual install commands
+        - ChatGPT Skills onboarding
+        - Update existing install
+        - First workflow task after install
+        - Feedback/review only
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What were you trying to do, and what happened?
+    validations:
+      required: true
+  - type: textarea
+    id: prompt_or_commands
+    attributes:
+      label: Sanitized Prompt Or Commands
+      description: Paste the exact prompt or commands if safe. Replace private paths, names, URLs, and project details with placeholders.
+      render: text
+  - type: textarea
+    id: result
+    attributes:
+      label: Result
+      description: Where did the flow stop, succeed, or become confusing? Include the exact error or message if safe.
+      render: text
+    validations:
+      required: true
+  - type: dropdown
+    id: completed
+    attributes:
+      label: Completed Successfully
+      options:
+        - yes
+        - no
+        - partly
+        - not sure
+    validations:
+      required: true
+  - type: dropdown
+    id: shell_commands
+    attributes:
+      label: Could The Environment Run Shell Commands?
+      options:
+        - yes
+        - no
+        - not sure
+        - not applicable
+  - type: dropdown
+    id: git_available
+    attributes:
+      label: Was git Available?
+      options:
+        - yes
+        - no
+        - not sure
+        - not applicable
+  - type: dropdown
+    id: sandbox_configured
+    attributes:
+      label: Was Codex Sandbox Or Workspace Folder Configured?
+      options:
+        - yes
+        - no
+        - not sure
+        - not applicable
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      placeholder: "macOS, Windows, Linux, or unknown"
+  - type: input
+    id: version_or_commit
+    attributes:
+      label: Version Or Commit
+      description: Which release, tag, or commit did you test?
+      placeholder: "v1.0.2, main, or commit SHA"
+  - type: textarea
+    id: expected
+    attributes:
+      label: What Did You Expect?
+      description: Short plain-language expectation.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy Confirmation
+      options:
+        - label: I removed secrets, API keys, private links, client data, credentials, local absolute paths, personal emails, and private project context from this report.
+          required: true
+        - label: I understand security-sensitive reports should use SECURITY.md or the Security tab, not this public issue.
+          required: true

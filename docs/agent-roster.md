@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This guide explains the public FrameCore Works role IDs, what each role is allowed to own, which artifact it should produce, and where it can hand off next.
+This guide is the canonical role-responsibility reference for public FrameCore Works role IDs: what each role is allowed to own, which artifact it should produce, which gate reviews it, and where it can hand off next. It is not the inventory source for total counts.
 
 The source repo uses neutral role IDs only. During onboarding, each user may assign local display names for their own workspace. Those display names stay in local config and should not be committed back to the public kit.
 

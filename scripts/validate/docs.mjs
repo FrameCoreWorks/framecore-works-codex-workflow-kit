@@ -24,6 +24,8 @@ export function run(ctx) {
     "docs/openai-api-policy.md",
     "docs/v1-readiness.md",
     "docs/live-codex-e2e-check.md",
+    "docs/e2e-results/README.md",
+    "docs/e2e-results/TEMPLATE.md",
     "docs/roadmap.md",
     "docs/release.md",
     "docs/release-notes-template.md",
