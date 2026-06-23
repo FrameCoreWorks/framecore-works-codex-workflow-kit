@@ -17,6 +17,7 @@
   "gates": [
     "intent_lock",
     "workflow_route",
+    "loop_control_fit",
     "brief_completeness",
     "reference_authority_fit",
     "direction_fit",
@@ -29,6 +30,7 @@
   "artifacts": [
     "Task Confirmation",
     "Project State",
+    "Loop State",
     "Brief Contract",
     "Reference Pack",
     "Direction Contract",

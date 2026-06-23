@@ -35,6 +35,7 @@ Create a provider-neutral prompt pack and QA plan for a set of ecommerce visuals
 | Gate | Artifact |
 | --- | --- |
 | `intent_lock` | [Task Confirmation](artifacts/task-confirmation.md) |
+| `loop_control_fit` | Loop State |
 | `brief_completeness` | [Brief Contract](artifacts/brief-contract.md) |
 | `reference_authority_fit` | [Reference Pack](artifacts/reference-pack.md) |
 | `direction_fit` | [Direction Contract](artifacts/direction-contract.md) |
@@ -45,6 +46,7 @@ Create a provider-neutral prompt pack and QA plan for a set of ecommerce visuals
 ## Artifacts Produced
 
 - `artifacts/task-confirmation.md`
+- Loop State
 - `artifacts/brief-contract.md`
 - `artifacts/reference-pack.md`
 - `artifacts/direction-contract.md`

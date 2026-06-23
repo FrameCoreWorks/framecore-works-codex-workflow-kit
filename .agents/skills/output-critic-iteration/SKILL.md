@@ -39,6 +39,7 @@ Produce a QA / Iteration Report with:
 - accepted assets and delivery allowlist
 - excluded assets and rejection reasons
 - defects grouped by severity
+- root cause, loopback target, regression check, and stop recommendation when Loop Protocol applies
 - corrected instruction packets or rerun guidance
 - loopback target when upstream work must change
 - residual caveats
@@ -49,7 +50,8 @@ Produce a QA / Iteration Report with:
 2. Separate objective failures from taste preferences.
 3. Decide accept, fix, rerun, loop back, or exclude for each asset.
 4. Write corrected instructions only for the smallest necessary change.
-5. Produce a clear allowlist for `delivery-documentation`.
+5. For Loop Protocol work, name root cause, regression check, and one stop recommendation: `stop_sufficient`, `patch_one_gap`, `ask_user`, or `blocked`.
+6. Produce a clear allowlist for `delivery-documentation`.
 
 ## Decision Rules
 
@@ -57,6 +59,7 @@ Produce a QA / Iteration Report with:
 - Use loopback when the prompt, brief, reference pack, or direction was the real failure point.
 - Accept with caveat only when the caveat is visible and safe for the user.
 - Do not request reruns without explaining what must change.
+- Do not continue a loop only because the result could be better in theory.
 
 ## Guardrails
 
@@ -75,6 +78,10 @@ Hand off to `delivery-documentation` with:
 - `accepted_assets`
 - `excluded_assets`
 - `QA status`
+- `root_cause`
+- `loopback_target`
+- `regression_check`
+- `stop_recommendation`
 - `caveats`
 - `allowlist`
 
@@ -86,4 +93,5 @@ Loop back to the responsible upstream role when defects require rework.
 - Rejections include concrete reasons.
 - Acceptance criteria were applied consistently.
 - Corrected instructions target the real failure.
+- Loop recommendations include severity, root cause, regression check, and stop decision when iteration applies.
 - Delivery allowlist contains only accepted assets.

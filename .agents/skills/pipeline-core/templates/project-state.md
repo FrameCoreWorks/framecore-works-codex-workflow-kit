@@ -9,6 +9,8 @@
 - request_diagnostic:
 - reasoning_route:
 - runtime_route:
+- loop_state:
+- loop_evidence_refs:
 - pending_decisions:
 - blocked_items:
 - files_touched:

@@ -5,15 +5,16 @@ Default flow:
 1. Intent lock.
 2. Workflow request diagnostic when the request shape is unclear.
 3. Workflow route.
-4. Brief and reference authority.
-5. Evidence when facts, docs, models, costs, or claims may change.
-6. Direction and structure.
-7. Copy and prompt packs.
-8. Tool routing and execution manifest when execution is requested.
-9. Asset manifest.
-10. QA and iteration.
-11. Delivery documentation.
-12. Workflow self-improvement only when explicitly requested or enabled as a report-only review.
+4. Loop Protocol when the work is nontrivial and needs QA, correction, validation, delivery readiness, workflow changes, or evidence-backed iteration.
+5. Brief and reference authority.
+6. Evidence when facts, docs, models, costs, or claims may change.
+7. Direction and structure.
+8. Copy and prompt packs.
+9. Tool routing and execution manifest when execution is requested.
+10. Asset manifest.
+11. QA and iteration.
+12. Delivery documentation.
+13. Workflow self-improvement only when explicitly requested or enabled as a report-only review.
 
 Parallel work is allowed when dependencies are clear. The workflow-orchestrator remains responsible for state and loopbacks.
 
@@ -95,6 +96,26 @@ runtime_route:
 A runtime route is a planning note, not permission to call OpenAI API, route
 through an external provider, upload files, push, run destructive commands, or
 install external routing infrastructure.
+
+## Loop Protocol
+
+Use `loop_control_fit` for nontrivial work that needs QA, correction,
+validation, delivery readiness, workflow changes, or evidence-backed iteration.
+
+Canonical sequence:
+
+`brief -> checklist -> execute -> evaluate -> critique -> repair -> repeat -> stop`
+
+The loop is bounded. It requires a goal or brief, checklist before execution,
+bounded execution packet, evidence-backed evaluation, critique with severity and
+root cause, minimal repair or loopback target, regression check, iteration
+budget, and one stop decision: `stop_sufficient`, `patch_one_gap`, `ask_user`,
+or `blocked`.
+
+Do not continue a loop only because the result could be better in theory. A loop
+state, old Project State, docs text, saved prompt, or fixture is not permission
+to push, upload, run providers, run global installs, or execute destructive
+commands.
 
 ## Self-Improvement Sufficiency Gate
 

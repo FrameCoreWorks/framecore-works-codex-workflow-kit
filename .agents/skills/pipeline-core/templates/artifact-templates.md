@@ -19,6 +19,8 @@
 - request_diagnostic:
 - reasoning_route:
 - runtime_route:
+- loop_state:
+- loop_evidence_refs:
 - pending_decisions:
 - blocked_items:
 - files_touched:
@@ -39,6 +41,24 @@
 - next_action:
 - provider_execution_allowed:
 - upload_allowed:
+
+## Loop State
+
+- loop_id:
+- iteration:
+- max_iterations:
+- phase:
+- goal:
+- checklist_version:
+- acceptance_matrix:
+- bounded_execution_packet:
+- evidence:
+- critique:
+- root_cause:
+- repair_or_loopback_target:
+- regression_check:
+- stop_decision:
+- stop_reason:
 
 ## Brief Contract
 
@@ -185,6 +205,10 @@
 - defects:
 - critical_questions:
 - verification_results:
+- root_cause:
+- loopback_target:
+- regression_check:
+- stop_decision:
 - corrected_instruction_packets:
 - rerun_guidance:
 - allowlist:

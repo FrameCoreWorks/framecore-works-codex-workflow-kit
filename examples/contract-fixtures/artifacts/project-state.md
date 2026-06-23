@@ -33,6 +33,14 @@
   - provider_execution_allowed: false
   - openai_api_allowed: false
   - external_router_adopted_raw: false
+- loop_state:
+  - loop_id: loop-minimal-planning-001
+  - iteration: 0
+  - max_iterations: 1
+  - phase: brief
+  - stop_decision: stop_sufficient
+- loop_evidence_refs:
+  - examples/contract-fixtures/artifacts/project-state.md
 - pending_decisions:
   - Confirm whether references are required before direction.
 - blocked_items:

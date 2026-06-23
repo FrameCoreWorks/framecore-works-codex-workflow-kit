@@ -33,6 +33,7 @@ Loop back to the source role only when QA finds a fix that belongs to a specific
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit`
 - `asset_manifest_fit`
 - `post_execution_fit`
 - `delivery_fit`
@@ -41,6 +42,7 @@ Loop back to the source role only when QA finds a fix that belongs to a specific
 
 - Task Confirmation
 - Project State
+- Loop State
 - Asset Manifest
 - QA / Iteration Report
 - Delivery Manifest

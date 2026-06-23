@@ -17,6 +17,16 @@
 - verification_results:
   - No generated media is included in this fixture.
   - Planning artifacts are accepted only as review drafts.
+- root_cause:
+  - Missing product specs are upstream brief gaps, not QA-only delivery issues.
+- loopback_target:
+  - `brief-architect` if product specs become required.
+  - `copy-voice` if visible marketing copy becomes required.
+  - `image-prompting` after dimensions and channel formats are known.
+- regression_check:
+  - Ensure no provider execution, uploads, or generated media claims were introduced.
+  - Ensure visible-text policy remains one-pass when text is required.
+- stop_decision: stop_sufficient
 - corrected_instruction_packets:
   - If visible text becomes required, lock exact copy before any raster graphic generation.
   - If channel formats are supplied, update prompts with aspect ratio and safe-margin requirements.

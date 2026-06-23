@@ -37,7 +37,7 @@ export function run(ctx) {
   if (existsSync(artifactTemplates)) {
     const text = read(artifactTemplates);
     const sections = markdownSections(text);
-    for (const section of ["Task Confirmation", "Workflow Request Diagnostic", "Brief Contract", "Reference Pack", "Instruction Packet", "Storyboard Contract", "Board Artifact Prompt", "Prompt Pack", "Execution Manifest", "HyperFrames Production Brief", "QA / Iteration Report", "Delivery Manifest", "Self-Improvement Sufficiency Gate"]) {
+    for (const section of ["Task Confirmation", "Workflow Request Diagnostic", "Loop State", "Brief Contract", "Reference Pack", "Instruction Packet", "Storyboard Contract", "Board Artifact Prompt", "Prompt Pack", "Execution Manifest", "HyperFrames Production Brief", "QA / Iteration Report", "Delivery Manifest", "Self-Improvement Sufficiency Gate"]) {
       if (!sections.has(section)) addFinding("MISSING_TEMPLATE_SECTION", `Artifact template section is missing: ${section}`, [artifactTemplates]);
     }
     if (artifactSchemas?.artifacts) {

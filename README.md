@@ -20,9 +20,9 @@ At a glance, the repo includes:
 - **20 Codex role-agent templates** for routing, creative planning, prompting, QA, delivery, and execution documentation.
 - **27 workflow skills** for brief building, reference curation, campaign direction, image and video prompting, storyboard work, Humanizer, HyperFrames planning, Hipson-style packets, QA, delivery, onboarding, and workflow self-improvement. These skills are workflow contracts and routing rules, not full generator-technique manuals.
 - **Project-local install and onboarding** with doctor/preflight, dry-run, manifest tracking, update, repair, and uninstall.
-- **Workflow contracts** for gates, handoffs, artifact schemas, examples, and provider-neutral safety boundaries.
+- **Workflow contracts** for gates, handoffs, artifact schemas, examples, Loop Protocol, and provider-neutral safety boundaries.
 
-For the full inventory, see [Included Agents And Skills](docs/included-agents-and-skills.md).
+For the full inventory, see [Included Agents And Skills](docs/included-agents-and-skills.md). For iterative QA and repair discipline, see [Loop Protocol](docs/loop-protocol.md). For the staged adoption plan, see [Loop Protocol Integration Plan](docs/loop-protocol-integration-plan.md).
 
 | Area | Included examples |
 | --- | --- |

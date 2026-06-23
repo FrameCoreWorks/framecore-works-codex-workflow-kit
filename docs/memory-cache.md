@@ -58,7 +58,7 @@ Do not create or rewrite recovery folders without the user's current consent. Do
 - a long unattended session
 - a handoff to a new chat or maintainer
 
-It should include `checkpoint_id`, `checkpoint_status`, `last_completed_gate`, `blocked_items`, `files_touched`, `risks`, `next_action`, and a short recovery prompt pointer.
+It should include `checkpoint_id`, `checkpoint_status`, `last_completed_gate`, loop state when iteration applies, `blocked_items`, `files_touched`, `risks`, `next_action`, and a short recovery prompt pointer.
 
 ## Recovery Prompt
 

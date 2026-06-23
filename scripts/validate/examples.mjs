@@ -98,6 +98,17 @@ export function run(ctx) {
     if (typeof workflow.execution_boundary !== "string" || workflow.execution_boundary.trim().length === 0) {
       addFinding("INVALID_EXAMPLE_WORKFLOW", "Example workflow must define execution_boundary.", [workflowPath]);
     }
+    if (Array.isArray(workflow.route) && workflow.route.includes("qa-iteration")) {
+      if (!Array.isArray(workflow.gates) || !workflow.gates.includes("loop_control_fit")) {
+        addFinding("MISSING_EXAMPLE_LOOP_GATE", "Example workflows that route through qa-iteration must include loop_control_fit.", [workflowPath]);
+      }
+      if (!Array.isArray(workflow.artifacts) || !workflow.artifacts.includes("Loop State")) {
+        addFinding("MISSING_EXAMPLE_LOOP_ARTIFACT", "Example workflows that route through qa-iteration must include Loop State.", [workflowPath]);
+      }
+    }
+    if (Array.isArray(workflow.gates) && workflow.gates.includes("loop_control_fit") && (!Array.isArray(workflow.artifacts) || !workflow.artifacts.includes("Loop State"))) {
+      addFinding("MISSING_EXAMPLE_LOOP_ARTIFACT", "Example workflows that use loop_control_fit must include Loop State.", [workflowPath]);
+    }
     for (const [field, allowedSet, code] of [
       ["route", ctx.requiredRoleSet, "UNKNOWN_EXAMPLE_ROLE"],
       ["gates", new Set(ctx.knownGates.keys()), "UNKNOWN_EXAMPLE_GATE"],

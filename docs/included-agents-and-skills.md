@@ -81,14 +81,14 @@ Skills are workflow contracts. They define when a capability should be used, wha
 | `marketing` | Plan campaigns, offer framing, asset matrices, audience fit, channel adaptation, launch kits, and campaign QA. |
 | `onboarding-preference-tuning` | Run first-time setup for preferences, local display names, output paths, QA strictness, delivery behavior, and optional expansions. |
 | `output-critic-iteration` | Review produced outputs against brief, references, prompts, copy locks, observables, and acceptance criteria. |
-| `pipeline-core` | Route workflows through roles, gates, handoffs, artifacts, request diagnostics, reasoning routes, QA, delivery, and governance. |
+| `pipeline-core` | Route workflows through roles, gates, handoffs, artifacts, request diagnostics, reasoning routes, Loop Protocol, QA, delivery, and governance. |
 | `reference-pack-curator` | Structure references into canonical sources, aliases, role tags, suppression rules, conflicts, and continuity anchors. |
 | `storyboard-board-architect` | Specify storyboard board, production board, or shot board graphics with panel structure and board copy. |
 | `storyboard-director` | Convert direction into beats, scenes, shot cards, timing, transitions, and continuity rules. |
 | `storytelling` | Plan narrative structure, story beats, emotional arcs, scene logic, continuity, and multi-shot workflows. |
 | `ugc` | Plan UGC-style creator ads, talking-head scripts, social proof concepts, hooks, and creator-read copy. |
 | `video-prompt-architect` | Create final provider-neutral video prompt packs from approved storyboard, motion direction, references, and copy. |
-| `workflow-orchestrator` | Route workflows, maintain project state, assign role-based agents, enforce gates, and decide loopbacks. |
+| `workflow-orchestrator` | Route workflows, maintain project state, assign role-based agents, enforce gates, own Loop State, and decide loopbacks and stop decisions. |
 | `workflow-self-improvement` | Run explicit-only retrospectives, workflow audits, improvement notes, and approval-gated change proposals. |
 
 ## Skill Groups

@@ -7,7 +7,7 @@ description: Use this skill for FrameCore Works workflow routing, role-based age
 
 Use this skill when a task needs the FrameCore Works workflow system.
 
-It is the contract layer for roles, gates, handoffs, artifacts, request diagnostics, reasoning routes, text-bearing image policy, Humanizer routing, HyperFrames routing, Hipson Adapter routing, and workflow governance.
+It is the contract layer for roles, gates, handoffs, artifacts, request diagnostics, reasoning routes, Loop Protocol, text-bearing image policy, Humanizer routing, HyperFrames routing, Hipson Adapter routing, and workflow governance.
 
 ## When To Use
 
@@ -15,6 +15,7 @@ Use this skill when:
 
 - A request needs more than one workflow stage or role.
 - The task involves brief, references, direction, prompting, QA, delivery, onboarding, or governance.
+- The task needs checklist-driven evaluation, critique, repair, regression checks, or a loopback decision.
 - The user asks how the kit routes work or what the installed roles do.
 
 Do not use this skill to bypass specialist skills, run tools, upload files, or replace the user's local preferences.
@@ -40,6 +41,7 @@ Produce one or more of:
 - Task Confirmation
 - Project State
 - Workflow Request Diagnostic
+- Loop State
 - role route and gate sequence
 - reasoning route and runtime route when useful
 - handoff notes
@@ -50,9 +52,10 @@ Produce one or more of:
 
 1. `intent-confirmation` locks goal, exclusions, work mode, expected output, and immediate next step.
 2. `workflow-orchestrator` chooses blueprint, roles, gates, handoffs, reasoning route when useful, and next action.
-3. Specialist roles produce contracts, not loose opinions.
-4. `qa-iteration` reviews produced outputs when assets exist.
-5. `delivery-documentation` packages final notes only after QA or explicit acceptance.
+3. For nontrivial iterative work, `workflow-orchestrator` activates `loop_control_fit`: brief, checklist, bounded execution, evaluation, critique, minimal repair, regression check, and stop decision.
+4. Specialist roles produce contracts, not loose opinions.
+5. `qa-iteration` reviews produced outputs when assets exist or when evidence-backed critique is needed.
+6. `delivery-documentation` packages final notes only after QA or explicit acceptance.
 
 ## References
 
@@ -60,6 +63,7 @@ Read only what is needed:
 
 - `references/agent-roster.md` for role list and responsibilities.
 - `references/workflow-operating-model.md` for stage order and review gates.
+- `references/loop-protocol.md` for `brief -> checklist -> execute -> evaluate -> critique -> repair -> repeat -> stop`, loop state, repair boundaries, regression checks, and stop decisions.
 - `references/workflow-blueprints.md` for common task routes and loopback boundaries.
 - `references/handoff-matrix.md` for allowed handoffs and required fields.
 - `references/gate-registry.md` for canonical gate names.
@@ -71,6 +75,7 @@ Read only what is needed:
 ## Decision Rules
 
 - Prefer the smallest route that preserves gates and handoffs.
+- Use `loop_control_fit` for nontrivial work that needs QA, correction, validation, delivery readiness, workflow changes, or evidence-backed iteration.
 - Use a Workflow Request Diagnostic when the request could be mistaken for install help, a simple prompt, a full creative workflow, QA, delivery, provider execution planning, or workflow improvement.
 - Record a compact `reasoning_route` when the task needs decomposition, verification, comparison, a tool loop, branching, or bounded search.
 - Prefer public runtime tiers and reasoning effort levels over brittle exact model names when a `runtime_route` is useful.
@@ -91,6 +96,8 @@ Read only what is needed:
 - Delivery follows QA when generated assets exist.
 - Upload, publish, or external delivery requires an explicit current user request.
 - Workflow self-improvement creates proposals, not automatic mutations; when implementation is requested, use the self-improvement sufficiency gate to choose `stop_sufficient`, `patch_one_gap`, or `ask_user`.
+- Loop Protocol work must record an iteration budget, acceptance matrix, evidence, root cause, minimal repair or loopback target, regression check, and one stop decision: `stop_sufficient`, `patch_one_gap`, `ask_user`, or `blocked`.
+- Do not continue a loop only because the result could be better in theory.
 - Do not store raw chain-of-thought, raw reasoning traces, raw debate transcripts, private URLs, provider responses, secrets, `.env` files, or copied private project context.
 - A runtime route or model recommendation is not permission to call an API, use an external provider, upload files, run destructive commands, or install routing infrastructure.
 - Do not add private project context, secrets, local machine paths, or provider-specific execution dependencies.
@@ -110,6 +117,8 @@ Hand off with:
 - `request_diagnostic`
 - `reasoning_route`
 - `runtime_route`
+- `loop_state`
+- `loop_evidence_refs`
 - `pending_decisions`
 - `blocked_items`
 - `files_touched`
@@ -125,6 +134,7 @@ Hand off with:
 - Required gates and handoffs are named.
 - Reasoning routes are compact, bounded, and do not store raw reasoning traces.
 - Runtime routes keep provider/API/upload permissions false unless the current user explicitly asks for the protected action.
+- Loop state has checklist-before-execution, evidence-backed evaluation, root cause, minimal repair or loopback target, regression check, and stop decision.
 - Missing artifacts trigger loopback instead of guesswork.
 - External delivery or execution is not implied without user instruction.
 - Public-neutral boundaries remain intact.

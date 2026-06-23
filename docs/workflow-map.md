@@ -13,7 +13,7 @@ Use this document when you need the full mental model before installing, customi
 | Project instructions | `AGENTS.template.md` | Installed workspace behavior, safety boundaries, local workflow entry point. |
 | Role agents | `.codex/agents/*.toml.template` | Codex custom-agent role files rendered into the target workspace. |
 | Workflow skills | `.agents/skills/*/SKILL.md` | Reusable contracts for when to act, required inputs, outputs, guardrails, and handoff. |
-| Pipeline core | `.agents/skills/pipeline-core/` | Role routes, gates, handoffs, Project State, artifact templates, reasoning routes, and safety policy. |
+| Pipeline core | `.agents/skills/pipeline-core/` | Role routes, gates, handoffs, Project State, Loop Protocol, artifact templates, reasoning routes, and safety policy. |
 | Public examples | `examples/*/workflow.json` | Machine-checked route examples for common workflow shapes. |
 | Install lifecycle | `scripts/install.mjs`, `scripts/guided-install.mjs`, `scripts/doctor.mjs` | Project-local install, onboarding, dry-run, update, repair, uninstall, and diagnostics. |
 | Bundle readiness | `config/bundle-map.json`, `docs/bundle-readiness.md` | Future package boundaries without changing current install behavior. |
@@ -82,6 +82,21 @@ If a skill appears here but does not appear as a role-agent template, treat it a
 | Hipson Adapter | `.agents/skills/hipson-adapter/`, `docs/hipson-integration.md` | A task needs research maps, internet mapping packets, review packets, or bounded instruction packets without installing full Hipson. |
 | Memory Cache | `templates/Memory Cache/`, `docs/memory-cache.md`, `docs/context-folder.md` | Long Codex sessions need local state, recovery prompts, decision logs, and context folding. |
 | Provider governance | `config/provider-neutral-policy.json`, `config/text-image-policy.json`, `docs/provider-neutral-boundary.md` | A workflow touches execution planning, visible text in graphics, OpenAI API boundaries, uploads, or external-provider safety. |
+
+## Loop Protocol
+
+Nontrivial work that needs QA, correction, validation, delivery readiness,
+workflow changes, or evidence-backed iteration uses [Loop Protocol](loop-protocol.md):
+
+`brief -> checklist -> execute -> evaluate -> critique -> repair -> repeat -> stop`
+
+The canonical gate is `loop_control_fit`. The workflow-orchestrator owns loop
+state and stop decisions. The QA role owns evidence-backed critique, root cause,
+loopback target, regression check, and stop recommendation when QA applies.
+
+Loop Protocol is bounded. It must end with `stop_sufficient`, `patch_one_gap`,
+`ask_user`, or `blocked`; it is not permission for providers, uploads, pushes,
+global installs, destructive commands, or endless polish.
 
 ## Handoff Discipline
 

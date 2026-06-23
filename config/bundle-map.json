@@ -5,7 +5,7 @@
   "bundles": {
     "pipeline-core": {
       "status": "current-public",
-      "summary": "Core workflow operating layer: instructions, routing, gates, handoffs, artifact contracts, Project State, and safe recovery policy.",
+      "summary": "Core workflow operating layer: instructions, routing, gates, handoffs, artifact contracts, Loop Protocol, Project State, and safe recovery policy.",
       "public_installable": true,
       "dependencies": [],
       "source_paths": [
@@ -16,6 +16,8 @@
         "docs/architecture.md",
         "docs/included-agents-and-skills.md",
         "docs/workflow-map.md",
+        "docs/loop-protocol.md",
+        "docs/loop-protocol-integration-plan.md",
         "docs/workflow-stages.md",
         "docs/artifact-schemas.md"
       ],

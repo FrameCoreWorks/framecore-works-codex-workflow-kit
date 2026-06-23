@@ -34,6 +34,7 @@ This example uses `static-direction` and `image-prompting`. Other no-provider ro
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit`
 - `brief_completeness`
 - `reference_authority_fit`
 - `direction_fit`
@@ -49,6 +50,7 @@ This example uses `static-direction` and `image-prompting`. Other no-provider ro
 - Direction Contract
 - Copy Pack
 - Prompt Pack
+- Loop State
 - QA / Iteration Report
 - Delivery Manifest
 

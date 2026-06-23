@@ -205,7 +205,7 @@ Codex should then keep `Memory Cache/project-state.md` and `Memory Cache/recover
 
 For multi-step or resumable work, ask Codex to keep a Project State artifact current. Treat it as the durable run-state ledger for the active task, not as a final delivery file.
 
-Project State should include the selected route, active role IDs, completed or existing artifacts, last completed gate, pending decisions, blocked items, touched files, visible risks, next role, next action, and a recovery prompt.
+Project State should include the selected route, active role IDs, completed or existing artifacts, last completed gate, request diagnostic, reasoning route, runtime route, loop state when iteration applies, loop evidence refs when iteration applies, pending decisions, blocked items, touched files, visible risks, next role, next action, and a recovery prompt.
 
 If a session loses context, restart with:
 

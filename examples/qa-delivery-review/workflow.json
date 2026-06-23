@@ -12,6 +12,7 @@
   "gates": [
     "intent_lock",
     "workflow_route",
+    "loop_control_fit",
     "asset_manifest_fit",
     "post_execution_fit",
     "delivery_fit"
@@ -19,6 +20,7 @@
   "artifacts": [
     "Task Confirmation",
     "Project State",
+    "Loop State",
     "Asset Manifest",
     "QA / Iteration Report",
     "Delivery Manifest"

@@ -16,14 +16,14 @@ Start with the smallest safe route:
 4. Stop before `tool-routing-cost` unless the user explicitly asks for execution planning.
 5. Stop before uploads, publishing, or external tools unless the user explicitly requests them.
 
-The active route should name the role IDs, required gates, expected artifacts, handoff target, execution boundary, and loopback condition if QA fails.
+The active route should name the role IDs, required gates, expected artifacts, handoff target, execution boundary, and loopback condition if QA fails. Nontrivial iterative work should also name the Loop State and stop decision path.
 
 ## Role Roster
 
 | Role ID | When to use | Primary input | Primary artifact | Review gate | Common handoff |
 | --- | --- | --- | --- | --- | --- |
 | `intent-confirmation` | A new or ambiguous user request needs scope, exclusions, and output expectations locked. | Raw user request | Task Confirmation | `intent_lock` | `workflow-orchestrator` |
-| `workflow-orchestrator` | The workflow route, depth, handoffs, loopbacks, and stopping point need ownership. | Task Confirmation, local config | Project State | `workflow_route` | Specialist role, `instruction-packet-factory`, or `asset-manifest` |
+| `workflow-orchestrator` | The workflow route, depth, handoffs, loopbacks, Loop State, and stopping point need ownership. | Task Confirmation, local config | Project State, Loop State when iteration applies | `workflow_route`, `loop_control_fit` when iteration applies | Specialist role, `instruction-packet-factory`, `qa-iteration`, or `asset-manifest` |
 | `brief-architect` | A rough idea needs conversion into a usable creative or production brief. | Goal, raw context, constraints | Brief Contract | `brief_completeness` | `reference-curator`, `research-evidence`, or `delivery-documentation` |
 | `reference-curator` | Visual, brand, product, continuity, or inspiration references need structure. | Brief Contract, reference needs | Reference Pack | `reference_authority_fit` | `static-direction` or `motion-direction` |
 | `research-evidence` | Claims, tool limits, public facts, or source-backed decisions need verification. | Bounded research question, source rules | Evidence Note | `evidence_fit` | Requesting role or `copy-voice` |
@@ -39,7 +39,7 @@ The active route should name the role IDs, required gates, expected artifacts, h
 | `tool-routing-cost` | The user explicitly asks to plan execution with their own configured tools. | Prompt Pack, approval status | Tool Routing Plan | `schema_pricing_fit` | `execution-manifest` |
 | `execution-manifest` | An approved execution run needs traceability, parameters, output plan, and risk notes. | Selected tool, approved inputs | Execution Manifest | `execution_manifest_fit` | `asset-manifest` |
 | `asset-manifest` | Existing or produced files need indexing, versions, provenance, and traceability. | Output files, source notes | Asset Manifest | `asset_manifest_fit` | `qa-iteration` |
-| `qa-iteration` | Outputs, prompts, or artifacts need acceptance review and loopback decisions. | Artifacts, assets, criteria | QA / Iteration Report | `post_execution_fit` | `delivery-documentation` or source role loopback |
+| `qa-iteration` | Outputs, prompts, or artifacts need acceptance review, evidence-backed critique, regression check, and loopback decisions. | Artifacts, assets, criteria, Loop State | QA / Iteration Report | `post_execution_fit`, `loop_control_fit` support | `delivery-documentation`, `workflow-orchestrator`, or source role loopback |
 | `delivery-documentation` | Accepted work needs packaging notes, caveats, final summary, or delivery manifest. | Accepted assets and caveats | Delivery Manifest | `delivery_fit` | User-facing final response |
 | `hyperframes-producer` | A coded-video route needs scene structure, animation system, captions, render QA, and manifest planning. | Storyboard, copy, render constraints | HyperFrames Production Brief | `execution_manifest_fit` | `asset-manifest` |
 

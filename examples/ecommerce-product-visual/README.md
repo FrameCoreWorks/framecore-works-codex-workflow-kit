@@ -33,6 +33,7 @@ Create a prompt-ready planning pack for an ecommerce product visual set: hero pr
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit`
 - `brief_completeness`
 - `reference_authority_fit`
 - `direction_fit`
@@ -45,6 +46,7 @@ Create a prompt-ready planning pack for an ecommerce product visual set: hero pr
 
 - Task Confirmation
 - Project State
+- Loop State
 - Brief Contract
 - Reference Pack
 - Direction Contract

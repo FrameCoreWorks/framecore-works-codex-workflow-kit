@@ -33,6 +33,8 @@ export function run(ctx) {
     "docs/architecture.md",
     "docs/included-agents-and-skills.md",
     "docs/workflow-map.md",
+    "docs/loop-protocol.md",
+    "docs/loop-protocol-integration-plan.md",
     "docs/artifact-schemas.md",
     "docs/example-authoring.md",
     "docs/workflow-stages.md",

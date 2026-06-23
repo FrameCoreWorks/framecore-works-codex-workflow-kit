@@ -33,6 +33,7 @@ Prepare a six-shot storyboard and video prompt pack for a short product reveal c
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit`
 - `brief_completeness`
 - `reference_authority_fit`
 - `direction_fit`
@@ -48,6 +49,7 @@ Prepare a six-shot storyboard and video prompt pack for a short product reveal c
 - Storyboard Contract
 - Copy Pack
 - Video Prompt Pack
+- Loop State
 - QA / Iteration Report
 - Delivery Manifest
 

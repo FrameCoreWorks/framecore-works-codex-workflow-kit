@@ -16,6 +16,7 @@ Use this page when deciding where a task should enter the pipeline, which artifa
 | --- | --- | --- | --- | --- | --- |
 | Intent lock | `intent-confirmation` | raw user request | Task Confirmation | `intent_lock` | `workflow-orchestrator` |
 | Route | `workflow-orchestrator` | task confirmation, local config | Project State | `workflow_route` | specialist role or `instruction-packet-factory` |
+| Loop control | `workflow-orchestrator`, `qa-iteration` | goal, acceptance criteria, artifacts under review | Loop State | `loop_control_fit` | bounded execution, QA, delivery, or source-role loopback |
 | Brief | `brief-architect` | goal, raw context, constraints | Brief Contract | `brief_completeness` | `reference-curator` |
 | References | `reference-curator` | brief, reference needs | Reference Pack | `reference_authority_fit` | direction role |
 | Research | `research-evidence` | bounded research question | Evidence Note | `evidence_fit` | requesting role |
@@ -42,11 +43,16 @@ Use this page when deciding where a task should enter the pipeline, which artifa
 
 Loopbacks should preserve accepted upstream artifacts unless the failed gate proves that an upstream decision is wrong or incomplete.
 
+For nontrivial iterative work, use [Loop Protocol](loop-protocol.md): brief,
+checklist, bounded execution, evidence evaluation, critique, minimal repair,
+regression check, and a stop decision. Do not continue a loop only because the
+result could be better in theory.
+
 ## Durable Project State
 
 Project State is the recovery ledger for long-running work. It should be updated whenever the route changes, a review gate is completed, a blocker appears, or the next role changes.
 
-At minimum, Project State records the selected workflow blueprint, active roles, completed or existing artifacts, last completed gate, required handoffs, review gates, pending decisions, blocked items, touched files, visible risks, next role, next action, and a recovery prompt.
+At minimum, Project State records the selected workflow blueprint, active roles, completed or existing artifacts, last completed gate, required handoffs, review gates, request diagnostic, reasoning route, runtime route, loop state when applicable, loop evidence refs when applicable, pending decisions, blocked items, touched files, visible risks, next role, next action, and a recovery prompt.
 
 When context is lost, a new Codex session should read `AGENTS.md`, `AGENTS.framecore.md` when present, and the latest Project State before continuing. If Project State is missing, reconstruct it from available artifacts before producing new specialist deliverables.
 

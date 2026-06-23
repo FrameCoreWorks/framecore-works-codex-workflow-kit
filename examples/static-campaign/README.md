@@ -32,6 +32,7 @@ Create a visual direction and prompt pack for three static ecommerce campaign im
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit`
 - `brief_completeness`
 - `reference_authority_fit`
 - `direction_fit`
@@ -47,6 +48,7 @@ Create a visual direction and prompt pack for three static ecommerce campaign im
 - Direction Contract
 - Copy Pack
 - Prompt Pack
+- Loop State
 - QA / Iteration Report
 - Delivery Manifest
 

@@ -63,6 +63,17 @@ test("validation rejects weak inference reasoning policy", () => {
   assert.match(`${result.stderr}${result.stdout}`, /WEAK_INFERENCE_REASONING_POLICY/);
 });
 
+test("validation rejects weak loop protocol", () => {
+  const dir = copyRepoFixture("framecore-validate-loop-policy-");
+  const file = join(dir, ".agents/skills/pipeline-core/references/loop-protocol.md");
+  const text = readFileSync(file, "utf8");
+  writeFileSync(file, text.replace("bounded_execution_packet", "execution_notes"));
+
+  const result = failRun(["scripts/validate.mjs", dir]);
+  assert.notEqual(result.status, 0);
+  assert.match(`${result.stderr}${result.stdout}`, /WEAK_LOOP_PROTOCOL/);
+});
+
 test("validation rejects missing artifact schemas for gate-required artifacts", () => {
   const dir = copyRepoFixture("framecore-validate-artifact-schema-missing-");
   const schemaFile = join(dir, "config/artifact-schemas.json");

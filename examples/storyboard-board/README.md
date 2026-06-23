@@ -34,6 +34,7 @@ Prepare a four-panel storyboard board prompt for a product reveal sequence. Keep
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit`
 - `brief_completeness`
 - `reference_authority_fit`
 - `direction_fit`
@@ -53,6 +54,7 @@ Prepare a four-panel storyboard board prompt for a product reveal sequence. Keep
 - Storyboard Contract
 - Board Artifact Prompt
 - Image Prompt Contract
+- Loop State
 - QA / Iteration Report
 - Delivery Manifest
 

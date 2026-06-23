@@ -28,6 +28,7 @@ Turn this approved brief and direction into a clean image prompt pack. Do not ge
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit`
 - `promptability_fit`
 - `post_execution_fit`
 - `delivery_fit`
@@ -36,6 +37,7 @@ Turn this approved brief and direction into a clean image prompt pack. Do not ge
 
 - Prompt Pack
 - Image Prompt Contract when visible text is required
+- Loop State
 - QA / Iteration Report
 - Delivery Manifest
 

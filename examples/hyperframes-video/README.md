@@ -32,6 +32,7 @@ Prepare a HyperFrames production brief for a short animated product title card w
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit`
 - `direction_fit`
 - `structure_fit`
 - `copy_fit`
@@ -47,6 +48,7 @@ Prepare a HyperFrames production brief for a short animated product title card w
 - Copy Pack
 - HyperFrames Production Brief
 - Asset Manifest
+- Loop State
 - QA / Iteration Report
 - Delivery Manifest
 

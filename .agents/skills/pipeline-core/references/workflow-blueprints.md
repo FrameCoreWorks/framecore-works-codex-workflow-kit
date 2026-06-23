@@ -44,6 +44,7 @@ Required gates:
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit`
 - `brief_completeness`
 - `reference_authority_fit`
 - `direction_fit`
@@ -78,6 +79,7 @@ Required gates:
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit`
 - `brief_completeness`
 - `reference_authority_fit`
 - `direction_fit`
@@ -111,6 +113,7 @@ Required gates:
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit`
 - `brief_completeness`
 - `reference_authority_fit`
 - `direction_fit`
@@ -144,6 +147,7 @@ Required gates:
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit`
 - `brief_completeness`
 - `reference_authority_fit`
 - `direction_fit`
@@ -176,6 +180,7 @@ Required gates:
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit` when a draft/output is reviewed
 - `brief_completeness`
 - `reference_authority_fit` when references are used
 - `direction_fit` when direction is used
@@ -204,6 +209,7 @@ Required gates:
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit` when a draft/output is reviewed
 - `brief_completeness`
 - `evidence_fit` when research is used
 - `copy_fit` when copy is produced or polished
@@ -229,6 +235,7 @@ Required gates:
 
 - `intent_lock`
 - `workflow_route`
+- `loop_control_fit`
 - `asset_manifest_fit` when assets exist
 - `post_execution_fit`
 - `delivery_fit`

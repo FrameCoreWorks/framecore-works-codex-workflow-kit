@@ -73,6 +73,7 @@ const { knownSkillNames } = skillState;
 const gateRegistry = join(validationRoot, ".agents/skills/pipeline-core/references/gate-registry.md");
 const handoffMatrix = join(validationRoot, ".agents/skills/pipeline-core/references/handoff-matrix.md");
 const workflowBlueprints = join(validationRoot, ".agents/skills/pipeline-core/references/workflow-blueprints.md");
+const loopProtocol = join(validationRoot, ".agents/skills/pipeline-core/references/loop-protocol.md");
 const inferenceReasoningMethods = join(validationRoot, ".agents/skills/pipeline-core/references/inference-reasoning-methods.md");
 const artifactTemplates = join(validationRoot, ".agents/skills/pipeline-core/templates/artifact-templates.md");
 const artifactSchemasPath = join(validationRoot, "config/artifact-schemas.json");
@@ -81,6 +82,7 @@ const paths = {
   gateRegistry,
   handoffMatrix,
   workflowBlueprints,
+  loopProtocol,
   inferenceReasoningMethods,
   artifactTemplates,
   artifactSchemasPath,

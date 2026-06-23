@@ -6,6 +6,7 @@
 | workflow-orchestrator | brief-architect | goal, raw_context, constraints, expected_artifact, request_diagnostic, reasoning_route when useful |
 | workflow-orchestrator | asset-manifest | existing_files, review_goal, acceptance_criteria, delivery_need, source_notes |
 | workflow-orchestrator | instruction-packet-factory | target_role, packet_type, context, goal, exclusions, output_need, reasoning_route, selected_methods, stop_condition |
+| workflow-orchestrator | qa-iteration | loop_state, artifacts_under_review, acceptance_matrix, regression_scope, stop_condition |
 | instruction-packet-factory | research-evidence | packet_id, goal, source_rules, acceptance_criteria, output_schema, verification_questions |
 | instruction-packet-factory | reference-curator | packet_id, reference_goals, suppression_rules, output_schema, source_notes_need |
 | brief-architect | reference-curator | brief_contract, reference_needs, constraints |
@@ -37,6 +38,7 @@
 | execution-manifest | asset-manifest | output_files, params_summary, source_notes, redaction_status |
 | hyperframes-producer | asset-manifest | source_files, render_outputs, dependencies, traceability |
 | asset-manifest | qa-iteration | file_list, source_traceability, acceptance_criteria |
+| qa-iteration | workflow-orchestrator | QA status, severity, root_cause, loopback_target, regression_check, stop_recommendation |
 | qa-iteration | delivery-documentation | accepted_assets, excluded_assets, QA status, verification_results, stop_condition, caveats |
 
 Invalid handoffs:

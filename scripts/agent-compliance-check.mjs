@@ -69,6 +69,7 @@ function main() {
     assertIncludes("workflow-orchestrator agent", orchestratorAgent, "Outputs: Project State");
     assertIncludes("workflow-orchestrator agent", orchestratorAgent, "Review gate: workflow_route");
     assertIncludes("workflow-orchestrator agent", orchestratorAgent, "required_handoffs");
+    assertIncludes("workflow-orchestrator agent", orchestratorAgent, "loop_state");
     assertIncludes("workflow-orchestrator agent", orchestratorAgent, "recovery_prompt");
 
     assertIncludes("pipeline-core skill", pipelineSkill, "intent-confirmation");
@@ -108,6 +109,14 @@ function main() {
         openai_api_allowed: false,
         external_router_adopted_raw: false,
       },
+      loop_state: {
+        loop_id: "loop-agent-compliance-001",
+        iteration: 0,
+        max_iterations: 1,
+        phase: "brief",
+        stop_decision: "stop_sufficient",
+      },
+      loop_evidence_refs: ["scripts/agent-compliance-check.mjs"],
       pending_decisions: [],
       blocked_items: [],
       files_touched: [],

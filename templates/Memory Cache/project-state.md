@@ -27,6 +27,15 @@ Durable recovery state for one operational chat or project folder.
 - Context stores user-supplied input and reference material.
 - Do not repopulate Context from Memory Cache unless the current user explicitly asks for it.
 
+## Loop State
+
+- loop_id: none
+- iteration: 0
+- max_iterations: 0
+- phase: stop
+- stop_decision: stop_sufficient
+- loop_evidence_refs: none
+
 ## Risks
 
 - none recorded

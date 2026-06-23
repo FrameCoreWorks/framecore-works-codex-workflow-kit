@@ -5,6 +5,7 @@
 | `intent_lock` | `intent-confirmation` | Task Confirmation |
 | `request_diagnostic_fit` | `workflow-orchestrator` | Workflow Request Diagnostic |
 | `workflow_route` | `workflow-orchestrator` | Project State |
+| `loop_control_fit` | `workflow-orchestrator`, `qa-iteration` | Loop State |
 | `brief_completeness` | `brief-architect` | Brief Contract |
 | `reference_authority_fit` | `reference-curator` | Reference Pack |
 | `evidence_fit` | `research-evidence` | Evidence Note |

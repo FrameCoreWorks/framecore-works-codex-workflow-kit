@@ -45,15 +45,35 @@ export function run(ctx) {
     read
   } = ctx.helpers;
   const { findings, addFinding } = createFindings(ctx.root);
-  const { artifactSchemasPath, artifactTemplates, gateRegistry, handoffMatrix, inferenceReasoningMethods, workflowBlueprints } = ctx.paths;
+  const { artifactSchemasPath, artifactTemplates, gateRegistry, handoffMatrix, inferenceReasoningMethods, loopProtocol, workflowBlueprints } = ctx.paths;
 
   let knownGates = new Map();
   let knownHandoffPairs = new Set();
   let knownWorkflowBlueprints = new Set();
   let workflowBlueprintContracts = new Map();
 
-  for (const file of [gateRegistry, handoffMatrix, workflowBlueprints, inferenceReasoningMethods, artifactTemplates]) {
+  for (const file of [gateRegistry, handoffMatrix, workflowBlueprints, inferenceReasoningMethods, loopProtocol, artifactTemplates]) {
     if (!existsSync(file)) addFinding("MISSING_PIPELINE_FILE", "Required pipeline core file is missing.", [file]);
+  }
+
+  if (existsSync(loopProtocol)) {
+    const text = read(loopProtocol);
+    for (const phrase of [
+      "brief -> checklist -> execute -> evaluate -> critique -> repair -> repeat -> stop",
+      "loop_control_fit",
+      "checklist",
+      "bounded_execution_packet",
+      "evidence",
+      "root_cause",
+      "regression_check",
+      "stop_sufficient | patch_one_gap | ask_user | blocked",
+      "Do not store raw chain-of-thought",
+      "Do not treat a loop state"
+    ]) {
+      if (!text.includes(phrase)) {
+        addFinding("WEAK_LOOP_PROTOCOL", `Loop protocol is missing required phrase: ${phrase}`, [loopProtocol]);
+      }
+    }
   }
 
   if (existsSync(inferenceReasoningMethods)) {
@@ -84,7 +104,7 @@ export function run(ctx) {
     const seenGates = new Set();
     const gates = new Map(gateRows.map((row) => [row.gate, row]));
     knownGates = gates;
-    for (const gate of ["intent_lock", "workflow_route", "brief_completeness", "reference_authority_fit", "evidence_fit", "instruction_packet_fit", "direction_fit", "structure_fit", "storyboard_board_fit", "copy_fit", "promptability_fit", "schema_pricing_fit", "execution_manifest_fit", "asset_manifest_fit", "post_execution_fit", "delivery_fit"]) {
+    for (const gate of ["intent_lock", "workflow_route", "loop_control_fit", "brief_completeness", "reference_authority_fit", "evidence_fit", "instruction_packet_fit", "direction_fit", "structure_fit", "storyboard_board_fit", "copy_fit", "promptability_fit", "schema_pricing_fit", "execution_manifest_fit", "asset_manifest_fit", "post_execution_fit", "delivery_fit"]) {
       if (!gates.has(gate)) addFinding("MISSING_GATE", `Gate is missing: ${gate}`, [gateRegistry]);
     }
     for (const row of gateRows) {
