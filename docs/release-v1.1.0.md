@@ -68,11 +68,11 @@ Confirm these passed before publishing:
 
 ## Links
 
-- [README](../README.md)
-- [Quickstart](quickstart.md)
-- [Troubleshooting](troubleshooting.md)
-- [Compatibility](compatibility.md)
-- [Loop Protocol](loop-protocol.md)
-- [Loop Protocol Integration Plan](loop-protocol-integration-plan.md)
-- [Roadmap](roadmap.md)
-- [Release Process](release.md)
+- [README](https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/blob/v1.1.0/README.md)
+- [Quickstart](https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/blob/v1.1.0/docs/quickstart.md)
+- [Troubleshooting](https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/blob/v1.1.0/docs/troubleshooting.md)
+- [Compatibility](https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/blob/v1.1.0/docs/compatibility.md)
+- [Loop Protocol](https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/blob/v1.1.0/docs/loop-protocol.md)
+- [Loop Protocol Integration Plan](https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/blob/v1.1.0/docs/loop-protocol-integration-plan.md)
+- [Roadmap](https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/blob/v1.1.0/docs/roadmap.md)
+- [Release Process](https://github.com/FrameCoreWorks/framecore-works-codex-workflow-kit/blob/v1.1.0/docs/release.md)
