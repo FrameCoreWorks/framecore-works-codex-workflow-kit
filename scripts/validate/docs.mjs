@@ -8,6 +8,7 @@ export function run(ctx) {
   const validationRoot = ctx.root;
 
   const requiredDocs = [
+    "docs/getting-started-5-minutes.md",
     "docs/quickstart.md",
     "docs/codex-assisted-install.md",
     "docs/using-the-kit.md",

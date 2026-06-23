@@ -7,6 +7,8 @@
 
 Licensed under Apache-2.0. See [NOTICE](NOTICE) for redistribution notice details.
 
+New to Codex or this repo? Start with [Getting Started In 5 Minutes](docs/getting-started-5-minutes.md).
+
 Just want to install in Codex? Jump to the [copy-paste install prompt](#copy-paste-install-prompt).
 
 ## What This Repo Gives You
@@ -37,6 +39,7 @@ The kit provides the workflow spine: roles, gates, handoffs, artifact expectatio
 
 | If you are... | Use this path | What happens |
 | --- | --- | --- |
+| New and want the shortest safe path | [Getting Started In 5 Minutes](docs/getting-started-5-minutes.md) | You get a compact beginner checklist, copy-paste prompt, and expected result. |
 | New to Codex and want the full workflow in one project | [Copy-Paste Install Prompt](#copy-paste-install-prompt) | Codex guides cloning, checks, onboarding, dry-run, and project-local install. |
 | Comfortable with terminal commands | [Install Flow](#install-flow) | You run the guided installer or manual command sequence yourself. |
 | Already installed and want the newest repo changes | [Update An Existing Workspace](#update-an-existing-workspace) | Codex or terminal updates only FrameCore-managed files recorded in `.framecore/manifest.json`. |
@@ -47,6 +50,8 @@ The kit provides the workflow spine: roles, gates, handoffs, artifact expectatio
 ## Beginner Start
 
 If someone sent you this repo and you do not know Terminal, start here.
+
+For the shortest version, use [Getting Started In 5 Minutes](docs/getting-started-5-minutes.md). The longer prompt below gives Codex more context and more safety checks.
 
 There are two beginner paths:
 
