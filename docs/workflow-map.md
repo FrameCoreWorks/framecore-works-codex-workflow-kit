@@ -37,6 +37,8 @@ Use this document when you need the full mental model before installing, customi
 
 Some roles have a same-named skill. Other roles are supported by broader specialist skills. This is intentional: role agents own handoff state, while skills provide reusable domain contracts.
 
+If a skill appears here but does not appear as a role-agent template, treat it as support knowledge for the listed role, not as an orphaned agent. Routing still goes through the role IDs in [Agent Roster](agent-roster.md) and [Handoff Matrix](../.agents/skills/pipeline-core/references/handoff-matrix.md).
+
 | Role agent | Supporting skill or knowledge | Primary artifact | Review gate |
 | --- | --- | --- | --- |
 | `intent-confirmation` | `pipeline-core`, `workflow-orchestrator` | Task Confirmation | `intent_lock` |
@@ -59,6 +61,17 @@ Some roles have a same-named skill. Other roles are supported by broader special
 | `asset-manifest` | `asset-manifest` | Asset Manifest | `asset_manifest_fit` |
 | `qa-iteration` | `output-critic-iteration`, `pipeline-core` | QA / Iteration Report | `post_execution_fit` |
 | `delivery-documentation` | `delivery-documentation`, `humanizer` when copy polish matters | Delivery Manifest | `delivery_fit` |
+
+## Intentional Name Mismatches
+
+| Skill | Primary role it supports | Reason |
+| --- | --- | --- |
+| `output-critic-iteration` | `qa-iteration` | The role owns the QA handoff state; the skill provides reusable critique, correction, and iteration rules. |
+| `storyboard-director` | `storyboard-architect` | The role owns the checked storyboard artifact; the skill provides story, beat, scene, and continuity methods. |
+| `commercial-visual-campaign-director` | `static-direction` | The role stays neutral; the skill adds commercial static campaign direction. |
+| `commercial-video-campaign-director` | `motion-direction` | The role stays neutral; the skill adds commercial video direction. |
+| `creative-music-video-director` | `music-video-direction` | The role stays neutral; the skill adds music-video direction. |
+| `marketing`, `ugc`, `storytelling`, `character-design`, `cinematography` | Multiple creative roles | These are support contracts used when the route needs strategy, script, narrative, character, or cinematic depth. |
 
 ## Knowledge Packs
 

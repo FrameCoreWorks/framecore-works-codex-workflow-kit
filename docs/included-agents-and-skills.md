@@ -46,6 +46,17 @@ These are Codex role-agent templates. During install, they are rendered into the
 
 For detailed inputs, outputs, gates, and common handoffs, see [Agent Roster](agent-roster.md).
 
+## Roles Vs Skills
+
+Roles and skills are intentionally not a one-to-one list.
+
+- **Role-agent templates** are active Codex handoff actors. They own workflow state, artifacts, review gates, and next handoff decisions.
+- **Workflow skills** are reusable contracts or knowledge packs. They describe when a capability should be used, what inputs it needs, what it should produce, and which safety rules apply.
+- Some skills share a name with a role because the role and support contract are tightly coupled.
+- Some skills support broader roles instead of becoming separate roles. For example, `output-critic-iteration` supports the `qa-iteration` role, `storyboard-director` supports `storyboard-architect`, and the commercial, cinematography, storytelling, marketing, character, and UGC skills support direction, copy, storyboard, image-prompting, and video-prompting routes.
+
+This keeps the installed role roster stable while still giving the workflow domain-specific support where it is useful. A skill that is not listed as a role is not dead by default; check [Workflow Map](workflow-map.md) for its supporting route.
+
 ## Installed Workflow Skills
 
 Skills are workflow contracts. They define when a capability should be used, what input it needs, what artifact it should produce, and which safety rules apply. They are not paid provider integrations.
@@ -79,6 +90,16 @@ Skills are workflow contracts. They define when a capability should be used, wha
 | `video-prompt-architect` | Create final provider-neutral video prompt packs from approved storyboard, motion direction, references, and copy. |
 | `workflow-orchestrator` | Route workflows, maintain project state, assign role-based agents, enforce gates, and decide loopbacks. |
 | `workflow-self-improvement` | Run explicit-only retrospectives, workflow audits, improvement notes, and approval-gated change proposals. |
+
+## Skill Groups
+
+| Group | Skills | Primary role relationship |
+| --- | --- | --- |
+| Core routing and governance | `pipeline-core`, `workflow-orchestrator`, `onboarding-preference-tuning`, `workflow-self-improvement` | Own install-time behavior, route selection, Project State, onboarding preferences, and explicit-only improvement proposals. |
+| Intake, references, evidence, and packets | `brief-architect`, `reference-pack-curator`, `instruction-packet-factory`, `hipson-adapter` | Support brief, reference, research, and bounded packet roles without installing full Hipson. |
+| Creative direction and strategy support | `marketing`, `character-design`, `cinematography`, `commercial-video-campaign-director`, `commercial-visual-campaign-director`, `creative-music-video-director`, `storytelling`, `ugc` | Support `static-direction`, `motion-direction`, `music-video-direction`, `storyboard-architect`, `copy-voice`, `image-prompting`, and `video-prompting`. |
+| Prompting, boards, and coded-video planning | `image-prompt-architect`, `video-prompt-architect`, `storyboard-director`, `storyboard-board-architect`, `hyperframes-workflow`, `hyperframes-prompting`, `hyperframes-gsap-guidance` | Support prompt, storyboard, board, and HyperFrames routes. |
+| QA, delivery, and asset handling | `output-critic-iteration`, `asset-manifest`, `delivery-documentation`, `humanizer` | Support `qa-iteration`, `asset-manifest`, `delivery-documentation`, and `copy-voice` responsibilities. |
 
 ## Other Included Workflow Assets
 

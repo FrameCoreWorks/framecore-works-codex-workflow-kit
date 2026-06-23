@@ -45,6 +45,8 @@ The kit must not ship:
 
 The static raster and text-bearing image policy is an intentional built-in capability boundary, not an external paid provider integration.
 
+The policy source of truth is split deliberately: [Static Raster And Text-Bearing Image Policy](text-image-policy.md) is the human-readable source and `config/text-image-policy.json` is the machine-readable config source. This section only explains how that exception fits inside the provider-neutral boundary.
+
 When the user asks for a generated static raster graphic, the workflow should use native Codex or ChatGPT image generation powered by GPT Image 2 by default when that capability is available. Do not silently replace this with Python-generated artwork, SVG, HTML/canvas, Sharp/composited PNG, or other coded artwork unless the user explicitly asks for a coded, vector, template, or editable source artifact.
 
 When a static raster graphic needs visible text, the final visible text belongs in the generation prompt and should not be added later with overlays unless the user explicitly asks for a coded or vector artifact.

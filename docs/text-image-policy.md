@@ -6,6 +6,8 @@ This policy protects quality for posters, banners, social graphics, infographic 
 
 For graphics with visible text, the workflow must also produce the final graphic in a way that treats the text as part of the image generation task, not as a late overlay.
 
+This document is the canonical human-readable source for the static raster and text-bearing image policy. `config/text-image-policy.json` is the canonical machine-readable config source. Other docs, skills, and agent templates may repeat short runtime reminders, but they should not redefine the policy independently.
+
 ## Built-In Generation Path
 
 Static raster graphics should use the built-in Codex/ChatGPT image generation capability powered by GPT Image 2 by default when that capability is available. In short: static raster graphics should use native image generation first, not coded substitutes.
@@ -58,3 +60,5 @@ If generation returns unreadable, duplicated, cropped, or incorrect text, treat 
 ## Validation
 
 The release gate checks that the policy keeps GPT Image 2, built-in Codex/ChatGPT image generation, default static raster graphic generation, one pass, exact final copy, safe margins, no extra words, Python-generated artwork prohibition, coded or vector artifact exceptions, and Do not silently replace visible in the documentation and config.
+
+When changing this policy, update this document and `config/text-image-policy.json` first, then update runtime reminders only when needed for agent behavior or user-facing clarity.
